@@ -4,6 +4,7 @@ const mongoose  = require('mongoose');
 const dotenv    = require('dotenv');
 const courseRoute = require('./routes/course');
 const professorRoute = require('./routes/professor');
+const departmentRoute = require('./routes/department');
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 app.use(express.json());
 app.use("/api/course",courseRoute);
-app.use("/api/professor",professorRoute);
+app.use("/api/department",departmentRoute);
 
 app.get("/",(req,res) => {
     res.send("Working!")

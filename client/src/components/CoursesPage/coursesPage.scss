@@ -1,5 +1,6 @@
 .coursespage{
     display: flex;
+    margin: 0 40px;
     .container{
         width: 70%;
         .courses{
@@ -15,13 +16,19 @@
                 font-family: 'Roboto', sans-serif;
                 border-radius: 20px;
                 border: 2px solid black;
+
+                &:hover{
+                    // border: 2px solid red;
+                    background-color: black;
+                    color: white;
+                }
             }
         }
     }
 
     .courseInfo{
         width: 30%;
-        height: calc(100vh - 98px - 19px);
+        height: calc(100vh - 98px  - 63px );
         // background-color: blue;
         position: sticky;
         top: calc(0% + 10px);

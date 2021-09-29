@@ -51,7 +51,7 @@ function CoursesPage() {
                 <div className="courses">
                     {firstYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
+                            {course.name}
                         </div>
                     ))}
                 </div>
@@ -59,7 +59,7 @@ function CoursesPage() {
                 <div className="courses">
                     {secondYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
+                            {course.name}
                         </div>
                     ))}
                 </div>
@@ -67,7 +67,7 @@ function CoursesPage() {
                 <div className="courses">
                     {thirdYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
+                            {course.name}
                         </div>
                     ))}
                 </div>

@@ -2,11 +2,13 @@
 .App{
     
     font-family: 'Roboto', sans-serif;
-
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     footer{
         text-align: center;
         background-color: #F7F7F7;
         font-family: 'Roboto', sans-serif;
-
+        margin-top: auto;
     }
 }
