@@ -28,7 +28,7 @@ function App() {
           </Switch>
         </div>
         <footer>
-          Made with love by Aly Khaled
+          Made by Aly Khaled
         </footer>
       </div>
     </Router>

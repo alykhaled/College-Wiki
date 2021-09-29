@@ -1,23 +1,23 @@
 header{
-    background-color: #243E8B;
+    // background-color: #243E8B;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px 5%;
+    border-bottom: 1px solid black;
 }
 
 .logo{
     cursor: pointer;
-    
 }
 
 #searchInput{
     padding: 10px 5px;
     width: 500px;
     outline: none;
-    border: 1px solid gray;
+    border: 1px solid rgb(218, 216, 216);
     border-radius: 5px;
-    background: gray;
+    background: rgb(218, 216, 216);
     font-family: 'Roboto', sans-serif;
 
     &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -36,7 +36,7 @@ header{
         display: inline-block;
         a{
             text-decoration: none !important;
-            color: #fff;
+            color: #000;
             font-size: 20px;
             margin: 10px;
             font-family: 'Roboto', sans-serif;

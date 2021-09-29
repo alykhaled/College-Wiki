@@ -6,7 +6,7 @@ const CourseSchema = new mongoose.Schema({
     semster:[{type: String, required: false}],
     creditHours:{type: Number, required: false},
     description:{type: String, required: false},
-    type:{type: String, required: false},
+    // type:{type: String, required: false},
     preReq:[{type: mongoose.Schema.Types.ObjectId , ref: "Course", required: false}],
     professor:[{type: mongoose.Schema.Types.ObjectId , ref: "Professor", required: false}],
     links:[{type: String, required: false}],
