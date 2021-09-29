@@ -11,6 +11,7 @@ router.post("/", async (req,res) => {
         semster:req.body.semster,
         creditHours:req.body.creditHours,
         description:req.body.description,
+        type:req.body.type,
         preReq:req.body.preReq,
         professor:req.body.professor,
         links:req.body.links,
@@ -36,8 +37,23 @@ router.post("/", async (req,res) => {
 router.get("/:id" ,async (req,res) => {
     try 
     {
-        const course = await Course.findById(req.params.id);
+        const course = await Course.findById(req.params.id).populate("professor","-courses");
         res.status(200).send(course);
+    } 
+    catch (error) 
+    {
+        console.log(error);
+        res.status(500).send(error);
+    }
+    
+});
+
+//GET All courses
+router.get("/" ,async (req,res) => {
+    try 
+    {
+        const courses = await Course.find().populate("professor","-courses");
+        res.status(200).send(courses);
     } 
     catch (error) 
     {

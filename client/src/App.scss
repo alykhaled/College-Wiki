@@ -1,52 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 .App{
-    header{
-        background-color: #243E8B;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 30px 5%;
-    }
-
-    .logo{
-        cursor: pointer;
-        
-    }
-
-    #searchInput{
-        padding: 10px 5px;
-        width: 500px;
-        outline: none;
-        border: 1px solid gray;
-        border-radius: 5px;
-        background: gray;
-        font-family: 'Roboto', sans-serif;
-
-        &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: white;
-            opacity: 1; /* Firefox */
-        }
-        
-        &::-ms-input-placeholder { /* Microsoft Edge */
-        color: red;
-        }
-    }
-
-    .nav_links{
-        list-style: none;
-        li{
-            display: inline-block;
-            a{
-                text-decoration: none !important;
-                color: #fff;
-                font-size: 20px;
-                padding: 10px;
-                font-family: 'Roboto', sans-serif;
-            }
-        }
-    }
+    
+    font-family: 'Roboto', sans-serif;
 
     footer{
-        background-color: gray;
+        text-align: center;
+        background-color: #F7F7F7;
+        font-family: 'Roboto', sans-serif;
+
     }
 }

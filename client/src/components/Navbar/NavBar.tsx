@@ -1,9 +1,10 @@
 import React from 'react'
+import './navbar.scss'
 
 function NavBar() {
     return (
     <header>  
-        <h1 className="logo">Collge Wiki</h1>
+        <h1 className="logo">Wiki</h1>
         <input type="search" placeholder="Search for course" name="" id="searchInput" />
         <nav>
             <ul className="nav_links">
