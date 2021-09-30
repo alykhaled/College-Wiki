@@ -9,13 +9,15 @@ function List() {
         department: "", 
         description: "", 
     });
-    const [response, setResponse] = useState("");
+    const [response, setResponse] = useState({});
     async function login(e) 
     {
+        console.log(listData);
         e.preventDefault();
         try {
             const res = await axios.post("https://collegewikiapi.herokuapp.com/api/list",listData);
             setResponse(res.data);
+            console.log(res.data);
             // history.push("/");
         } catch (error) {
             console.log(error);

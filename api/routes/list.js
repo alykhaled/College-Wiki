@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 router.post("/", async (req,res) => {
     const newList = new List({
         name:req.body.name,
-        department:req.body.code,
+        department:req.body.department,
         description:req.body.description,
         courses:req.body.courses,
     });
