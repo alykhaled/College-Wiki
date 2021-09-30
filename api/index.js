@@ -13,11 +13,19 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true,
 }).then(() => console.log("DB Connected")).catch(err => console.log(err));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+  
+
 app.use(express.json());
 app.use("/api/course",courseRoute);
 app.use("/api/department",departmentRoute);
 
 app.get("/",(req,res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     res.send("Working!")
 })
 
