@@ -47,30 +47,30 @@ function CoursesPage() {
     return (
         <div className="coursespage">
             <div className="container">
-                <h1>HEMN1XX</h1>
+                <h1>Discipline Requirements</h1>
                 <div className="courses">
                     {firstYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                     {firstYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                     {firstYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                     {firstYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                 </div>
-                <h1>HEMN2XX</h1>
+                <h1>Major Requirements</h1>
                 <div className="courses">
                     {secondYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
@@ -78,7 +78,7 @@ function CoursesPage() {
                         </div>
                     ))}
                 </div>
-                <h1>HEMN3XX</h1>
+                <h1>Elective</h1>
                 <div className="courses">
                     {thirdYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
