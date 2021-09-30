@@ -11,29 +11,40 @@ import {
 import Home from './components/Home/Home';
 import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
 import ComingSoon from './components/ComingSoon/ComingSoon';
+import AdminMain from './components/AdminPanel/AdminMain/AdminMain';
+import Login from './components/AdminPanel/Login/Login';
+
 function App() {
   return (
     <Router>
-      <div className="App">
-        <NavBar/>
-        <Switch>
-          <Route path="/departments">
-            <DepartmentsPage/>
-          </Route>
-          <Route path="/hem">
-            <CoursesPage/>
-          </Route>
-          <Route path="/comingsoon">
-            <ComingSoon />
-          </Route>
-          <Route path="/">
-            <Home/>
-          </Route>
-        </Switch>
-        <footer>
-          Made by Aly Khaled
-        </footer>
-      </div>
+      <Switch>
+        <Route path="/admin">
+          <AdminMain/>
+        </Route>
+        <Route path="/login">
+          <Login/>
+        </Route>
+        <div className="App">
+          <NavBar/>
+          <Switch>
+            <Route path="/departments">
+              <DepartmentsPage/>
+            </Route>
+            <Route path="/hem">
+              <CoursesPage/>
+            </Route>
+            <Route path="/comingsoon">
+              <ComingSoon />
+            </Route>
+            <Route path="/">
+              <Home/>
+            </Route>
+          </Switch>
+          <footer>
+            Made by Aly Khaled
+          </footer>
+        </div>
+      </Switch>
     </Router>
   );
 }

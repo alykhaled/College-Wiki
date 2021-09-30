@@ -14,7 +14,7 @@ function Home() {
                 <Link to="/departments">
                     <div className="item">
                         <h3>Courses</h3>
-                        <p>Browse all the courses according to our department</p>
+                        <p>Browse all the courses according to your department</p>
                     </div>
                 </Link>
                 <Link to="/comingsoon">

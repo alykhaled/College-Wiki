@@ -3,6 +3,7 @@ const app       = express();
 const mongoose  = require('mongoose');
 const dotenv    = require('dotenv');
 const courseRoute = require('./routes/course');
+const authRoute = require('./routes/auth');
 const professorRoute = require('./routes/professor');
 const departmentRoute = require('./routes/department');
 
@@ -22,6 +23,7 @@ app.use(function(req, res, next) {
 
 app.use(express.json());
 app.use("/api/course",courseRoute);
+app.use("/api/auth",authRoute);
 app.use("/api/department",departmentRoute);
 
 app.get("/",(req,res) => {
