@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import './login.scss'
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
+import './login.scss'
 
 function Login() {
     const history = useHistory();
@@ -15,11 +15,12 @@ function Login() {
         try {
             const res = await axios.post("https://collegewikiapi.herokuapp.com/api/auth/login",registerData);
             console.log(res.data);
-            // localStorage.setItem("token",res.token);
+            localStorage.setItem("token",res.data.token);
+            localStorage.setItem("isAdmin",res.data.isAdmin);
+            history.push("/");
         } catch (error) {
             console.log(error);
         }
-        history.push("/");
     };
     function handle(e)
     {
@@ -34,7 +35,7 @@ function Login() {
                 <form onSubmit={(e) => login(e)} className="formData">
                     <div className="inputField">
                         <label htmlFor="html">username</label>
-                        <input onChange={(e) => handle(e)} type="text" placeholder="username" id="email" />
+                        <input onChange={(e) => handle(e)} type="text" placeholder="username" id="username" />
                     </div>
                     <div className="inputField">
                         <label htmlFor="html">Password</label>

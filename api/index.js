@@ -6,6 +6,7 @@ const courseRoute = require('./routes/course');
 const authRoute = require('./routes/auth');
 const professorRoute = require('./routes/professor');
 const departmentRoute = require('./routes/department');
+const listRoute = require('./routes/list');
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/course",courseRoute);
 app.use("/api/auth",authRoute);
 app.use("/api/department",departmentRoute);
+app.use("/api/list",listRoute);
 
 app.get("/",(req,res) => {
     res.set('Access-Control-Allow-Origin', '*');

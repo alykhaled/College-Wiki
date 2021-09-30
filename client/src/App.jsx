@@ -13,11 +13,15 @@ import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import AdminMain from './components/AdminPanel/AdminMain/AdminMain';
 import Login from './components/AdminPanel/Login/Login';
+import List from './components/AdminPanel/List/List';
 
 function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/admin/list">
+          <List/>
+        </Route>
         <Route path="/admin">
           <AdminMain/>
         </Route>
@@ -41,7 +45,7 @@ function App() {
             </Route>
           </Switch>
           <footer>
-            Made by Aly Khaled
+            Made by <a href="https://github.com/alykhaled">Aly Khaled</a>
           </footer>
         </div>
       </Switch>

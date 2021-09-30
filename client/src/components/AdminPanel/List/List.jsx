@@ -1,0 +1,57 @@
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
+import axios from "axios";
+import './list.scss'
+function List() {
+    const history = useHistory();
+    const [listData,setListData] = useState({
+        name: "",
+        department: "", 
+        description: "", 
+    });
+    const [response, setResponse] = useState("");
+    async function login(e) 
+    {
+        e.preventDefault();
+        try {
+            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/list",listData);
+            setResponse(res.data);
+            // history.push("/");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    function handle(e)
+    {
+        const newdata = {...listData};
+        newdata[e.target.id] = e.target.value;
+        setListData(newdata);
+        console.log(newdata);
+    }
+    return (
+        <div className="list">
+            <div className="mainForm">
+                <form onSubmit={(e) => login(e)} className="formData">
+                    <div className="inputField">
+                        <label htmlFor="html">Name</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="name" id="name" />
+                    </div>
+                    <div className="inputField">
+                        <label htmlFor="html">Department</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="department" id="department" />
+                    </div>
+                    <div className="inputField">
+                        <label htmlFor="html">description</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="description" id="description" />
+                    </div>
+                    <div className="longBtn submit">
+                        <button>LOG IN</button>
+                    </div>
+                </form>
+            </div>
+            <p>{response.toString()}</p>
+        </div>
+    )
+}
+
+export default List

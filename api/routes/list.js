@@ -17,7 +17,6 @@ router.post("/", async (req,res) => {
     try{
         const list = await newList.save();
         res.status(200).send(list);
-
     }
     catch(error){
         console.log(error);
