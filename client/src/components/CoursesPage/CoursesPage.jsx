@@ -90,7 +90,9 @@ function CoursesPage() {
             {course !== undefined && <div className="courseInfo">
                 <h3 className="courseCode">{course.code}</h3>
                 <h1 className="courseName">{course.name}</h1>
+                <hr/>
                 <p className="courseDesc">{course.description}</p>
+                <hr/>
                 <p className="courseProfessor">Professor: {course.professor[0].name}</p>
             </div>}
         </div>
