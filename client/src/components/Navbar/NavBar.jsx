@@ -1,6 +1,7 @@
 import React from 'react'
 import './navbar.scss'
 import { Link } from "react-router-dom";
+import SearchBar from '../SearchBar/SearchBar';
 
 function NavBar() {
     return (
@@ -8,16 +9,7 @@ function NavBar() {
         <Link to="/">
             <h1 className="logo">Wiki</h1>
         </Link>
-        <div className="searchInput">
-            <input type="search" placeholder="Search for course" id="searchInput" />
-            <div className="autoComplete">
-                <li>CMPN103</li>
-                <li>HEMN106</li>
-                <li>HEMN106</li>
-                <li>HEMN106</li>
-                <li>HEMN106</li>
-            </div>
-        </div>
+        <SearchBar/>
         <nav>
             <ul className="nav_links">
                 <li>

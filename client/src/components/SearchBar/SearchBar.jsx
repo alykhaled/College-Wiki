@@ -17,12 +17,12 @@ function SearchBar() {
     }
     return (
         <div className="searchInput">
-            <input type="search" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
-            <div className="autoComplete">
+            <input type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
+            {query !== "" && <div className="autoComplete">
                 {suggested.map(course => (
                     <li>{course.code}</li>
                 ))}
-            </div>
+            </div>}
         </div>
     )
 }
