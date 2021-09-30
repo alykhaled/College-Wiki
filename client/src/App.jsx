@@ -9,12 +9,16 @@ import {
   Link
 } from "react-router-dom";
 import Home from './components/Home/Home';
+import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
 function App() {
   return (
     <Router>
       <div className="App">
         <NavBar/>
         <Switch>
+          <Route path="/departments">
+            <DepartmentsPage/>
+          </Route>
           <Route path="/hem">
             <CoursesPage/>
           </Route>

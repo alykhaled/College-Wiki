@@ -11,7 +11,7 @@ function Home() {
                 <SearchBar />
             </div>
             <div className="options">
-                <Link to="/hem">
+                <Link to="/departments">
                     <div className="item">
                         Courses
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p>

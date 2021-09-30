@@ -15,12 +15,16 @@ function SearchBar() {
         console.log(query);
         setQuery(query);
     }
+    function chooseOption(course) {
+        console.log(query);
+        setQuery("");
+    }
     return (
         <div className="searchInput">
-            <input type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
+            <input value={query} type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
             {query !== "" && <div className="autoComplete">
                 {suggested.map(course => (
-                    <li>{course.code}</li>
+                    <li onClick={(e) => chooseOption()}>{course.code} | {course.name}</li>
                 ))}
             </div>}
         </div>

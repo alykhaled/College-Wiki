@@ -1,0 +1,27 @@
+.departmentspage{
+    a{
+        text-decoration: none !important;
+        color: #000;
+    }
+    .options{
+        display: grid;
+        justify-content: center;
+        grid-template-columns: auto auto auto;
+        // column-gap: 100px;
+        margin: 30px 200px;
+        @media (max-width:480px){
+            grid-template-columns: auto ;
+            margin: 30px 30px;
+        }
+        .item{
+            cursor: pointer;
+            padding: 20px;
+            margin: 20px;
+            // border: 2px solid black;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 5pt 1pt #D3D3D3;
+        }
+        
+    }
+}
