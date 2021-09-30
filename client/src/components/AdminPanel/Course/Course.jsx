@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import './list.scss'
-function List() {
+import './course.scss'
+function Course() {
     const history = useHistory();
     const isAuthenticated = localStorage.getItem("isAdmin");
     if (!isAuthenticated) {
         history.push('/login');
     }
-    const [listData,setListData] = useState({
+    const [courseData,setCourseData] = useState({
         name: "",
-        department: "", 
+        code: "", 
+        creditHours: 0, 
         description: "", 
     });
     const [response, setResponse] = useState({});
-    async function login(e) 
+    async function addCourse(e) 
     {
-        console.log(listData);
+        console.log(courseData);
         e.preventDefault();
         try {
-            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/list",listData);
+            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/course",courseData);
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");
@@ -29,22 +30,26 @@ function List() {
     };
     function handle(e)
     {
-        const newdata = {...listData};
+        const newdata = {...courseData};
         newdata[e.target.id] = e.target.value;
-        setListData(newdata);
+        setCourseData(newdata);
         console.log(newdata);
     }
     return (
-        <div className="list">
+        <div className="courseAdmin">
             <div className="mainForm">
-                <form onSubmit={(e) => login(e)} className="formData">
+                <form onSubmit={(e) => addCourse(e)} className="formData">
                     <div className="inputField">
                         <label htmlFor="html">Name</label>
                         <input onChange={(e) => handle(e)} type="text" placeholder="name" id="name" />
                     </div>
                     <div className="inputField">
-                        <label htmlFor="html">Department</label>
-                        <input onChange={(e) => handle(e)} type="text" placeholder="department" id="department" />
+                        <label htmlFor="html">code</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="department" id="code" />
+                    </div>
+                    <div className="inputField">
+                        <label htmlFor="html">creditHours</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="creditHours" id="creditHours" />
                     </div>
                     <div className="inputField">
                         <label htmlFor="html">description</label>
@@ -60,4 +65,4 @@ function List() {
     )
 }
 
-export default List
+export default Course

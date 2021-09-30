@@ -14,6 +14,7 @@ import ComingSoon from './components/ComingSoon/ComingSoon';
 import AdminMain from './components/AdminPanel/AdminMain/AdminMain';
 import Login from './components/AdminPanel/Login/Login';
 import List from './components/AdminPanel/List/List';
+import Course from './components/AdminPanel/Course/Course';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
       <Switch>
         <Route path="/admin/list">
           <List/>
+        </Route>
+        <Route path="/admin/course">
+          <Course/>
         </Route>
         <Route path="/admin">
           <AdminMain/>

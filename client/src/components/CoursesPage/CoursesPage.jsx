@@ -9,6 +9,7 @@ function CoursesPage() {
     const [firstYear, setfirstYear] = useState([]);    
     const [secondYear, setsecondYear] = useState([]);    
     const [thirdYear, setthirdYear] = useState([]);    
+    const [fourthYear, setfourthYear] = useState([]);    
     useEffect(() => {
         const getCourses = async () => 
         {
@@ -28,6 +29,10 @@ function CoursesPage() {
                     if (course.code.includes("CMPN3") || course.code.includes("HEMN3")|| course.code.includes("SBEN3")) 
                     {
                         setthirdYear(thirdYearTemp => [...thirdYearTemp, course]);
+                    }
+                    if (course.code.includes("CMPN4") || course.code.includes("HEMN4")|| course.code.includes("SBEN4")) 
+                    {
+                        setfourthYear(fourthYearTemp => [...fourthYearTemp, course]);
                     }
                 }
                 console.log(res.data);
@@ -54,21 +59,6 @@ function CoursesPage() {
                             {course.code}
                         </div>
                     ))}
-                    {firstYear.map(course => (
-                        <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
-                        </div>
-                    ))}
-                    {firstYear.map(course => (
-                        <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
-                        </div>
-                    ))}
-                    {firstYear.map(course => (
-                        <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.code}
-                        </div>
-                    ))}
                 </div>
                 <h1>Major Requirements</h1>
                 <div className="courses">
@@ -86,6 +76,14 @@ function CoursesPage() {
                         </div>
                     ))}
                 </div>
+                <h1>Elective</h1>
+                <div className="courses">
+                    {fourthYear.map(course => (
+                        <div className="course" onClick={() => chooseCourse(course)}>
+                            {course.code}
+                        </div>
+                    ))}
+                </div>
             </div>
             {course !== undefined && <div className="courseInfo">
                 <h3 className="courseCode">{course.code}</h3>
@@ -93,7 +91,7 @@ function CoursesPage() {
                 <hr/>
                 <p className="courseDesc">{course.description}</p>
                 <hr/>
-                <p className="courseProfessor">Professor: {course.professor[0].name}</p>
+                {/* <p className="courseProfessor">Professor: {course.professor[0].name}</p> */}
             </div>}
         </div>
     )

@@ -1,0 +1,39 @@
+.courseAdmin{
+    height: 100vh;
+    .mainForm{
+        width: 450px;
+        margin: 0px auto;
+    }
+
+    .inputField {
+        margin-top: 30px;
+        label{
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input[type=text]{
+            margin-top: 15px;
+            width: calc(100% - 15px);
+            height: 50px;
+            font-size: 15px;
+            border-radius: 5px;
+            border-style:groove;
+            border: 1px solid black;
+            outline: none;
+            padding-left: 15px;
+        }
+    }
+
+    .submit{
+        margin-top: 33px;
+        margin-bottom: 35px;
+        text-align: center;
+        button{
+            background-color: white;
+            border: 2px solid gray;
+            color: gray;
+            letter-spacing: 0.1em;
+        }
+    }
+}
