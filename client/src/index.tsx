@@ -9,6 +9,7 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+  // "proxy": "http://localhost:8080/api",
 
  
 reportWebVitals();
