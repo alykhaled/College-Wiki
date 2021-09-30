@@ -13,7 +13,7 @@ function CoursesPage() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get("/course/");
+                const res = await axios.get("https://collegewikiapi.herokuapp.com/api/course/");
                 setCourses(res.data);
                 for (let i = 0; i < res.data.length; i++) {
                     const course = res.data[i];
