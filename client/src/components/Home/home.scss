@@ -17,12 +17,16 @@
     .options{
         display: grid;
         justify-content: center;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto auto auto;
         // column-gap: 100px;
         margin: 30px 200px;
         @media (max-width:480px){
             grid-template-columns: auto ;
             margin: 30px 30px;
+        }
+        a{
+            text-decoration: none !important;
+            color: #000;
         }
         .item{
             cursor: pointer;

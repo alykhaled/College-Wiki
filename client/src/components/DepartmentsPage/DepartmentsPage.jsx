@@ -12,13 +12,13 @@ function DepartmentsPage() {
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}
                     </div>
                 </Link>
-                <Link to="/cce">
+                <Link to="/comingsoon">
                     <div className="item">
                         CCE
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}
                     </div>
                 </Link>
-                <Link to="/eee">
+                <Link to="/comingsoon">
                     <div className="item">
                         EEE
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}

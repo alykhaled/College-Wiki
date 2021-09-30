@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Home from './components/Home/Home';
 import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
+import ComingSoon from './components/ComingSoon/ComingSoon';
 function App() {
   return (
     <Router>
@@ -22,8 +23,8 @@ function App() {
           <Route path="/hem">
             <CoursesPage/>
           </Route>
-          <Route path="/cce">
-            cce
+          <Route path="/comingsoon">
+            <ComingSoon />
           </Route>
           <Route path="/">
             <Home/>

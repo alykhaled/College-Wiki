@@ -13,22 +13,22 @@ function NavBar() {
         <nav>
             <ul className="nav_links">
                 <li>
-                    <Link to="/hem">
+                    <Link to="/departments">
                         Courses
                     </Link>
                 </li>
                 <li>
-                    <Link to="/hem">
+                    <Link to="/comingsoon">
                         Make a Table
                     </Link>
                 </li>
                 <li>
-                    <Link to="/hem">
+                    <Link to="/comingsoon">
                         Guide
                     </Link>
                 </li>
                 <li>
-                    <Link to="/hem">
+                    <Link to="/comingsoon">
                         Feedback
                     </Link>
                 </li>

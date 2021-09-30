@@ -13,26 +13,29 @@ function Home() {
             <div className="options">
                 <Link to="/departments">
                     <div className="item">
-                        Courses
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p>
+                        <h3>Courses</h3>
+                        <p>Browse all the courses according to our department</p>
                     </div>
                 </Link>
-                <div className="item">
-                    Make a table
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. impedit facere asperiores provident officiis?</p>
-                </div>
-                <div className="item">
-                    Guide
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p>
-                </div>
-                <div className="item">
-                    Guide
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. impedit facere asperiores provident officiis?</p>
-                </div>
-                <div className="item">
-                    Guide
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p>
-                </div>
+                <Link to="/comingsoon">
+                    <div className="item">
+                        <h3>Make a table</h3>
+                        <p>Customize your own table with a much cooler UI than your college's shitty website</p>
+                    </div>
+                </Link>
+                <Link to="/comingsoon">
+                    <div className="item">
+                        <h3>Guide</h3>
+                        <p>Some advices from students with lower than 3 GPA</p>
+                    </div>
+                </Link>
+                <Link to="/comingsoon">
+                    <div className="item">
+                        <h3>Feedback</h3>
+                        <p>Send us your feedback in case we need it (Most probably we don't care)</p>
+                    </div>
+                </Link>
+
             </div>
         </div>
     )
