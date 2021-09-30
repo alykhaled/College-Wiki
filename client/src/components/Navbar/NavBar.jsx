@@ -8,13 +8,38 @@ function NavBar() {
         <Link to="/">
             <h1 className="logo">Wiki</h1>
         </Link>
-        <input type="search" placeholder="Search for course" name="" id="searchInput" />
+        <div className="searchInput">
+            <input type="search" placeholder="Search for course" id="searchInput" />
+            <div className="autoComplete">
+                <li>CMPN103</li>
+                <li>HEMN106</li>
+                <li>HEMN106</li>
+                <li>HEMN106</li>
+                <li>HEMN106</li>
+            </div>
+        </div>
         <nav>
             <ul className="nav_links">
-                <li><a href="/">Courses</a></li>
-                <li><a href="/">Make a Table</a></li>
-                <li><a href="/">Guide</a></li>
-                <li><a href="/">Feedback</a></li>
+                <li>
+                    <Link to="/hem">
+                        Courses
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/hem">
+                        Make a Table
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/hem">
+                        Guide
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/hem">
+                        Feedback
+                    </Link>
+                </li>
             </ul>
         </nav>
     </header>

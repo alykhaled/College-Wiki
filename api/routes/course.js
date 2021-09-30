@@ -50,6 +50,38 @@ router.get("/:id" ,async (req,res) => {
 
 //GET All courses
 router.get("/" ,async (req,res) => {
+    const query = req.query.search;
+    if(query === undefined)
+    {
+        try 
+        {
+            const courses = await Course.find().populate("professor","-courses");
+            res.status(200).send(courses);
+        } 
+        catch (error) 
+        {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
+    else{
+        console.log(query);
+        try 
+        {
+            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
+            res.status(200).send(courses);
+        } 
+        catch (error) 
+        {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
+    
+});
+
+//GET All courses
+router.get("/?id" ,async (req,res) => {
     try 
     {
         const courses = await Course.find().populate("professor","-courses");
