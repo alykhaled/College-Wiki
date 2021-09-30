@@ -1,8 +1,10 @@
 .home{
+    width: 100%;
     .mainImage{
         background-image: url("https://targetcareers.co.uk/sites/targetcareers.co.uk/files/public/styles/header_1500x550/public/field/image/engineering-personal-statements.jpg?itok=I8sIDavS");
         text-align: center;
         height: 40vh;
+        width: 100%;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -20,6 +22,10 @@
         grid-template-columns: auto auto auto;
         // column-gap: 100px;
         margin: 30px 200px;
+        @media (max-width:480px){
+            grid-template-columns: auto auto ;
+            margin: 30px 30px;
+        }
         .item{
             cursor: pointer;
             padding: 20px;
@@ -28,5 +34,8 @@
             border-radius: 10px;
             text-align: center;
         }
+        
     }
+    
+
 }

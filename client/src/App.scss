@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 .App{
-    
+    width: 100%;
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
     display: flex;
@@ -14,5 +14,8 @@
         font-family: 'Roboto', sans-serif;
         margin-top: auto;
         padding: 30px;
+    }
+    .content{
+        width: 100%;
     }
 }

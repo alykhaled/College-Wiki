@@ -54,12 +54,27 @@ function CoursesPage() {
                             {course.name}
                         </div>
                     ))}
+                    {firstYear.map(course => (
+                        <div className="course" onClick={() => chooseCourse(course)}>
+                            {course.name}
+                        </div>
+                    ))}
+                    {firstYear.map(course => (
+                        <div className="course" onClick={() => chooseCourse(course)}>
+                            {course.name}
+                        </div>
+                    ))}
+                    {firstYear.map(course => (
+                        <div className="course" onClick={() => chooseCourse(course)}>
+                            {course.name}
+                        </div>
+                    ))}
                 </div>
                 <h1>HEMN2XX</h1>
                 <div className="courses">
                     {secondYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                 </div>
@@ -67,7 +82,7 @@ function CoursesPage() {
                 <div className="courses">
                     {thirdYear.map(course => (
                         <div className="course" onClick={() => chooseCourse(course)}>
-                            {course.name}
+                            {course.code}
                         </div>
                     ))}
                 </div>

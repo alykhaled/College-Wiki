@@ -1,8 +1,19 @@
 .coursespage{
     display: flex;
     margin: 0 40px;
+    @media (max-width:480px){
+        margin: 0 15px;
+    }
     .container{
         width: 70%;
+        @media (max-width:480px){
+            width: 30%;
+        }
+        h1{
+            @media (max-width:480px){
+                font-size: 15px;
+            }
+        }
         .courses{
             display: flex;
             flex-wrap: wrap;
@@ -22,6 +33,11 @@
                     background-color: black;
                     color: white;
                 }
+                @media (max-width:480px){
+                    padding: 5px;
+                    text-align: center;
+                    font-size: 13px;
+                }
             }
         }
     }
@@ -37,8 +53,13 @@
         border: 1px solid gray;
         border-radius: 10px;
         padding: 10px;
-        box-shadow: 0 0 7px #000000;
-
+        // box-shadow: 0 0 7px #000000;
+        @media (max-width:480px){
+            // visibility: hidden;
+            width: 70%;
+            margin: 0px;
+            padding: 0px;
+        }
     }
 
 }

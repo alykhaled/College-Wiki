@@ -3,8 +3,12 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 5%;
+    padding: 20px 5%;
+    // width: 100%;
     border-bottom: 1px solid black;
+    @media (max-width:480px){
+        padding: 0px 5%;
+    }
 }
 
 .logo{
@@ -13,13 +17,16 @@ header{
 
 #searchInput{
     padding: 10px 5px;
-    width: 500px;
+    width: auto;
     outline: none;
     border: 1px solid rgb(218, 216, 216);
     border-radius: 5px;
     background: rgb(218, 216, 216);
     font-family: 'Roboto', sans-serif;
 
+    @media (min-width:480px){
+        padding: 0px 5%;
+    }
     &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: white;
         opacity: 1; /* Firefox */
@@ -30,10 +37,25 @@ header{
     }
 }
 
+
+nav{
+    @media (max-width:480px){
+        visibility:hidden;
+        width: 0;
+    }
+}
+
 .nav_links{
     list-style: none;
+    @media (max-width:480px){
+        visibility:hidden;
+        width: 0;
+    }
     li{
         display: inline-block;
+        @media (max-width:480px){
+            width: 0;
+        }
         a{
             text-decoration: none !important;
             color: #000;

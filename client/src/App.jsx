@@ -14,19 +14,17 @@ function App() {
     <Router>
       <div className="App">
         <NavBar/>
-        <div className="content">
-          <Switch>
-            <Route path="/hem">
-              <CoursesPage/>
-            </Route>
-            <Route path="/cce">
-              cce
-            </Route>
-            <Route path="/">
-              <Home/>
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/hem">
+            <CoursesPage/>
+          </Route>
+          <Route path="/cce">
+            cce
+          </Route>
+          <Route path="/">
+            <Home/>
+          </Route>
+        </Switch>
         <footer>
           Made by Aly Khaled
         </footer>
