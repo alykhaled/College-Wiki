@@ -1,0 +1,19 @@
+.viewlists{
+    .autoComplete{
+        width: auto;
+        background-color: white;
+        box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+        -webkit-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+        -moz-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+        -webkit-appearance: none;
+        text-align: start;
+        li{
+            list-style: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            &:hover{
+                background: #efefef;
+            }
+        }
+    }
+}

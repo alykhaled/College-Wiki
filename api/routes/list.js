@@ -28,7 +28,7 @@ router.post("/", async (req,res) => {
 //GET  List
 router.get("/:id", async (req,res) => {
     try{
-        const list = await List.findById(req.params.id);
+        const list = await List.findById(req.params.id).populate('courses');
         res.status(200).send(list);
     }
     catch(error){

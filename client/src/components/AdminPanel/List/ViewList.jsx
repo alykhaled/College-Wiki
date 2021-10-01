@@ -14,6 +14,7 @@ function ViewList() {
             try {
                 const res = await axios.get("http://localhost:8080/api/list/"+id);
                 setList(res.data);
+                console.log(res.data);
             } catch (error) {
                 console.log(error);
             }
@@ -30,17 +31,7 @@ function ViewList() {
             }
         };
         getCourses();
-        // const getArtistAlbums = async () => 
-        // {
-        //     try {
-        //         const albums = await axios.get("/artist/"+id+"/albums");
-        //         setAlbums(albums.data);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // };
         getList();
-        // getArtistAlbums();
     }, []);
     useEffect(() => {
         const addCourse = async (course) => 
@@ -48,7 +39,7 @@ function ViewList() {
             console.log(course);
             try {
                 const res = await axios.put("http://localhost:8080/api/list/"+id+"/course",{course:course._id});
-                setList(res.data);
+                console.log(res.data);
             } catch (error) {
                 console.log(error);
             }
@@ -63,8 +54,15 @@ function ViewList() {
             {/* <div className="autoComplete">
                 <li>course.code | course.name</li>
             </div> */}
+            <h1>List Courses:</h1>
             <div className="autoComplete">
-                {courses != undefined && courses.map(course => (
+                {list.courses !== undefined && list.courses.map(course => (
+                    <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
+                ))}
+            </div>
+            <h1>All courses:</h1>
+            <div className="autoComplete">
+                {courses !== undefined && courses.map(course => (
                     <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
                 ))}
             </div>

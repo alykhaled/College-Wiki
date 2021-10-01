@@ -1,0 +1,51 @@
+.outerWrap{
+    display: flex;
+    .NavBar {
+        min-width: 282px;
+        height: 100vh;
+        background: black;
+        display: flex; 
+        flex-direction: column;
+        justify-content: center; 
+        border-radius: 0px 30px 30px 0px;
+        ul {
+            padding: 0px 8px;
+            a{
+                text-decoration: none;
+            }
+            li {
+                font-weight: bold;
+                font-family: sans-serif;
+                color: gray;
+                list-style-type: none;
+                border-radius: 5px;
+                padding: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                display: flex;
+                &.active{
+                    background: gray;
+                    color: white;
+                }
+                
+                &:hover{
+                    color: white;
+                }
+                align-content: center; 
+                .icon{
+                    svg{
+                        padding-left: 11px;
+                        padding-top: 3px;
+    
+                    }
+                }
+                .title{
+                    margin-left: 16px;
+                    text-align: center;
+                    font-size: 0.9rem;
+                    padding-top: 7px;              
+                }
+            }
+        }
+    }
+}
