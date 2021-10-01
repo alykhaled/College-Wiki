@@ -13,7 +13,7 @@ function Login() {
     {
         e.preventDefault();
         try {
-            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/auth/login",registerData);
+            const res = await axios.post(process.env.REACT_APP_API+"/auth/login",registerData);
             console.log(res.data);
             localStorage.setItem("token",res.data.token);
             localStorage.setItem("isAdmin",res.data.isAdmin);

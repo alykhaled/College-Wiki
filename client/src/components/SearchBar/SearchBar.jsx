@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react'
+import React, { Component,useState,useEffect } from 'react'
 import axios from "axios";
 
-function SearchBar() {
+function SearchBar({callback}) {
     const [query, setQuery] = useState("");
     const [suggested, setSuggested] = useState([]);
     useEffect(() => {
@@ -16,15 +16,17 @@ function SearchBar() {
         setQuery(query);
     }
     function chooseOption(course) {
-        console.log(query);
+        console.log(course);
         setQuery("");
+        callback(course);
+        window.location.reload();
     }
     return (
         <div className="searchInput">
             <input value={query} type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
             {query !== "" && <div className="autoComplete">
                 {suggested.map(course => (
-                    <li onClick={(e) => chooseOption()}>{course.code} | {course.name}</li>
+                    <li onClick={(e) => chooseOption(course)}>{course.code} | {course.name}</li>
                 ))}
             </div>}
         </div>

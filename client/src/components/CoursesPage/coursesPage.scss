@@ -45,26 +45,58 @@
     .courseInfo{
         width: 30%;
         height: calc(100vh - 98px  - 63px );
-        // background-color: blue;
         position: sticky;
         top: calc(0% + 10px);
         margin: 10px 0px;
-        // right: 0%;
-        // border: 1px solid gray;
         border-radius: 10px;
         padding: 10px;
-        // box-shadow: 0 0 7px #000000;
+        .courseDesc{
+            margin: 15px 0px;
+            font-size: 20px;
+            @media (max-width:480px){
+                font-size: 18px;
+            }
+        }
+        .courseName{
+            margin: 15px 0px;
+            @media (max-width:480px){
+                font-size: 25px;
+            }
+        }
+        .courseCode{
+            margin: 15px 0px;
+        }
+        
+        .course{
+            cursor: pointer;
+            margin: 5px;
+            padding: 10px;
+            color: black;
+            font-family: 'Roboto', sans-serif;
+            border-radius: 20px;
+            border: 2px solid black;
+            width: fit-content;
+            &:hover{
+                // border: 2px solid red;
+                background-color: black;
+                color: white;
+            }
+            @media (max-width:480px){
+                padding: 5px;
+                text-align: center;
+                font-size: 13px;
+            }
+        }
         box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         -webkit-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         -moz-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         @media (max-width:480px){
-            // visibility: hidden;
             width: 70%;
             margin: 20px 0;
             border-right: 0px;
             height: auto;
-            // padding: 0px;    
         }
+
     }
 
 }

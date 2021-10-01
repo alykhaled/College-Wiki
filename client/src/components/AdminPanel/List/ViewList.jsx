@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import './viewlist.scss'
+import SearchBar from '../../SearchBar/SearchBar';
 
 function ViewList() {
     const {id} = useParams();
@@ -61,50 +62,34 @@ function ViewList() {
         };
         removeCourse(removedCourse);
     }, [removedCourse]);
+    function handleChange(newValue) {
+        setCourse(newValue);
+    }
 
-    function temp(course) {
-        console.log("all");
-    }
-    function tempp(text) {
-        console.log("Span");
-    }
-    function changeQuery(query) {
-        console.log(query);
-        setQuery(query);
-    }
     return (
         <div className="viewlist">
             <h1>{list.name}</h1>
             <h1>{list.department}</h1>
             <h1>{list.description}</h1>
-            {/* <div className="autoComplete">
-                <li>course.code | course.name</li>
-            </div> */}
-            <h1>List Courses:</h1>
-            <div className="autoComplete">
-                {list.courses !== undefined && list.courses.map(course => (
-                    <div>
-                        <li >{course.code} | {course.name}</li>
-                        <span onClick={(e) => setRemovedCourse(course)}>
-                            X
-                        </span>
+            <div className="coursesOption">
+                <div className="listCourses">
+                    <h1>List Courses:</h1>
+                    <div className="autoComplete">
+                        {list.courses !== undefined && list.courses.map(course => (
+                            <div>
+                                <li>{course.code} | {course.name}</li>
+                                <span onClick={(e) => setRemovedCourse(course)}>
+                                    X
+                                </span>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
+                <div className="allCourses">
+                    <h1>Add courses:</h1>
+                    <SearchBar callback={handleChange}/> 
+                </div>
             </div>
-            <h1>All courses:</h1>
-            <div className="searchInput">
-                <input value={query} type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
-                {query !== "" && <div className="autoComplete">
-                    {courses !== undefined && courses.map(course => (
-                        <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
-                    ))}
-                </div>}
-            </div>
-            {/* <div className="autoComplete">
-                {courses !== undefined && courses.map(course => (
-                    <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
-                ))}
-            </div> */}
         </div>
     )
 }

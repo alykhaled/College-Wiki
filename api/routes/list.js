@@ -4,6 +4,7 @@ const Department = require('../models/Department');
 const List = require('../models/List');
 const Professor = require('../models/Professor');
 const mongoose = require('mongoose');
+const { verify } = require('jsonwebtoken');
 
 //Create List (POST)
 router.post("/", async (req,res) => {
@@ -31,7 +32,7 @@ router.post("/", async (req,res) => {
 });
 
 //GET  List
-router.get("/:id", async (req,res) => {
+router.get("/:id", verify, async (req,res) => {
     try{
         const list = await List.findById(req.params.id).populate('courses');
         res.status(200).send(list);

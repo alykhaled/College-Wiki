@@ -39,9 +39,15 @@ function CoursesPage() {
                 <h3 className="courseCode">{course.code}</h3>
                 <h1 className="courseName">{course.name}</h1>
                 <hr/>
+                <p className="coursePrereq">Prerequisite: {course.preReq[0] !== undefined ? course.preReq.map(course => (
+                    <div className="course">
+                        {course.code}
+                    </div>
+                )) : "No Prereq"}</p>
+                <hr/>
                 <p className="courseDesc">{course.description}</p>
                 <hr/>
-                {/* <p className="courseProfessor">Professor: {course.professor[0].name}</p> */}
+                <p className="courseProfessor">Professor: {course.professor[0] !== undefined ? course.professor[0].name : ""}</p>
             </div>}
         </div>
     )
