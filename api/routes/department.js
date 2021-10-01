@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 //Create Department (POST)
 router.post("/", async (req,res) => {
-    const newDepartment = new Course({
+    const newDepartment = new Department({
         name:req.body.name,
         code:req.body.code,
         description:req.body.description,
@@ -18,7 +18,24 @@ router.post("/", async (req,res) => {
     try{
         const department = await newDepartment.save();
         res.status(200).send(department);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
 
+//GET Department's List
+router.get("/:code/lists", async (req,res) => {
+    try{
+        const list = await Department.findOne({code:req.params.code.toUpperCase()}).populate('lists').select('lists').populate({
+            path:"lists",
+            populate:{
+                path:"courses",
+                model:"Course",
+             }
+        });
+        res.status(200).send(list);
     }
     catch(error){
         console.log(error);

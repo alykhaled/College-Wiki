@@ -36,6 +36,11 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 5pt 1pt #D3D3D3;
+            transition: all 0.05s ease-in-out;
+            &:hover{
+                box-shadow: 0 0 8pt 2pt #D3D3D3;
+                transform: scale(1.08) perspective(1px)
+            }
         }
         
     }

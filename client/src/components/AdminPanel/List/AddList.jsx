@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import './list.scss'
-function List() {
+function AddList() {
     const history = useHistory();
     const isAuthenticated = localStorage.getItem("isAdmin");
     if (!isAuthenticated) {
@@ -19,7 +19,7 @@ function List() {
         console.log(listData);
         e.preventDefault();
         try {
-            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/list",listData);
+            const res = await axios.post("http://localhost:8080/api/list",listData);
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");
@@ -60,4 +60,4 @@ function List() {
     )
 }
 
-export default List
+export default AddList
