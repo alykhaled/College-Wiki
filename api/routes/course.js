@@ -81,19 +81,19 @@ router.get("/" ,async (req,res) => {
 });
 
 //GET All courses
-router.get("/?id" ,async (req,res) => {
-    try 
-    {
-        const courses = await Course.find().populate("professor","-courses");
-        res.status(200).send(courses);
-    } 
-    catch (error) 
-    {
-        console.log(error);
-        res.status(500).send(error);
-    }
+// router.get("/?id" ,async (req,res) => {
+//     try 
+//     {
+//         const courses = await Course.find().populate("professor","-courses");
+//         res.status(200).send(courses);
+//     } 
+//     catch (error) 
+//     {
+//         console.log(error);
+//         res.status(500).send(error);
+//     }
     
-});
+// });
 //Update Course PUT
 
 //DELETE Course

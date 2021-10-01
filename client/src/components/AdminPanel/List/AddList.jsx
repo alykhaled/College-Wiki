@@ -19,7 +19,7 @@ function AddList() {
         console.log(listData);
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:8080/api/list",listData);
+            const res = await axios.post("/list",listData);
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");

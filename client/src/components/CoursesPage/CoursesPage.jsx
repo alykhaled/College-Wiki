@@ -10,7 +10,7 @@ function CoursesPage() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get("http://localhost:8080/api/department/"+"HEM"+"/lists");
+                const res = await axios.get(process.env.REACT_APP_API+"/department/"+"HEM"+"/lists");
                 setLists(res.data.lists);
                 console.log(res.data);
             } catch (error) {
