@@ -1,4 +1,9 @@
 .viewlists{
+    width: 100%;
+    display: flex;
+    // justify-content: center;
+    flex-direction: column;
+    align-items: center;
     .autoComplete{
         width: auto;
         background-color: white;

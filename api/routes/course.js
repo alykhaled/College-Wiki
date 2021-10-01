@@ -18,6 +18,11 @@ router.post("/", async (req,res) => {
     });
 
     try{
+        const tempcourse = await Course.find({code:req.body.code});
+        if(tempcourse)
+        {
+            res.status(200).send("Course Is Already created!");
+        }
         const course = await newCourse.save();
         const professors = newCourse.professor;
         for(const professor of professors)
@@ -26,6 +31,18 @@ router.post("/", async (req,res) => {
         }
         res.status(200).send(course);
 
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
+
+//UPDATE List
+router.put("/:id", async (req,res) => {
+    try{
+        const list = await Course.findByIdAndUpdate(req.params.id,{$set:req.body});
+        res.status(200).send(list);
     }
     catch(error){
         console.log(error);

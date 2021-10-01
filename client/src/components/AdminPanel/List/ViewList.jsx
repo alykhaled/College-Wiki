@@ -6,13 +6,15 @@ import './viewlist.scss'
 function ViewList() {
     const {id} = useParams();
     const [list, setList] = useState({});
+    const [query, setQuery] = useState("");
     const [courses, setCourses] = useState([]);
     const [course, setCourse] = useState({});
+    const [removedCourse, setRemovedCourse] = useState({});
     useEffect(() => {
         const getList = async () => 
         {
             try {
-                const res = await axios.get("http://localhost:8080/api/list/"+id);
+                const res = await axios.get(process.env.REACT_APP_API+"/list/"+id);
                 setList(res.data);
                 console.log(res.data);
             } catch (error) {
@@ -23,7 +25,7 @@ function ViewList() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get("http://localhost:8080/api/course/");
+                const res = await axios.get(process.env.REACT_APP_API+"/course/");
                 setCourses(res.data);
                 console.log(res.data);
             } catch (error) {
@@ -38,7 +40,7 @@ function ViewList() {
         {
             console.log(course);
             try {
-                const res = await axios.put("http://localhost:8080/api/list/"+id+"/course",{course:course._id});
+                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id});
                 console.log(res.data);
             } catch (error) {
                 console.log(error);
@@ -46,6 +48,30 @@ function ViewList() {
         };
         addCourse(course);
     }, [course]);
+    useEffect(() => {
+        const removeCourse = async (removedCourse) => 
+        {
+            console.log(course);
+            try {
+                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        removeCourse(removedCourse);
+    }, [removedCourse]);
+
+    function temp(course) {
+        console.log("all");
+    }
+    function tempp(text) {
+        console.log("Span");
+    }
+    function changeQuery(query) {
+        console.log(query);
+        setQuery(query);
+    }
     return (
         <div className="viewlist">
             <h1>{list.name}</h1>
@@ -57,15 +83,28 @@ function ViewList() {
             <h1>List Courses:</h1>
             <div className="autoComplete">
                 {list.courses !== undefined && list.courses.map(course => (
-                    <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
+                    <div>
+                        <li >{course.code} | {course.name}</li>
+                        <span onClick={(e) => setRemovedCourse(course)}>
+                            X
+                        </span>
+                    </div>
                 ))}
             </div>
             <h1>All courses:</h1>
-            <div className="autoComplete">
+            <div className="searchInput">
+                <input value={query} type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
+                {query !== "" && <div className="autoComplete">
+                    {courses !== undefined && courses.map(course => (
+                        <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
+                    ))}
+                </div>}
+            </div>
+            {/* <div className="autoComplete">
                 {courses !== undefined && courses.map(course => (
                     <li onClick={(e) => setCourse(course)}>{course.code} | {course.name}</li>
                 ))}
-            </div>
+            </div> */}
         </div>
     )
 }

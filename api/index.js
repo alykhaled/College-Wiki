@@ -22,7 +22,6 @@ app.use(function(req, res, next) {
     next();
 });
   
-
 app.use(express.json());
 app.use("/api/course",courseRoute);
 app.use("/api/auth",authRoute);

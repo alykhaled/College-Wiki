@@ -20,7 +20,7 @@ function Course() {
         console.log(courseData);
         e.preventDefault();
         try {
-            const res = await axios.post("https://collegewikiapi.herokuapp.com/api/course",courseData);
+            const res = await axios.post(process.env.REACT_APP_API+"/course",courseData);
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");
