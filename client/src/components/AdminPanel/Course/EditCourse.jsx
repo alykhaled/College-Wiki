@@ -51,7 +51,7 @@ function EditCourse() {
     return (
         <div className="editcourse">
             <SearchBar callback={setCourseData} refresh={false}/>
-            <div className="mainForm" >
+            {<div className="mainForm" >
                 <form onSubmit={(e) => editCourse(e)} className="formData">
                     <div className="inputField">
                         <label htmlFor="html">Name</label>
@@ -85,7 +85,7 @@ function EditCourse() {
                         <button>Update</button>
                     </div>
                 </form>
-            </div>
+            </div>}
             <p>{JSON.stringify(response)}</p>
         </div>
     )

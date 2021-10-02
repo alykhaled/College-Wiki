@@ -131,11 +131,11 @@
         box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         -webkit-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         -moz-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+        height: 100%;
         @media (max-width:780px){
             margin: 20px 0;
             width: 70%;
             border-right: 0px;
-            height: 100%;
         }
 
     }

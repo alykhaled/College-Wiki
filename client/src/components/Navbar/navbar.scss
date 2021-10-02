@@ -6,9 +6,10 @@ header{
     @media (max-width:780px){
         padding: 0px 5%;
     }
-    box-shadow: 0px 0px 50px -30px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px 0px 50px -30px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 50px -30px rgba(0,0,0,0.75);
+    box-shadow: 0 0 10pt 1pt #D3D3D3;
+    -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
+    -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
+    -webkit-appearance: none;
 }
 
 .logo{
@@ -23,13 +24,14 @@ header{
     -moz-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
     -webkit-appearance: none;
     position: relative;
+    border-radius: 5px;
 
     input{
         padding: 10px 10px;
         width: 500px;
         outline: none;
-        border-style: none;
         border-radius: 5px;
+        border-style: none;
         background: white;
         font-family: 'Roboto', sans-serif;
         box-shadow: 0 0 3pt 0.3pt #D3D3D3;
