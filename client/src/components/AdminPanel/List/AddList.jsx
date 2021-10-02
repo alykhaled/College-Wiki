@@ -57,7 +57,7 @@ function AddList() {
                     </div>
                 </form>
             </div>
-            <p>{JSON.stringify(response)}</p>
+            <pre>{JSON.stringify(response)}</pre>
         </div>
     )
 }

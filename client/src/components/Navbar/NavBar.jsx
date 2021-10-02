@@ -1,16 +1,21 @@
 import React from 'react'
 import './navbar.scss'
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import logo from './img1.png'; // with import
 function NavBar() {
+    const history = useHistory();
+    function chooseCourse(course) {
+        history.push('/course/'+course.code)
+    }
     return (
     <header>  
         <Link to="/">
             <img src={logo} />
         </Link>
         <div style={{width:"500px"}}>
-            <SearchBar/>
+            <SearchBar callback={chooseCourse}/>
         </div>
         <nav>
             <ul className="nav_links">

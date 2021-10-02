@@ -7,7 +7,7 @@ import {
   } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import AddList from './List/AddList';
-import Course from './Course/Course';
+import AddCourse from './Course/AddCourse';
 import ViewList from './List/ViewList';
 import ViewLists from './List/ViewLists';
 import { useState } from 'react';
@@ -100,7 +100,7 @@ function AdminRoute() {
                         <EditCourse/>
                     </Route>
                     <Route path="/admin/course">
-                        <Course/>
+                        <AddCourse/>
                     </Route>
                 </Switch>
             </div>

@@ -54,7 +54,7 @@ function CoursesPage() {
                 <h1 className="courseName">{course.name}</h1>
                 <hr/>
                 <p>Semester: </p>
-                <div className="courseSemester">{course.semester[0] !== undefined ? course.semester.map(sem => (
+                <div className="courseSemester">{course !== undefined ? course.semester.map(sem => (
                     <div className="course">
                         {sem}
                     </div>

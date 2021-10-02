@@ -12,6 +12,7 @@ import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import Login from './components/AdminPanel/Login/Login';
 import AdminRoute from './components/AdminPanel/AdminRoute';
+import CoursePage from './components/CoursePage/CoursePage';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
             <Route path="/departments">
               <DepartmentsPage/>
             </Route>
+            <Route path="/course/:code">
+              <CoursePage />
+            </Route>
             <Route path="/hem">
               <CoursesPage/>
             </Route>
@@ -36,7 +40,7 @@ function App() {
               <ComingSoon />
             </Route>
             <Route path="/">
-              <Home/>
+              <Home />
             </Route>
           </Switch>
           <footer>

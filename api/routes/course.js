@@ -70,11 +70,27 @@ router.get("/:id" ,async (req,res) => {
 //GET All courses
 router.get("/" ,async (req,res) => {
     const query = req.query.search;
-    if(query === undefined)
+    const queryCode = req.query.code;
+    if(query !== undefined)
     {
+        console.log(query);
         try 
         {
-            const courses = await Course.find().populate("professor","-courses");
+            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
+            res.status(200).send(courses);
+        } 
+        catch (error) 
+        {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
+    else if(queryCode !== undefined)
+    {
+        console.log(queryCode);
+        try 
+        {
+            const courses = await Course.findOne({code: queryCode.toUpperCase()});
             res.status(200).send(courses);
         } 
         catch (error) 
@@ -84,10 +100,9 @@ router.get("/" ,async (req,res) => {
         }
     }
     else{
-        console.log(query);
         try 
         {
-            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
+            const courses = await Course.find().populate("professor","-courses");
             res.status(200).send(courses);
         } 
         catch (error) 

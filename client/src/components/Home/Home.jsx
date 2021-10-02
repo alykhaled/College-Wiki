@@ -1,9 +1,13 @@
 import React from 'react'
 import './home.scss'
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 function Home() {
-
+    const history = useHistory();
+    function chooseCourse(course) {
+        history.push('/course/'+course.code)
+    }
     return (
         <div className="home">
             <div className="mainImage">
@@ -13,7 +17,7 @@ function Home() {
             <div className="all">
                 <div className="content">
                     <h1>CAN WE HELP YOU ?</h1>
-                    <SearchBar />
+                    <SearchBar callback={chooseCourse}/>
                 </div>
                 <div className="options">
                     <Link to="/departments">

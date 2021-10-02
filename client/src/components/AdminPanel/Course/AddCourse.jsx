@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import './course.scss'
-function Course() {
+function AddCourse() {
     const history = useHistory();
     const isAuthenticated = localStorage.getItem("isAdmin");
     if (!isAuthenticated) {
@@ -99,4 +99,4 @@ function Course() {
     )
 }
 
-export default Course
+export default AddCourse
