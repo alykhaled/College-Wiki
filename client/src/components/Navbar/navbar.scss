@@ -2,7 +2,7 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
+    padding: 5px 5%;
     @media (max-width:780px){
         padding: 0px 5%;
     }
@@ -12,6 +12,7 @@ header{
     // -webkit-appearance: none;
     img{
         width: 100px;
+        
     }
 }
 
