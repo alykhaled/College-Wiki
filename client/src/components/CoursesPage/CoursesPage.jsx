@@ -40,9 +40,9 @@ function CoursesPage() {
                         <h1>{list.name}</h1>
                         <div className="courses">
                             {list.courses.map(course => (
-                                <div className="course" onClick={() => setCourse(course)}>
+                                (!showCurrentSemster | course.semester.includes("FALL")) ? <div className="course" onClick={() => setCourse(course)}>
                                     {showNames ? course.name : course.code}
-                                </div>
+                                </div> : ""
                             ))}
                         </div>
                     </div>

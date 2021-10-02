@@ -12,7 +12,7 @@
         h1{
             color: black;
             font-size: 50px;
-            @media (max-width:480px){
+            @media (max-width:780px){
                 font-size: 30px;
                 margin: 0px 30px;
             }
@@ -24,7 +24,7 @@
         grid-template-columns: auto auto auto auto;
         // column-gap: 100px;
         margin: 30px 200px;
-        @media (max-width:480px){
+        @media (max-width:780px){
             grid-template-columns: auto ;
             margin: 30px 30px;
         }

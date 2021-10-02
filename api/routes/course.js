@@ -38,10 +38,10 @@ router.post("/", async (req,res) => {
     }
 });
 
-//UPDATE List
+//UPDATE Course
 router.put("/:id", async (req,res) => {
     try{
-        const list = await Course.findByIdAndUpdate(req.params.id,{$set:req.body});
+        const list = await Course.findByIdAndUpdate(req.params.id,{$set:req.body}, {new: true});
         res.status(200).send(list);
     }
     catch(error){

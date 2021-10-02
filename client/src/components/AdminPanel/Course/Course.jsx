@@ -60,32 +60,31 @@ function Course() {
                         <input onChange={(e) => handle(e)} type="text" placeholder="name" id="name" />
                     </div>
                     <div className="inputField">
-                        <label htmlFor="html">code</label>
-                        <input onChange={(e) => handle(e)} type="text" placeholder="department" id="code" />
+                        <label htmlFor="html">Code:</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="Code" id="code" />
                     </div>
                     <div className="inputField">
-                        <label htmlFor="html">creditHours</label>
-                        <input onChange={(e) => handle(e)} type="text" placeholder="creditHours" id="creditHours" />
+                        <label htmlFor="html">Credit Hours:</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="Credit Hours" id="creditHours" />
                     </div>
                     <div className="inputField">
-                        <label htmlFor="html">description</label>
-                        <input onChange={(e) => handle(e)} type="text" placeholder="description" id="description" />
+                        <label htmlFor="html">Description:</label>
+                        <input onChange={(e) => handle(e)} type="text" placeholder="Description" id="description" />
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="FALL"/>
-                        <label for="scales">FALL</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="FALL" name="FALL"/>
+                        <label style={{marginLeft:"5px"}} for="FALL">FALL</label>
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SPRING"/>
-                        <label for="scales">SPRING</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SPRING" name="SPRING"/>
+                        <label style={{marginLeft:"5px"}} for="SPRING">SPRING</label>
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SUMMER"/>
-                        <label for="scales">SUMMER</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
+                        <label style={{marginLeft:"5px"}} for="SUMMER">SUMMER</label>
                     </div>
-                    
                     <div className="longBtn submit">
-                        <button>LOG IN</button>
+                        <button>ADD COURSE</button>
                     </div>
                 </form>
             </div>

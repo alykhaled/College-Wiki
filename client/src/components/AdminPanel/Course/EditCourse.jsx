@@ -13,6 +13,7 @@ function EditCourse() {
             const res = await axios.put(process.env.REACT_APP_API+"/course/"+courseData._id,courseData);
             setResponse(res.data);
             console.log(res.data);
+            setCourseData({});
             // history.push("/");
         } catch (error) {
             console.log(error);
@@ -49,16 +50,8 @@ function EditCourse() {
 
     return (
         <div className="editcourse">
-            {/* <div className="searchInput">
-                <input value={query} type="search" autocomplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
-                {query !== "" && <div className="autoComplete">
-                    {suggested.map(course => (
-                        <li onClick={(e) => chooseOption(course)}>{course.code} | {course.name}</li>
-                    ))}
-                </div>}
-            </div> */}
             <SearchBar callback={setCourseData} refresh={false}/>
-            {<div className="mainForm" >
+            <div className="mainForm" >
                 <form onSubmit={(e) => editCourse(e)} className="formData">
                     <div className="inputField">
                         <label htmlFor="html">Name</label>
@@ -76,23 +69,23 @@ function EditCourse() {
                         <label htmlFor="html">description</label>
                         <input onChange={(e) => handle(e)} type="text" value={courseData.description} placeholder="description" id="description" />
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="FALL"/>
-                        <label for="scales">FALL</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="FALL" name="FALL"/>
+                        <label for="FALL">FALL</label>
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SPRING"/>
-                        <label for="scales">SPRING</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SPRING" name="SPRING"/>
+                        <label for="SPRING">SPRING</label>
                     </div>
-                    <div>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SUMMER"/>
-                        <label for="scales">SUMMER</label>
+                    <div style={{margin:"5px"}}>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
+                        <label for="SUMMER">SUMMER</label>
                     </div>
                     <div className="longBtn submit">
                         <button>Update</button>
                     </div>
                 </form>
-            </div>}
+            </div>
             <p>{JSON.stringify(response)}</p>
         </div>
     )
