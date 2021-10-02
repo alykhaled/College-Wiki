@@ -48,19 +48,6 @@ function CoursesPage() {
                     </div>
                     
                 ))}
-                {lists.map(list => (
-                    <div className="wrap">
-                        <h1>{list.name}</h1>
-                        <div className="courses">
-                            {list.courses.map(course => (
-                                <div className="course" onClick={() => setCourse(course)}>
-                                    {showNames ? course.name : course.code}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    
-                ))}
             </div>
             {course !== undefined && <div className="courseInfo">
                 <h3 className="courseCode">{course.code}</h3>
