@@ -6,7 +6,7 @@ import { useEffect,useState } from 'react';
 function CoursesPage() {
     const [course, setCourse] = useState();    
     const [lists, setLists] = useState([]);
-    const [showNames, setShowNames] = useState(true);
+    const [showNames, setShowNames] = useState(false);
     useEffect(() => {
         const getCourses = async () => 
         {
@@ -26,11 +26,24 @@ function CoursesPage() {
             <div className="container">
                 <h1>Filters</h1>
                 <div className="filters">
-                    <div className={"filterOption " + (showNames ? "active" : "")} onClick={(e) => setShowNames(!showNames)}>
+                    <div className={(showNames ? "filterOption active" : "filterOption")} onClick={(e) => setShowNames(!showNames)}>
                         {showNames ? "Show Code" : "Show Names"}
                     </div>
                 </div>
                 <hr />
+                {lists.map(list => (
+                    <div className="wrap">
+                        <h1>{list.name}</h1>
+                        <div className="courses">
+                            {list.courses.map(course => (
+                                <div className="course" onClick={() => setCourse(course)}>
+                                    {showNames ? course.name : course.code}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    
+                ))}
                 {lists.map(list => (
                     <div className="wrap">
                         <h1>{list.name}</h1>
