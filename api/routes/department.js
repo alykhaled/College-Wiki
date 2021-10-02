@@ -54,13 +54,6 @@ router.get("/:code/lists",verify, async (req,res) => {
                 }
             }
         }).select('lists');
-        // await list.populate({
-        //     path:"lists",
-        //     populate:{
-        //         path:"courses.professor",
-        //         model:"Professor",
-        //      }
-        // })
         res.status(200).send(list);
     }
     catch(error){

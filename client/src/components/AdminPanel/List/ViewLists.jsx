@@ -13,7 +13,7 @@ function ViewLists() {
         const getList = async () => 
         {
             try {
-                const res = await axios.get("http://localhost:8080/api/department/"+"hem"+"/lists");
+                const res = await axios.get(process.env.REACT_APP_API+"/department/"+"hem"+"/lists");
                 setLists(res.data.lists);
                 console.log(lists);
             } catch (error) {

@@ -19,7 +19,7 @@ function AddList() {
         console.log(listData);
         e.preventDefault();
         try {
-            const res = await axios.post("/list",listData);
+            const res = await axios.post(process.env.REACT_APP_API+"/list",listData);
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");
