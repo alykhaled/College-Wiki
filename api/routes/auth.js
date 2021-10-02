@@ -33,7 +33,7 @@ router.post("/register", async (req,res)=>{
             return res.status(401).json({msg: "Incorrect password"});
         }
 
-        const token = jwt.sign({_id: user._id}, process.env.SECRET_KEY,{ expiresIn: "1m" });
+        const token = jwt.sign({_id: user._id}, process.env.SECRET_KEY,{ expiresIn: "1d" });
         const {password, ...info} = user._doc;
         res.status(200).json({...info, token});
     } catch (error) {

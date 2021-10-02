@@ -16,6 +16,9 @@ function EditCourse() {
             setCourseData({});
             // history.push("/");
         } catch (error) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("isAdmin");
+
             console.log(error);
         }
     };

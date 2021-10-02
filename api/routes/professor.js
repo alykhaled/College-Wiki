@@ -2,9 +2,10 @@ const router = require('express').Router();
 const Course = require('../models/Course');
 const Professor = require('../models/Professor');
 const mongoose = require('mongoose');
+const verify   = require('../verifyToken');
 
 //Create Professor POST
-router.post("/", async (req,res) => {
+router.post("/", verify ,async (req,res) => {
     const newProfessor = new Professor({
         name:req.body.name,
         image:req.body.image,

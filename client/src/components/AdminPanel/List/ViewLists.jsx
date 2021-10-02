@@ -17,6 +17,7 @@ function ViewLists() {
                 setLists(res.data.lists);
                 console.log(lists);
             } catch (error) {
+                
                 console.log(error);
             }
         };

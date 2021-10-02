@@ -3,7 +3,7 @@ const Course = require('../models/Course');
 const Department = require('../models/Department');
 const Professor = require('../models/Professor');
 const mongoose = require('mongoose');
-const { verify } = require('jsonwebtoken');
+const verify   = require('../verifyToken');
 
 //Create Department (POST)
 router.post("/",verify, async (req,res) => {
@@ -27,7 +27,7 @@ router.post("/",verify, async (req,res) => {
 });
 
 //GET Department's List
-router.get("/:code/lists",verify, async (req,res) => {
+router.get("/:code/lists", async (req,res) => {
     try{
         const list = await Department.findOne({code:req.params.code.toUpperCase()}).populate('lists').populate({
             path:"lists",

@@ -9,7 +9,9 @@ function NavBar() {
         <Link to="/">
             <h1 className="logo">Wiki</h1>
         </Link>
-        <SearchBar/>
+        <div style={{width:"500px"}}>
+            <SearchBar/>
+        </div>
         <nav>
             <ul className="nav_links">
                 <li>

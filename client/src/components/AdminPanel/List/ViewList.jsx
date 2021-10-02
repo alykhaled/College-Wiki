@@ -44,6 +44,8 @@ function ViewList() {
                 const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id});
                 console.log(res.data);
             } catch (error) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("isAdmin");
                 console.log(error);
             }
         };
@@ -57,6 +59,8 @@ function ViewList() {
                 const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
                 console.log(res.data);
             } catch (error) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("isAdmin");
                 console.log(error);
             }
         };

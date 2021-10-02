@@ -6,20 +6,22 @@ header{
     @media (max-width:780px){
         padding: 0px 5%;
     }
-    box-shadow: 0 0 10pt 1pt #D3D3D3;
-    -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
-    -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
-    -webkit-appearance: none;
+    // box-shadow: 0 0 10pt 1pt #D3D3D3;
+    // -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
+    // -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
+    // -webkit-appearance: none;
 }
 
 .logo{
     cursor: pointer;
+    @media (max-width:780px){
+        font-size: 20px;
+    }
 }
 
 .searchInput {
-    // background-color: red;
     margin-top: 5px;
-    width: fit-content;
+    width: 100%;
     box-shadow: 0 0 5pt 0.5pt #D3D3D3;
     -webkit-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
     -moz-box-shadow: 0 0 5pt 0.5pt #D3D3D3;
@@ -29,7 +31,7 @@ header{
 
     input{
         padding: 10px 10px;
-        width: 500px;
+        width: 100%;
         outline: none;
         border-radius: 5px;
         border-style: none;
@@ -39,16 +41,10 @@ header{
         -webkit-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
         -moz-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
         -webkit-appearance: none;
-        @media (max-width:780px){
-            width: 300px;
-        } 
         z-index: 20;
     }
     .autoComplete{
-        // padding: 10px 10px;
         overflow-y: auto;
-        // opacity: 0;
-        // display: none;
         z-index: 2;
         width: 100%;
         background-color: white;

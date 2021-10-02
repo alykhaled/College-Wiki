@@ -2,9 +2,9 @@ const router = require('express').Router();
 const Course = require('../models/Course');
 const Professor = require('../models/Professor');
 const mongoose = require('mongoose');
-
+const verify   = require('../verifyToken');
 //Create Course POST
-router.post("/", async (req,res) => {
+router.post("/",verify, async (req,res) => {
     const newCourse = new Course({
         name:req.body.name,
         code:req.body.code,
@@ -19,17 +19,19 @@ router.post("/", async (req,res) => {
 
     try{
         const tempcourse = await Course.find({code:req.body.code});
-        if(tempcourse)
+        if(tempcourse.length !== 0)
         {
             res.status(200).send("Course Is Already created!");
         }
-        const course = await newCourse.save();
-        const professors = newCourse.professor;
-        for(const professor of professors)
-        {
-            await Professor.findByIdAndUpdate(professor,{$addToSet: {courses: course.id}})
+        else{
+            const course = await newCourse.save();
+            const professors = newCourse.professor;
+            for(const professor of professors)
+            {
+                await Professor.findByIdAndUpdate(professor,{$addToSet: {courses: course.id}})
+            }
+            res.status(200).send(course);    
         }
-        res.status(200).send(course);
 
     }
     catch(error){
@@ -39,7 +41,7 @@ router.post("/", async (req,res) => {
 });
 
 //UPDATE Course
-router.put("/:id", async (req,res) => {
+router.put("/:id", verify, async (req,res) => {
     try{
         const list = await Course.findByIdAndUpdate(req.params.id,{$set:req.body}, {new: true});
         res.status(200).send(list);

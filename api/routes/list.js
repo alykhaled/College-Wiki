@@ -4,10 +4,10 @@ const Department = require('../models/Department');
 const List = require('../models/List');
 const Professor = require('../models/Professor');
 const mongoose = require('mongoose');
-const { verify } = require('jsonwebtoken');
+const verify   = require('../verifyToken');
 
 //Create List (POST)
-router.post("/", async (req,res) => {
+router.post("/",verify, async (req,res) => {
     const newList = new List({
         name:req.body.name,
         department:req.body.department,
@@ -32,7 +32,7 @@ router.post("/", async (req,res) => {
 });
 
 //GET  List
-router.get("/:id", verify, async (req,res) => {
+router.get("/:id", async (req,res) => {
     try{
         const list = await List.findById(req.params.id).populate('courses');
         res.status(200).send(list);
@@ -44,7 +44,7 @@ router.get("/:id", verify, async (req,res) => {
 });
 
 //DELETE List
-router.delete("/:id", async (req,res) => {
+router.delete("/:id",verify, async (req,res) => {
     try{
         await List.findByIdAndDelete(req.params.id);
         res.status(200).send("The list has been deleted");
@@ -56,7 +56,7 @@ router.delete("/:id", async (req,res) => {
 });
 
 //UPDATE List
-router.put("/:id", async (req,res) => {
+router.put("/:id", verify,async (req,res) => {
     try{
         const list = await List.findByIdAndUpdate(req.params.id,{$set:req.body});
         res.status(200).send(list);
@@ -68,7 +68,7 @@ router.put("/:id", async (req,res) => {
 });
 
 //ADD course to List (PUT)
-router.put("/:id/course", async (req,res) => {
+router.put("/:id/course",verify, async (req,res) => {
     try{
         const list = await List.findByIdAndUpdate(req.params.id,{$addToSet:{courses:req.body.course}});
         res.status(200).send(list);
@@ -80,7 +80,7 @@ router.put("/:id/course", async (req,res) => {
 });
 
 //Remove course from List (PUT)
-router.put("/:id/deletecourse", async (req,res) => {
+router.put("/:id/deletecourse",verify, async (req,res) => {
     try{
         const list = await List.findByIdAndUpdate(req.params.id,{$pull:{courses:req.body.course}});
         res.status(200).send(list);

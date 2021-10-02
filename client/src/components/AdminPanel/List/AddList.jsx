@@ -24,6 +24,8 @@ function AddList() {
             console.log(res.data);
             // history.push("/");
         } catch (error) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("isAdmin");
             console.log(error);
         }
     };

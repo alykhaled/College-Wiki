@@ -21,10 +21,16 @@ function Course() {
         console.log(courseData);
         e.preventDefault();
         try {
-            const res = await axios.post(process.env.REACT_APP_API+"/course",courseData);
+            const res = await axios.post(process.env.REACT_APP_API+"/course",courseData,{
+                headers: {
+                    token: "Bearer " + localStorage.getItem("token"),
+                }
+              });
             setResponse(res.data);
             console.log(res.data);
         } catch (error) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("isAdmin");
             console.log(error);
         }
     };
