@@ -1,7 +1,7 @@
 import React, { Component,useState,useEffect } from 'react'
 import axios from "axios";
 
-function SearchBar({callback}) {
+function SearchBar({callback,refresh}) {
     const [query, setQuery] = useState("");
     const [suggested, setSuggested] = useState([]);
     useEffect(() => {
@@ -19,7 +19,7 @@ function SearchBar({callback}) {
         console.log(course);
         setQuery("");
         callback(course);
-        window.location.reload();
+        refresh && window.location.reload();
     }
     return (
         <div className="searchInput">

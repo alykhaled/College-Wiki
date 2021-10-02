@@ -102,6 +102,11 @@
         .courseCode{
             margin: 15px 0px;
         }
+
+        .courseSemester{
+            display: flex;
+            flex-direction: row;
+        }
         
         .course{
             cursor: pointer;

@@ -13,7 +13,7 @@ function Course() {
         code: "", 
         creditHours: 0, 
         description: "", 
-        semster:[],
+        semester:[],
     });
     const [response, setResponse] = useState({});
     async function addCourse(e) 
@@ -24,7 +24,6 @@ function Course() {
             const res = await axios.post(process.env.REACT_APP_API+"/course",courseData);
             setResponse(res.data);
             console.log(res.data);
-            // history.push("/");
         } catch (error) {
             console.log(error);
         }
@@ -33,6 +32,22 @@ function Course() {
     {
         const newdata = {...courseData};
         newdata[e.target.id] = e.target.value;
+        setCourseData(newdata);
+        console.log(newdata);
+    }
+    function handleSemester(e)
+    {
+        const newdata = {...courseData};
+        if (e.target.checked) {
+            newdata["semester"].push(e.target.name);
+        }
+        else
+        {
+            const index = newdata["semester"].indexOf(e.target.name);
+            if (index > -1) {
+                newdata["semester"].splice(index, 1);
+            }
+        }
         setCourseData(newdata);
         console.log(newdata);
     }
@@ -56,6 +71,19 @@ function Course() {
                         <label htmlFor="html">description</label>
                         <input onChange={(e) => handle(e)} type="text" placeholder="description" id="description" />
                     </div>
+                    <div>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="FALL"/>
+                        <label for="scales">FALL</label>
+                    </div>
+                    <div>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SPRING"/>
+                        <label for="scales">SPRING</label>
+                    </div>
+                    <div>
+                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="scales" name="SUMMER"/>
+                        <label for="scales">SUMMER</label>
+                    </div>
+                    
                     <div className="longBtn submit">
                         <button>LOG IN</button>
                     </div>
