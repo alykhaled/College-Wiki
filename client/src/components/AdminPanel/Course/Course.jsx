@@ -13,6 +13,7 @@ function Course() {
         code: "", 
         creditHours: 0, 
         description: "", 
+        semster:[],
     });
     const [response, setResponse] = useState({});
     async function addCourse(e) 

@@ -7,6 +7,7 @@ function CoursesPage() {
     const [course, setCourse] = useState();    
     const [lists, setLists] = useState([]);
     const [showNames, setShowNames] = useState(false);
+    const [showCurrentSemster, setShowCurrentSemster] = useState(false);
     useEffect(() => {
         const getCourses = async () => 
         {
@@ -28,6 +29,9 @@ function CoursesPage() {
                 <div className="filters">
                     <div className={(showNames ? "filterOption active" : "filterOption")} onClick={(e) => setShowNames(!showNames)}>
                         {showNames ? "Show Code" : "Show Names"}
+                    </div>
+                    <div className={(showCurrentSemster ? "filterOption active" : "filterOption")} onClick={(e) => setShowCurrentSemster(!showCurrentSemster)}>
+                        {showCurrentSemster ? "Show Open Courses" : "Show Open Courses"}
                     </div>
                 </div>
                 <hr />
