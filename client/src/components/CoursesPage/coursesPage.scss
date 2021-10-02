@@ -1,6 +1,6 @@
 .coursespage{
     display: flex;
-    margin: 0 40px;
+    margin: 40px 40px;
     @media (max-width:480px){
         margin: 0 0px 0px 15px ;
     }
@@ -10,6 +10,8 @@
             width: 30%;
         }
         h1{
+            margin-top: 15px;
+            font-size: 25px;
             @media (max-width:480px){
                 font-size: 15px;
             }
@@ -40,6 +42,38 @@
                 }
             }
         }
+        .filters{
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            // height: calc(100vh - 98px - 19px);
+            .filterOption{
+                cursor: pointer;
+                margin: 5px;
+                padding: 10px;
+                color: black;
+                font-family: 'Roboto', sans-serif;
+                border-radius: 10px;
+                border: 2px solid black;
+
+                &:hover{
+                    // border: 2px solid red;
+                    background-color: black;
+                    color: white;
+                }
+
+                @media (max-width:480px){
+                    padding: 5px;
+                    text-align: center;
+                    font-size: 13px;
+                }
+            }
+
+            .active{
+                background-color: black;
+                color: white;
+            }
+        }
     }
 
     .courseInfo{
@@ -47,7 +81,7 @@
         height: calc(100vh - 98px  - 63px );
         position: sticky;
         top: calc(0% + 10px);
-        margin: 10px 0px;
+        // margin: 5px 0px;
         border-radius: 10px;
         padding: 10px;
         .courseDesc{
@@ -94,7 +128,7 @@
             width: 70%;
             margin: 20px 0;
             border-right: 0px;
-            height: auto;
+            height: 100%;
         }
 
     }
