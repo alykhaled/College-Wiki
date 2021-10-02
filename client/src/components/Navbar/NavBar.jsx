@@ -2,12 +2,12 @@ import React from 'react'
 import './navbar.scss'
 import { Link } from "react-router-dom";
 import SearchBar from '../SearchBar/SearchBar';
-
+import logo from './img1.png'; // with import
 function NavBar() {
     return (
     <header>  
         <Link to="/">
-            <h1 className="logo">Wiki</h1>
+            <img src={logo} />
         </Link>
         <div style={{width:"500px"}}>
             <SearchBar/>
