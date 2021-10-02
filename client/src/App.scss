@@ -2,9 +2,10 @@
 .App{
     width: 100%;
     font-family: 'IM Fell French Canon', serif;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    min-height: 100vh;
     a{
         text-decoration: none;
     }
@@ -12,9 +13,10 @@
         text-align: center;
         background-color: #F7F7F7;
         font-family: 'IM Fell French Canon', serif;
-        margin-top: auto;
+        bottom: 60%;
         padding: 30px;
         font-size: 20px;
+        margin-top: auto;
     }
     .content{
         width: 100%;
