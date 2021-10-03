@@ -37,7 +37,7 @@ function NavBar() {
             </ul>
         </div>  
         <Link to="/" onClick={() => setOpenMenu(false)}>
-            <img src={logo} />
+            <img src={logo} alt="logo"/>
         </Link>
         <div style={{width:"500px"}}>
             <SearchBar callback={chooseCourse}/>

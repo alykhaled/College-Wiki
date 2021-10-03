@@ -52,6 +52,26 @@ router.put("/:id", verify, async (req,res) => {
     }
 });
 
+//Search For a course by code
+router.get("/search/" ,async (req,res) => {
+    const query = req.query.q;
+    console.log(query);
+    if(query !== "")
+    {
+        console.log(query);
+        try 
+        {
+            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
+            res.status(200).send(courses);
+        } 
+        catch (error) 
+        {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
+});
+
 //GET Course
 router.get("/:id" ,async (req,res) => {
     try 
@@ -69,23 +89,8 @@ router.get("/:id" ,async (req,res) => {
 
 //GET All courses
 router.get("/" ,async (req,res) => {
-    const query = req.query.search;
     const queryCode = req.query.code;
-    if(query !== undefined)
-    {
-        console.log(query);
-        try 
-        {
-            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
-            res.status(200).send(courses);
-        } 
-        catch (error) 
-        {
-            console.log(error);
-            res.status(500).send(error);
-        }
-    }
-    else if(queryCode !== undefined)
+    if(queryCode !== undefined)
     {
         console.log(queryCode);
         try 

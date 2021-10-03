@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams,useHistory} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import axios from 'axios';
 import './coursepage.scss'
 function CoursePage() {
@@ -17,7 +17,7 @@ function CoursePage() {
             }
         };
         getCourse();
-    }, [])
+    }, [code])
     if (!course) {
         return(
             <h1>Loading</h1>

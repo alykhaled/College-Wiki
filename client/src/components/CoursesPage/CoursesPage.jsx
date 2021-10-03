@@ -1,4 +1,3 @@
-import React from 'react'
 import './coursesPage.scss'
 import axios from "axios";
 import { useEffect,useState } from 'react';
@@ -12,7 +11,7 @@ function CoursesPage() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/department/"+"HEM"+"/lists");
+                const res = await axios.get(process.env.REACT_APP_API+"/department/HEM/lists");
                 setLists(res.data.lists);
                 console.log(res.data);
             } catch (error) {
@@ -31,7 +30,7 @@ function CoursesPage() {
                         {showNames ? "Show Code" : "Show Names"}
                     </div>
                     <div className={(showCurrentSemster ? "filterOption active" : "filterOption")} onClick={(e) => setShowCurrentSemster(!showCurrentSemster)}>
-                        {showCurrentSemster ? "Show Open Courses" : "Show Open Courses"}
+                        {showCurrentSemster ? "Show Open Courses" : "Show All Courses"}
                     </div>
                 </div>
                 <hr />

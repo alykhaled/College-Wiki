@@ -12,26 +12,17 @@ import ViewList from './List/ViewList';
 import ViewLists from './List/ViewLists';
 import { useState } from 'react';
 import EditCourse from './Course/EditCourse';
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 function AdminRoute() {
     const history = useHistory();
     const isAuthenticated = localStorage.getItem("isAdmin");
-    const token = localStorage.getItem("token");
     const [option, setOption] = useState("")
     
-    // if (!isAuthenticated) {
-    //     history.push('/login');
-    // }
-    // jwt.verify(token,process.env.REACT_APP_SECRET_KEY,(err,user)=>{
-    //     if(err){
-    //         history.push('/login');
-    //     }
-    // });
-    var current_time = Date.now() / 1000;
-    if ( jwt.exp < current_time) {
-    /* expired */ 
+    if (!isAuthenticated) {
+        history.push('/login');
     }
+
     return (
         <Router>
             <div className="outerWrap">

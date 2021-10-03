@@ -24,14 +24,14 @@ function ViewList() {
             }
         };
         getList();
-    }, []);
+    }, [id]);
     const addCourse = async (course) => 
     {
         await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id},{
         headers: {
             token: "Bearer " + localStorage.getItem("token"),
         }
-        }).then((res)=>{
+        }).then(()=>{
             courses.push(course)
             setCourses([...courses]);
         })
@@ -47,7 +47,7 @@ function ViewList() {
     const removeCourse = async (removedCourse) => 
     {
         try {
-            const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
+            await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
         } catch (error) {
             localStorage.removeItem("token");
             localStorage.removeItem("isAdmin");

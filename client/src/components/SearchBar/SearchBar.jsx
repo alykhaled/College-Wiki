@@ -1,4 +1,4 @@
-import React, { Component,useState,useEffect } from 'react'
+import React, {useState,useEffect } from 'react'
 import axios from "axios";
 
 function SearchBar({callback,refresh}) {
@@ -6,8 +6,10 @@ function SearchBar({callback,refresh}) {
     const [suggested, setSuggested] = useState([]);
     useEffect(() => {
         async function getSearch(query) {
-            const res = await axios.get("https://collegewikiapi.herokuapp.com/api/course/?search="+query);
-            setSuggested(res.data);
+            if (query !== "") {
+                const res = await axios.get(process.env.REACT_APP_API+"/course/search/?q="+query);
+                setSuggested(res.data);
+            }
         }
         getSearch(query);
     }, [query])
