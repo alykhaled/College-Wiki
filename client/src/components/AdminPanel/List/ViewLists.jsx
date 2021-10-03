@@ -6,9 +6,6 @@ function ViewLists() {
     const {id} = useParams();
     const [lists, setLists] = useState([]);
     const history = useHistory();
-
-    // const [courses, setCourses] = useState([]);
-    // const [course, setCourse] = useState({});
     useEffect(() => {
         const getList = async () => 
         {
@@ -17,11 +14,10 @@ function ViewLists() {
                     headers: {
                         token: "Bearer " + localStorage.getItem("token"),
                     }
-                  });
+                });
                 setLists(res.data.lists);
                 console.log(lists);
             } catch (error) {
-                
                 console.log(error);
             }
         };

@@ -94,7 +94,7 @@ function AddCourse() {
                     </div>
                 </form>
             </div>
-            <p>{JSON.stringify(response)}</p>
+            <pre>{JSON.stringify(response).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
         </div>
     )
 }

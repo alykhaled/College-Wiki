@@ -7,10 +7,7 @@ import SearchBar from '../../SearchBar/SearchBar';
 function ViewList() {
     const {id} = useParams();
     const [list, setList] = useState({});
-    const [query, setQuery] = useState("");
     const [courses, setCourses] = useState([]);
-    const [course, setCourse] = useState({});
-    const [removedCourse, setRemovedCourse] = useState({});
     useEffect(() => {
         const getList = async () => 
         {
@@ -21,66 +18,47 @@ function ViewList() {
                     }
                   });
                 setList(res.data);
-                console.log(res.data);
+                setCourses(res.data.courses);
             } catch (error) {
                 console.log(error);
             }
         };
-
-        const getCourses = async () => 
-        {
-            try {
-                const res = await axios.get(process.env.REACT_APP_API+"/course/",{
-                    headers: {
-                        token: "Bearer " + localStorage.getItem("token"),
-                    }
-                  });
-                setCourses(res.data);
-                console.log(res.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getCourses();
         getList();
     }, []);
-    useEffect(() => {
-        const addCourse = async (course) => 
-        {
-            console.log(course);
-            try {
-                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id},{
-                    headers: {
-                        token: "Bearer " + localStorage.getItem("token"),
-                    }
-                  });
-                console.log(res.data);
-            } catch (error) {
+    const addCourse = async (course) => 
+    {
+        await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id},{
+        headers: {
+            token: "Bearer " + localStorage.getItem("token"),
+        }
+        }).then((res)=>{
+            courses.push(course)
+            setCourses([...courses]);
+        })
+        .catch((error) => {
+            console.log(error);
+            if (error.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("isAdmin");
-                console.log(error);
             }
-        };
-        addCourse(course);
-    }, [course]);
-    useEffect(() => {
-        const removeCourse = async (removedCourse) => 
-        {
-            console.log(course);
-            try {
-                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
-                console.log(res.data);
-            } catch (error) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("isAdmin");
-                console.log(error);
-            }
-        };
-        removeCourse(removedCourse);
-    }, [removedCourse]);
-    function handleChange(newValue) {
-        setCourse(newValue);
-    }
+        });
+    };
+
+    const removeCourse = async (removedCourse) => 
+    {
+        try {
+            const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
+        } catch (error) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("isAdmin");
+            console.log(error);
+        }
+        const index = courses.indexOf(removedCourse);
+        if (index > -1) {
+            courses.splice(index, 1);
+            setCourses([...courses]);
+        }
+    };
 
     return (
         <div className="viewlist">
@@ -91,10 +69,10 @@ function ViewList() {
                 <div className="listCourses">
                     <h1>List Courses:</h1>
                     <div className="autoComplete">
-                        {list.courses !== undefined && list.courses.map(course => (
+                        {courses !== undefined && courses.map(course => (
                             <div>
                                 <li>{course.code} | {course.name}</li>
-                                <span onClick={(e) => setRemovedCourse(course)}>
+                                <span onClick={(e) => removeCourse(course)}>
                                     X
                                 </span>
                             </div>
@@ -103,7 +81,7 @@ function ViewList() {
                 </div>
                 <div className="allCourses">
                     <h1>Add courses:</h1>
-                    <SearchBar callback={handleChange}/> 
+                    <SearchBar callback={addCourse}/> 
                 </div>
             </div>
         </div>

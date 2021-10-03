@@ -39,9 +39,9 @@ function CoursesPage() {
                     <div className="wrap">
                         <h1>{list.name}</h1>
                         <div className="courses">
-                            {list.courses.map(course => (
-                                (!showCurrentSemster | course.semester.includes("FALL")) ? <div className="course" onClick={() => setCourse(course)}>
-                                    {showNames ? course.name : course.code}
+                            {list.courses.map(currentCourse => (
+                                (!showCurrentSemster | currentCourse.semester.includes("FALL")) ? <div className={currentCourse === course ? "course active" : "course"} onClick={() => setCourse(currentCourse)}>
+                                    {showNames ? currentCourse.name : currentCourse.code}
                                 </div> : ""
                             ))}
                         </div>

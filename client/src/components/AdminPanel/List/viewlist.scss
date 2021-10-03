@@ -1,16 +1,13 @@
 .viewlist{
     display: flex;
-    // justify-content: center;
     flex-direction: column;
     width: 100%;
-    // justify-content: center;
-    // align-items: center;
     margin-left: 30px;
     
     .coursesOption{
         display: flex;
         width: 100%;
-        justify-content: space-between;
+        // justify-content: space-between;
         @media (max-width:560px){
             display: inline;
         }

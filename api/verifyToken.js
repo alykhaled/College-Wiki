@@ -16,6 +16,11 @@ function verify(req,res,next){
             next();
         });
     }
+    else{
+        return res.status(403).json({
+            message: 'No Token Provided'
+        });
+    }
 }
 
 module.exports = verify;

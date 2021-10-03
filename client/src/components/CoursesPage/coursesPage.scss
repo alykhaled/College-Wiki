@@ -30,6 +30,10 @@
                 border-radius: 20px;
                 border: 2px solid black;
 
+                &.active{
+                    background-color: black;
+                    color: white;
+                }
                 &:hover{
                     background-color: black;
                     color: white;
@@ -85,7 +89,7 @@
             margin: 15px 0px;
             font-size: 20px;
             @media (max-width:780px){
-                font-size: 18px;
+                font-size: 16px;
             }
         }
         .courseName{

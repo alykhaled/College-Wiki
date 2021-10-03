@@ -8,7 +8,7 @@ router.post("/",verify, async (req,res) => {
     const newCourse = new Course({
         name:req.body.name,
         code:req.body.code,
-        semster:req.body.semster,
+        semester:req.body.semester,
         creditHours:req.body.creditHours,
         description:req.body.description,
         type:req.body.type,

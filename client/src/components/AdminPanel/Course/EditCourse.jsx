@@ -10,7 +10,19 @@ function EditCourse() {
     {
         e.preventDefault();
         try {
-            const res = await axios.put(process.env.REACT_APP_API+"/course/"+courseData._id,courseData);
+            // const res = await axios({
+            //     method: 'put', //you can set what request you want to be
+            //     url: process.env.REACT_APP_API+"/course/"+courseData._id,
+            //     data: courseData,
+            //     'headers': {
+            //         'token': "Bearer " + localStorage.getItem("token"),
+            //     }
+            //   })
+            const res = await axios.put(process.env.REACT_APP_API+"/course/"+courseData._id,courseData,{
+                headers: {
+                    token: "Bearer " + localStorage.getItem("token"),
+                }
+              });
             setResponse(res.data);
             console.log(res.data);
             setCourseData({});
@@ -73,15 +85,15 @@ function EditCourse() {
                         <input onChange={(e) => handle(e)} type="text" value={courseData.description} placeholder="description" id="description" />
                     </div>
                     <div style={{margin:"5px"}}>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="FALL" name="FALL"/>
+                        <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("FALL") : false} type="checkbox" id="FALL" name="FALL"/>
                         <label for="FALL">FALL</label>
                     </div>
                     <div style={{margin:"5px"}}>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SPRING" name="SPRING"/>
+                        <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("SPRING") : false} type="checkbox" id="SPRING" name="SPRING"/>
                         <label for="SPRING">SPRING</label>
                     </div>
                     <div style={{margin:"5px"}}>
-                        <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
+                        <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("SUMMER") : false} type="checkbox" id="SUMMER" name="SUMMER"/>
                         <label for="SUMMER">SUMMER</label>
                     </div>
                     <div className="longBtn submit">
