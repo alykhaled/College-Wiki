@@ -21,7 +21,6 @@
             display: flex;
             flex-wrap: wrap;
             align-content: flex-start;
-            // height: calc(100vh - 98px - 19px);
             .course{
                 cursor: pointer;
                 margin: 5px;
@@ -32,7 +31,6 @@
                 border: 2px solid black;
 
                 &:hover{
-                    // border: 2px solid red;
                     background-color: black;
                     color: white;
                 }
@@ -50,15 +48,14 @@
             .filterOption{
                 cursor: pointer;
                 margin: 5px;
-                margin-bottom: 20px;
-                padding: 10px;
+                margin-bottom: 5px;
+                padding: 7px;
                 color: black;
                 font-family: 'Roboto', sans-serif;
                 border-radius: 10px;
                 border: 2px solid black;
 
                 &:hover{
-                    // border: 2px solid red;
                     background-color: black;
                     color: white;
                 }
@@ -68,7 +65,6 @@
                     text-align: center;
                     font-size: 13px;
                 }
-
             }
 
             .active{
@@ -83,7 +79,6 @@
         height: calc(100vh - 98px  - 63px );
         position: sticky;
         top: calc(0% + 10px);
-        // margin: 5px 0px;
         border-radius: 10px;
         padding: 10px;
         .courseDesc{
@@ -118,7 +113,6 @@
             border: 2px solid black;
             width: fit-content;
             &:hover{
-                // border: 2px solid red;
                 background-color: black;
                 color: white;
             }

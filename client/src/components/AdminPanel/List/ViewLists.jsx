@@ -13,7 +13,11 @@ function ViewLists() {
         const getList = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/department/"+"hem"+"/lists");
+                const res = await axios.get(process.env.REACT_APP_API+"/department/"+"hem"+"/lists",{
+                    headers: {
+                        token: "Bearer " + localStorage.getItem("token"),
+                    }
+                  });
                 setLists(res.data.lists);
                 console.log(lists);
             } catch (error) {

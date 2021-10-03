@@ -44,6 +44,7 @@ function App() {
             </Route>
           </Switch>
           <footer>
+            Unofficial Wiki and Guide for Cairo University Faculty of Engineering<br/>
             Made by <a href="https://github.com/alykhaled">Aly Khaled</a>
           </footer>
         </div>

@@ -15,7 +15,11 @@ function ViewList() {
         const getList = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/list/"+id);
+                const res = await axios.get(process.env.REACT_APP_API+"/list/"+id,{
+                    headers: {
+                        token: "Bearer " + localStorage.getItem("token"),
+                    }
+                  });
                 setList(res.data);
                 console.log(res.data);
             } catch (error) {
@@ -26,7 +30,11 @@ function ViewList() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/course/");
+                const res = await axios.get(process.env.REACT_APP_API+"/course/",{
+                    headers: {
+                        token: "Bearer " + localStorage.getItem("token"),
+                    }
+                  });
                 setCourses(res.data);
                 console.log(res.data);
             } catch (error) {
@@ -41,7 +49,11 @@ function ViewList() {
         {
             console.log(course);
             try {
-                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id});
+                const res = await axios.put(process.env.REACT_APP_API+"/list/"+id+"/course",{course:course._id},{
+                    headers: {
+                        token: "Bearer " + localStorage.getItem("token"),
+                    }
+                  });
                 console.log(res.data);
             } catch (error) {
                 localStorage.removeItem("token");

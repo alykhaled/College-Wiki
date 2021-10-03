@@ -19,7 +19,11 @@ function AddList() {
         console.log(listData);
         e.preventDefault();
         try {
-            const res = await axios.post(process.env.REACT_APP_API+"/list",listData);
+            const res = await axios.post(process.env.REACT_APP_API+"/list",listData,{
+                headers: {
+                    token: "Bearer " + localStorage.getItem("token"),
+                }
+              });
             setResponse(res.data);
             console.log(res.data);
             // history.push("/");

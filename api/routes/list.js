@@ -31,7 +31,7 @@ router.post("/",verify, async (req,res) => {
     }
 });
 
-//GET  List
+//GET List
 router.get("/:id", async (req,res) => {
     try{
         const list = await List.findById(req.params.id).populate('courses');
@@ -68,7 +68,7 @@ router.put("/:id", verify,async (req,res) => {
 });
 
 //ADD course to List (PUT)
-router.put("/:id/course",verify, async (req,res) => {
+router.put("/:id/course", async (req,res) => {
     try{
         const list = await List.findByIdAndUpdate(req.params.id,{$addToSet:{courses:req.body.course}});
         res.status(200).send(list);
@@ -80,7 +80,7 @@ router.put("/:id/course",verify, async (req,res) => {
 });
 
 //Remove course from List (PUT)
-router.put("/:id/deletecourse",verify, async (req,res) => {
+router.put("/:id/deletecourse", async (req,res) => {
     try{
         const list = await List.findByIdAndUpdate(req.params.id,{$pull:{courses:req.body.course}});
         res.status(200).send(list);
