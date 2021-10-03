@@ -61,7 +61,7 @@ router.get("/search/" ,async (req,res) => {
         console.log(query);
         try 
         {
-            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).exec();
+            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).populate("preReq").exec();
             res.status(200).send(courses);
         } 
         catch (error) 
@@ -76,7 +76,7 @@ router.get("/search/" ,async (req,res) => {
 router.get("/:id" ,async (req,res) => {
     try 
     {
-        const course = await Course.findById(req.params.id).populate("professor","-courses");
+        const course = await Course.findById(req.params.id).populate("professor","-courses").populate("preReq");
         res.status(200).send(course);
     } 
     catch (error) 

@@ -13,7 +13,7 @@ function DepartmentsPage() {
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}
                     </div>
                 </Link>
-                <Link to="/comingsoon">
+                <Link to="/cce">
                     <div className="item">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 511.997 511.997" height="60px">
                         <g>
@@ -36,7 +36,7 @@ function DepartmentsPage() {
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}
                     </div>
                 </Link>
-                <Link to="/comingsoon">
+                <Link to="/eee">
                     <div className="item">
                         <h3>EEE</h3>
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}

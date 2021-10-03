@@ -79,15 +79,15 @@ function AddCourse() {
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} type="checkbox" id="FALL" name="FALL"/>
-                        <label style={{marginLeft:"5px"}} for="FALL">FALL</label>
+                        <label style={{marginLeft:"5px"}} htmlFor="FALL">FALL</label>
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} type="checkbox" id="SPRING" name="SPRING"/>
-                        <label style={{marginLeft:"5px"}} for="SPRING">SPRING</label>
+                        <label style={{marginLeft:"5px"}} htmlFor="SPRING">SPRING</label>
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
-                        <label style={{marginLeft:"5px"}} for="SUMMER">SUMMER</label>
+                        <label style={{marginLeft:"5px"}} htmlFor="SUMMER">SUMMER</label>
                     </div>
                     <div className="longBtn submit">
                         <button>ADD COURSE</button>

@@ -1,15 +1,18 @@
-import React, { useState,useEffect } from 'react'
-import { useHistory} from 'react-router-dom'
+import { useState,useEffect } from 'react'
+import { useParams,useHistory} from 'react-router-dom'
 import axios from 'axios';
 import './viewlists.scss'
 function ViewLists() {
+    const {id} = useParams();
     const [lists, setLists] = useState([]);
     const history = useHistory();
+
     useEffect(() => {
+        setLists([]);
         const getList = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/department/hem/lists",{
+                const res = await axios.get(process.env.REACT_APP_API+"/department/"+id+"/lists",{
                     headers: {
                         token: "Bearer " + localStorage.getItem("token"),
                     }
@@ -20,7 +23,7 @@ function ViewLists() {
             }
         };
         getList();
-    }, []);
+    }, [id]);
     function chooseList(list) {
         history.push("/admin/list/"+list._id+"/view");
     }

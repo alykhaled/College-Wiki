@@ -32,13 +32,13 @@ function App() {
             <Route path="/course/:code">
               <CoursePage />
             </Route>
-            <Route path="/hem">
-              <CoursesPage/>
-            </Route>
             <Route path="/comingsoon">
               <ComingSoon />
             </Route>
-            <Route path="/">
+            <Route path="/:id">
+              <CoursesPage/>
+            </Route>
+            <Route exact path="/">
               <Home />
             </Route>
           </Switch>

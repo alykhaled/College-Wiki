@@ -90,3 +90,41 @@ pre{
         }
     }
 }
+
+.autoComplete{
+    width: auto;
+    background-color: white;
+    box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+    -webkit-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+    -moz-box-shadow: 0 0 3pt 0.3pt #D3D3D3;
+    -webkit-appearance: none;
+    text-align: start;
+    div{
+        display: flex;
+        // height: 100%;
+        align-content: center;
+        justify-content:space-between;
+        span{
+            margin-left: 5px;
+            background-color: red;
+            // height: 100%;
+            cursor: pointer;
+            height: 100%;
+            font-weight: bold;
+            font-size: 30px;
+            align-self: center;
+            right: 0%;
+            width: auto;
+            color: white;
+        }
+    }
+    li{
+        list-style: none;
+        padding: 8px 12px;
+        cursor: pointer;
+
+        &:hover{
+            background: #efefef;
+        }
+    }
+}

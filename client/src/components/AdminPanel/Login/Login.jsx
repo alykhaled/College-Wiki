@@ -17,7 +17,7 @@ function Login() {
             console.log(res.data);
             localStorage.setItem("token",res.data.token);
             localStorage.setItem("isAdmin",res.data.isAdmin);
-            history.push("/");
+            history.push("/admin/");
         } catch (error) {
             console.log(error);
         }

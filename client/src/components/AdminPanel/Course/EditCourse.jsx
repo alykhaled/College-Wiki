@@ -5,7 +5,7 @@ import './course.scss'
 function EditCourse() {
     const [courseData,setCourseData] = useState({});
     const [response, setResponse] = useState({});
-
+    const [preReq, setPreReq] = useState([]);
     async function editCourse(e) 
     {
         e.preventDefault();
@@ -62,10 +62,32 @@ function EditCourse() {
         setCourseData(newdata);
         console.log(newdata);
     }
-
+    function handleSearch(course) {
+        setCourseData(course);
+        console.log(course);
+        setPreReq(course["preReq"]);
+        // let list = courseData['preReq'];
+        // console.log(list);
+        // console.log(preReq);
+    }
+    function addPreReq(course) {
+        preReq.push(course);
+        setPreReq([...preReq]);
+        courseData.preReq = preReq;
+        setCourseData(courseData);
+    }
+    function removePreReq(course) {
+        const index = preReq.indexOf(course);
+        if (index > -1) {
+            preReq.splice(index, 1);
+            setPreReq([...preReq]);
+            courseData.preReq = preReq;
+            setCourseData(courseData);
+        }
+    }
     return (
         <div className="editcourse">
-            <SearchBar callback={setCourseData} refresh={false}/>
+            <SearchBar callback={handleSearch} refresh={false}/>
             {<div className="mainForm" >
                 <form onSubmit={(e) => editCourse(e)} className="formData">
                     <div className="inputField">
@@ -86,15 +108,26 @@ function EditCourse() {
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("FALL") : false} type="checkbox" id="FALL" name="FALL"/>
-                        <label for="FALL">FALL</label>
+                        <label htmlFor="FALL">FALL</label>
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("SPRING") : false} type="checkbox" id="SPRING" name="SPRING"/>
-                        <label for="SPRING">SPRING</label>
+                        <label htmlFor="SPRING">SPRING</label>
                     </div>
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("SUMMER") : false} type="checkbox" id="SUMMER" name="SUMMER"/>
-                        <label for="SUMMER">SUMMER</label>
+                        <label htmlFor="SUMMER">SUMMER</label>
+                    </div>
+                    <SearchBar callback={addPreReq}/> 
+                    <div className="autoComplete">
+                        {preReq !== undefined && preReq.map(course => (
+                            <div>
+                                <li>{course.code} | {course.name}</li>
+                                <span onClick={(e) => removePreReq(course)}>
+                                    X
+                                </span>
+                            </div>
+                        ))}
                     </div>
                     <div className="longBtn submit">
                         <button>Update</button>

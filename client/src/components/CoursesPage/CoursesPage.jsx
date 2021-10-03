@@ -1,8 +1,10 @@
 import './coursesPage.scss'
 import axios from "axios";
 import { useEffect,useState } from 'react';
+import { useParams } from 'react-router';
 
 function CoursesPage() {
+    const {id} = useParams();
     const [course, setCourse] = useState();    
     const [lists, setLists] = useState([]);
     const [showNames, setShowNames] = useState(false);
@@ -11,7 +13,7 @@ function CoursesPage() {
         const getCourses = async () => 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/department/HEM/lists");
+                const res = await axios.get(process.env.REACT_APP_API+"/department/"+id+"/lists");
                 setLists(res.data.lists);
                 console.log(res.data);
             } catch (error) {
@@ -30,7 +32,7 @@ function CoursesPage() {
                         {showNames ? "Show Code" : "Show Names"}
                     </div>
                     <div className={(showCurrentSemster ? "filterOption active" : "filterOption")} onClick={(e) => setShowCurrentSemster(!showCurrentSemster)}>
-                        {showCurrentSemster ? "Show Open Courses" : "Show All Courses"}
+                        {showCurrentSemster ? "Show All Courses" : "Show Open Courses"}
                     </div>
                 </div>
                 <hr />
@@ -45,7 +47,6 @@ function CoursesPage() {
                             ))}
                         </div>
                     </div>
-                    
                 ))}
             </div>
             {course !== undefined && <div className="courseInfo">
@@ -59,15 +60,14 @@ function CoursesPage() {
                     </div>
                 )) : "No Prereq"}</div>
                 <hr/>
-                <p className="coursePrereq">Prerequisite: {course.preReq[0] !== undefined ? course.preReq.map(course => (
-                    <div className="course">
-                        {course.code}
+                <p className="coursePrereq">Prerequisite: {course.preReq !== undefined ? course.preReq.map(course => (
+                    <div className="course" onClick={() => setCourse(course)}>
+                        {showNames ? course.name : course.code}
                     </div>
                 )) : "No Prereq"}</p>
+                {/* <p className="courseProfessor">Professor: {course.professor[0] !== undefined ? course.professor[0].name : ""}</p> */}
                 <hr/>
                 <p className="courseDesc">{course.description}</p>
-                <hr/>
-                <p className="courseProfessor">Professor: {course.professor[0] !== undefined ? course.professor[0].name : ""}</p>
             </div>}
         </div>
     )
