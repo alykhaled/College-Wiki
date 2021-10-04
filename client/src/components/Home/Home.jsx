@@ -77,7 +77,7 @@ function Home() {
                             <p>Some advices from students with lower than 3 GPA</p>
                         </div>
                     </Link>
-                    <Link to="/comingsoon">
+                    <a href="mailto:alykhaled2001@live.com">
                     <div className="item">
                     <svg x="0px" y="0px" viewBox="0 0 512 512" height="60">
                         <g>
@@ -93,7 +93,7 @@ function Home() {
                         <h3>Feedback</h3>
                         <p>Send us your feedback in case we need it (Most probably we don't care)</p>
                     </div>
-                </Link>
+                </a>
                 </div>
 
             </div>

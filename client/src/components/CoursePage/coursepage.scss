@@ -1,4 +1,35 @@
 .coursepage{
-    // background-color: red;
-    margin: 50px;
+    margin: 100px;
+    @media (max-width:780px){
+        margin: 30px;
+    }
+    p{
+        font-size: 18px;
+    }
+    .coursePrereq{
+        margin-top: 10px;
+        .course{
+            width: fit-content;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+    }
+    .courseSemester{
+        margin-top: 10px;
+        .course{
+            width: fit-content;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+    }
+    .courseLinks{
+        li{
+            // list-style-type: circle;
+        }
+    }
+    hr{
+        margin: 10px 0px;
+    }
 }

@@ -2,7 +2,7 @@ import './coursesPage.scss'
 import axios from "axios";
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router';
-
+import { Link } from "react-router-dom";
 function CoursesPage() {
     const {id} = useParams();
     const [course, setCourse] = useState();    
@@ -21,7 +21,7 @@ function CoursesPage() {
             }
         };
         getCourses();
-    }, []);
+    }, [id]);
 
     return (
         <div className="coursespage">
@@ -52,15 +52,16 @@ function CoursesPage() {
             {course !== undefined && <div className="courseInfo">
                 <h3 className="courseCode">{course.code}</h3>
                 <h1 className="courseName">{course.name}</h1>
+                <Link to={'/course/'+course.code}>View Full Page</Link>
                 <hr/>
                 <p>Semester: </p>
                 <div className="courseSemester">{course !== undefined ? course.semester.map(sem => (
                     <div className="course">
                         {sem}
                     </div>
-                )) : "No Prereq"}</div>
+                )) : "No Semester"}</div>
                 <hr/>
-                <p className="coursePrereq">Prerequisite: {course.preReq !== undefined ? course.preReq.map(course => (
+                <p className="coursePrereq">Prerequisite: {course.preReq !== [] ? course.preReq.map(course => (
                     <div className="course" onClick={() => setCourse(course)}>
                         {showNames ? course.name : course.code}
                     </div>

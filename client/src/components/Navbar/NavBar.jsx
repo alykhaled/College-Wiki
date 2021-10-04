@@ -60,9 +60,9 @@ function NavBar() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/comingsoon">
+                    <a href="mailto:alykhaled2001@live.com">
                         Feedback
-                    </Link>
+                    </a>
                 </li>
             </ul>
         </nav>

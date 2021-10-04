@@ -15,7 +15,7 @@ function DepartmentsPage() {
                 </Link>
                 <Link to="/cce">
                     <div className="item">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 511.997 511.997" height="60px">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 511.997 511.997" height="60px">
                         <g>
                             <g>
                                 <path d="M506.76,242.828l-118.4-125.44c-7.277-7.718-19.424-8.07-27.142-0.787c-7.706,7.277-8.064,19.43-0.781,27.142    l105.965,112.256L360.437,368.268c-7.283,7.712-6.925,19.859,0.781,27.142c3.712,3.501,8.454,5.235,13.178,5.235    c5.101,0,10.195-2.022,13.965-6.01l118.4-125.446C513.742,261.785,513.742,250.226,506.76,242.828z"/>
@@ -38,6 +38,7 @@ function DepartmentsPage() {
                 </Link>
                 <Link to="/eee">
                     <div className="item">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="60px" viewBox="0 0 192 192" width="60px"><path d="m155.109 74.028a4 4 0 0 0 -3.48-2.028h-52.4l8.785-67.123a4.023 4.023 0 0 0 -7.373-2.614l-63.724 111.642a4 4 0 0 0 3.407 6.095h51.617l-6.962 67.224a4.024 4.024 0 0 0 7.411 2.461l62.671-111.63a4 4 0 0 0 .048-4.027z"/></svg>
                         <h3>EEE</h3>
                         {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.  impedit facere asperiores provident officiis?</p> */}
                     </div>

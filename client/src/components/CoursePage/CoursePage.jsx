@@ -6,7 +6,7 @@ function CoursePage() {
     const {code} = useParams();
     const [course, setCourse] = useState({});
     useEffect(() => {
-        async function getCourse(e) 
+        async function getCourse() 
         {
             try {
                 const res = await axios.get(process.env.REACT_APP_API+"/course/?code="+code);
@@ -23,26 +23,43 @@ function CoursePage() {
             <h1>Loading</h1>
         )
     }
+    function checkLinkType(link) {
+        if (link.includes("drive.google")) {
+            return "Google Drive"
+        }
+        else if (link.includes("youtube.com")) {
+            return "Youtube"
+        }
+        else{
+            return "Website"
+        }
+    }
     return (
         <div className="coursepage">
             <h3 className="courseCode">{course.code}</h3>
             <h1 className="courseName">{course.name}</h1>
             <hr/>
-            <p>Semester: </p>
+            <h3>Semester: </h3>
             <div className="courseSemester">{course.semester !== undefined ? course.semester.map(sem => (
                 <div className="course">
                     {sem}
                 </div>
             )) : "No Prereq"}</div>
             <hr/>
-            <p className="coursePrereq">Prerequisite: {course.preReq !== undefined ? course.preReq.map(course => (
+            <h3>Prerequisite: </h3>
+            <div className="coursePrereq">{course.preReq !== undefined ? course.preReq.map(course => (
                 <div className="course">
                     {course.code}
                 </div>
-            )) : "No Prereq"}</p>
+            )) : "No Prereq" }</div>
             <hr/>
+            <h3>Description: </h3>
             <p className="courseDesc">{course.description}</p>
             <hr/>
+            <h3>Links: </h3>
+            <div className="courseLinks">{course.links !== undefined ? course.links.map(link => (
+                <li><a href={link}>{checkLinkType(link)}</a></li>
+            )) : "No Prereq" }</div>
         </div>
     )
 }

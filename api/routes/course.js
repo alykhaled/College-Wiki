@@ -95,7 +95,7 @@ router.get("/" ,async (req,res) => {
         console.log(queryCode);
         try 
         {
-            const courses = await Course.findOne({code: queryCode.toUpperCase()});
+            const courses = await Course.findOne({code: queryCode.toUpperCase()}).populate("preReq");
             res.status(200).send(courses);
         } 
         catch (error) 
