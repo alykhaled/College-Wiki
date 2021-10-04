@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import SearchBar from '../../SearchBar/SearchBar';
+
 import axios from "axios";
 import './course.scss'
 function AddCourse() {
     const history = useHistory();
     const isAuthenticated = localStorage.getItem("isAdmin");
+
     if (!isAuthenticated) {
         history.push('/login');
     }
@@ -16,6 +19,8 @@ function AddCourse() {
         semester:[],
     });
     const [response, setResponse] = useState({});
+    const [preReq, setPreReq] = useState([]);
+
     async function addCourse(e) 
     {
         console.log(courseData);
@@ -57,6 +62,21 @@ function AddCourse() {
         setCourseData(newdata);
         console.log(newdata);
     }
+    function addPreReq(course) {
+        preReq.push(course);
+        setPreReq([...preReq]);
+        courseData.preReq = preReq;
+        setCourseData(courseData);
+    }
+    function removePreReq(course) {
+        const index = preReq.indexOf(course);
+        if (index > -1) {
+            preReq.splice(index, 1);
+            setPreReq([...preReq]);
+            courseData.preReq = preReq;
+            setCourseData(courseData);
+        }
+    }
     return (
         <div className="courseAdmin">
             <div className="mainForm">
@@ -88,6 +108,17 @@ function AddCourse() {
                     <div style={{margin:"5px"}}>
                         <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
                         <label style={{marginLeft:"5px"}} htmlFor="SUMMER">SUMMER</label>
+                    </div>
+                    <SearchBar callback={addPreReq}/> 
+                    <div className="autoComplete">
+                        {preReq !== undefined && preReq.map(course => (
+                            <div>
+                                <li>{course.code} | {course.name}</li>
+                                <span onClick={(e) => removePreReq(course)}>
+                                    X
+                                </span>
+                            </div>
+                        ))}
                     </div>
                     <div className="longBtn submit">
                         <button>ADD COURSE</button>
