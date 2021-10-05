@@ -55,13 +55,24 @@ router.put("/:id", verify, async (req,res) => {
 //Search For a course by code
 router.get("/search/" ,async (req,res) => {
     const query = req.query.q;
+    const type = req.query.type;
     console.log(query);
     if(query !== "")
     {
-        console.log(query);
         try 
         {
-            const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).populate("preReq").exec();
+            // const courses = await Course.find({code: {$regex: new RegExp(query.toUpperCase())}}).populate("preReq").exec();
+            const courses = await Course.aggregate([
+                {
+                    "$search":{
+                        "index": "codeindex",
+                        "autocomplete":{
+                            "query": query,
+                            "path": `${type}`,
+                        }
+                    }
+               }
+            ]).exec();
             res.status(200).send(courses);
         } 
         catch (error) 

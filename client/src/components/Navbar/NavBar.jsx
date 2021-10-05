@@ -7,6 +7,7 @@ import logo from './img1.png'; // with import
 function NavBar() {
     const history = useHistory();
     const [openMenu, setOpenMenu] = useState(false);
+    const [searchType, setSearchType] = useState("code");
     function chooseCourse(course) {
         history.push('/course/'+course.code)
     }
@@ -40,7 +41,17 @@ function NavBar() {
             <img src={logo} alt="logo"/>
         </Link>
         <div style={{width:"500px"}}>
-            <SearchBar callback={chooseCourse}/>
+            <SearchBar callback={chooseCourse} type={searchType}/>
+            <div style={{display:"flex"}}>
+                <div style={{margin:"5px"}}>
+                    <input checked={searchType === "code" ? true : false} onClick={() => setSearchType("code")} type="radio" id="codeNav" name="SearchNav"/>
+                    <label style={{marginLeft:"5px"}} htmlFor="codeNav">Search By Code</label>
+                </div>
+                <div style={{margin:"5px"}}>
+                    <input checked={searchType === "name" ? true : false} onClick={() => setSearchType("name")} type="radio" id="nameNav" name="SearchNav"/>
+                    <label style={{marginLeft:"5px"}} htmlFor="nameNav">Search By Name</label>
+                </div>
+            </div>
         </div>
         <nav>
             <ul className="nav_links">

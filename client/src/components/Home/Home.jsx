@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './home.scss'
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 function Home() {
     const history = useHistory();
+    const [searchType, setSearchType] = useState("code");
     function chooseCourse(course) {
         history.push('/course/'+course.code)
     }
@@ -17,7 +18,17 @@ function Home() {
             <div className="all">
                 <div className="content">
                     <h1>CAN WE HELP YOU ?</h1>
-                    <SearchBar callback={chooseCourse}/>
+                    <div style={{display:"flex"}}>
+                        <div style={{margin:"5px"}}>
+                            <input checked={searchType === "code" ? true : false} onClick={() => setSearchType("code")} type="radio" id="codeHome" name="Search"/>
+                            <label style={{marginLeft:"5px"}} htmlFor="code">Search By Code</label>
+                        </div>
+                        <div style={{margin:"5px"}}>
+                            <input checked={searchType === "name" ? true : false} onClick={() => setSearchType("name")} type="radio" id="nameHome" name="Search"/>
+                            <label style={{marginLeft:"5px"}} htmlFor="nameHome">Search By Name</label>
+                        </div>
+                    </div>
+                    <SearchBar callback={chooseCourse} type={searchType}/>
                 </div>
                 <div className="options">
                     <Link to="/departments">

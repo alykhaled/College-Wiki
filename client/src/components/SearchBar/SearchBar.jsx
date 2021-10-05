@@ -1,13 +1,13 @@
 import React, {useState,useEffect } from 'react'
 import axios from "axios";
 
-function SearchBar({callback,refresh}) {
+function SearchBar({callback,refresh,type}) {
     const [query, setQuery] = useState("");
     const [suggested, setSuggested] = useState([]);
     useEffect(() => {
         async function getSearch(query) {
             if (query !== "") {
-                const res = await axios.get(process.env.REACT_APP_API+"/course/search/?q="+query);
+                const res = await axios.get(process.env.REACT_APP_API+"/course/search/?q="+query+"&type="+type);
                 setSuggested(res.data);
             }
         }

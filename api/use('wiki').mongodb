@@ -1,0 +1,16 @@
+use('wiki')
+
+db.courses.aggregate([
+    {
+        '$search': {
+            "index": "codeindex",
+            'autocomplete': {
+                'query': 'cmpn',
+                'path': "code",
+                "fuzzy":{
+                    "maxEdits":2
+                }
+            }
+        }
+    }
+]);
