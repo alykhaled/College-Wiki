@@ -9,7 +9,7 @@ function CoursePage() {
         async function getCourse() 
         {
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/course/?code="+code);
+                const res = await axios.get(process.env.REACT_APP_API+"/course/?code="+code.replace(/\s/g, ""));
                 setCourse(res.data);
                 console.log(res.data);
             } catch (error) {
