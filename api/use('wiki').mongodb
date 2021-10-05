@@ -1,16 +1,3 @@
 use('wiki')
 
-db.courses.aggregate([
-    {
-        '$search': {
-            "index": "codeindex",
-            'autocomplete': {
-                'query': 'cmpn',
-                'path': "code",
-                "fuzzy":{
-                    "maxEdits":2
-                }
-            }
-        }
-    }
-]);
+db.courses.find({code: {$regex: new RegExp(" ")}});

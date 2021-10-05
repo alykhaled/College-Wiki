@@ -24,7 +24,7 @@ function AddCourse() {
     async function addCourse(e) 
     {
         console.log(courseData);
-        courseData.name = courseData.name.replace(/\s/g, ""); 
+        courseData.code = courseData.code.replace(/\s/g, ""); 
         e.preventDefault();
         try {
             const res = await axios.post(process.env.REACT_APP_API+"/course",courseData,{
