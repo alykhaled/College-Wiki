@@ -8,8 +8,10 @@ function CoursePage() {
     useEffect(() => {
         async function getCourse() 
         {
+            let modeCode = code.replace(/\s/g, "");
+            console.log("\""+modeCode+"\"");
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/course/?code="+code.replace(/\s/g, ""));
+                const res = await axios.get(process.env.REACT_APP_API+"/course/?code="+modeCode);
                 setCourse(res.data);
                 console.log(res.data);
             } catch (error) {
