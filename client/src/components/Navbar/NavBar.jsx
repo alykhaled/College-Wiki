@@ -43,13 +43,14 @@ function NavBar() {
         <div style={{width:"500px"}}>
             <SearchBar callback={chooseCourse} type={searchType}/>
             <div style={{display:"flex"}}>
+                <p style={{alignSelf:"center", marginRight:"5px"}}>Search By:</p> 
                 <div style={{margin:"5px"}}>
                     <input checked={searchType === "code" ? true : false} onClick={() => setSearchType("code")} type="radio" id="codeNav" name="SearchNav"/>
-                    <label style={{marginLeft:"5px"}} htmlFor="codeNav">Search By Code</label>
+                    <label style={{marginLeft:"5px"}} htmlFor="codeNav">Code</label>
                 </div>
                 <div style={{margin:"5px"}}>
                     <input checked={searchType === "name" ? true : false} onClick={() => setSearchType("name")} type="radio" id="nameNav" name="SearchNav"/>
-                    <label style={{marginLeft:"5px"}} htmlFor="nameNav">Search By Name</label>
+                    <label style={{marginLeft:"5px"}} htmlFor="nameNav">Name</label>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ function SearchBar({callback,refresh,type}) {
     return (
         <div className="searchInput">
             <input value={query} type="search" autoComplete="off" onChange={(e) => changeQuery(e.target.value)} placeholder="Search for course" id="searchInput" />
-            {query !== "" && <div className="autoComplete">
+            {query !== "" && suggested !== undefined && <div className="autoComplete">
                 {suggested.map(course => (
                     <li onClick={(e) => chooseOption(course)}>{course.code} | {course.name}</li>
                 ))}

@@ -72,8 +72,15 @@ router.get("/search/" ,async (req,res) => {
                         }
                     }
                }
-            ]).exec();
-            res.status(200).send(courses);
+            ]).exec(function(err, courses) {
+                // Don't forget your error handling
+                // The callback with your transactions
+                // Assuming you are having a Tag model
+                Course.populate(courses, {path: 'preReq'}, function(err, populatedTransactions) {
+                    res.status(200).send(populatedTransactions);
+                });
+            });
+            // res.status(200).send(courses);
         } 
         catch (error) 
         {

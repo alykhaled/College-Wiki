@@ -87,7 +87,7 @@ function EditCourse() {
     }
     return (
         <div className="editcourse">
-            <SearchBar callback={handleSearch} refresh={false}/>
+            <SearchBar callback={handleSearch} refresh={false} type="code"/>
             {<div className="mainForm" >
                 <form onSubmit={(e) => editCourse(e)} className="formData">
                     <div className="inputField">
@@ -118,7 +118,7 @@ function EditCourse() {
                         <input onChange={(e) => handleSemester(e)} checked={courseData.semester ? courseData.semester.includes("SUMMER") : false} type="checkbox" id="SUMMER" name="SUMMER"/>
                         <label htmlFor="SUMMER">SUMMER</label>
                     </div>
-                    <SearchBar callback={addPreReq}/> 
+                    <SearchBar callback={addPreReq} type="code"/> 
                     <div className="autoComplete">
                         {preReq !== undefined && preReq.map(course => (
                             <div>

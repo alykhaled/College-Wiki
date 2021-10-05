@@ -81,7 +81,7 @@ function ViewList() {
                 </div>
                 <div className="allCourses">
                     <h1>Add courses:</h1>
-                    <SearchBar callback={addCourse}/> 
+                    <SearchBar callback={addCourse} type="code"/> 
                 </div>
             </div>
         </div>

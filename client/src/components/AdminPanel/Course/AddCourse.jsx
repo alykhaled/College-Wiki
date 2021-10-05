@@ -32,6 +32,7 @@ function AddCourse() {
                 }
               });
             setResponse(res.data);
+            setPreReq([]);
             console.log(res.data);
         } catch (error) {
             localStorage.removeItem("token");
@@ -109,7 +110,7 @@ function AddCourse() {
                         <input onChange={(e) => handleSemester(e)} type="checkbox" id="SUMMER" name="SUMMER"/>
                         <label style={{marginLeft:"5px"}} htmlFor="SUMMER">SUMMER</label>
                     </div>
-                    <SearchBar callback={addPreReq}/> 
+                    <SearchBar callback={addPreReq} type="code"/> 
                     <div className="autoComplete">
                         {preReq !== undefined && preReq.map(course => (
                             <div>
@@ -125,7 +126,7 @@ function AddCourse() {
                     </div>
                 </form>
             </div>
-            <pre>{JSON.stringify(response).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+            <p>{JSON.stringify(response).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
         </div>
     )
 }
