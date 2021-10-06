@@ -15,6 +15,7 @@ This project consists of two folder, one for frontend (Client) and the other for
 ### Start the API
 ```
 cd api
+npm install
 npm start
 ```
 
