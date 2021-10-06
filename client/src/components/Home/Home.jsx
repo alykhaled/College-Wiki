@@ -21,7 +21,7 @@ function Home() {
                     <div style={{display:"flex"}}>
                         <div style={{margin:"5px"}}>
                             <input checked={searchType === "code" ? true : false} onClick={() => setSearchType("code")} type="radio" id="codeHome" name="Search"/>
-                            <label style={{marginLeft:"5px"}} htmlFor="code">Search By Code</label>
+                            <label style={{marginLeft:"5px"}} htmlFor="codeHome">Search By Code</label>
                         </div>
                         <div style={{margin:"5px"}}>
                             <input checked={searchType === "name" ? true : false} onClick={() => setSearchType("name")} type="radio" id="nameHome" name="Search"/>

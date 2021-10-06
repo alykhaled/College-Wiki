@@ -23,7 +23,6 @@ function AddCourse() {
 
     async function addCourse(e) 
     {
-        console.log(courseData);
         courseData.code = courseData.code.replace(/\s/g, ""); 
         e.preventDefault();
         try {
@@ -34,20 +33,19 @@ function AddCourse() {
               });
             setResponse(res.data);
             setPreReq([]);
-            console.log(res.data);
         } catch (error) {
             localStorage.removeItem("token");
             localStorage.removeItem("isAdmin");
-            console.log(error);
         }
     };
+
     function handle(e)
     {
         const newdata = {...courseData};
         newdata[e.target.id] = e.target.value;
         setCourseData(newdata);
-        console.log(newdata);
     }
+    
     function handleSemester(e)
     {
         const newdata = {...courseData};
@@ -62,7 +60,6 @@ function AddCourse() {
             }
         }
         setCourseData(newdata);
-        console.log(newdata);
     }
     function addPreReq(course) {
         preReq.push(course);

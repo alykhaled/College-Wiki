@@ -1,0 +1,48 @@
+.tablepage{
+    .container{
+        display: grid;
+        grid-template-columns: auto auto auto;
+        @media (max-width:1400px){
+            grid-template-columns: auto auto;
+        }
+        @media (max-width:900px){
+            grid-template-columns: auto;
+        }
+
+    }
+    table, th, td {
+        border: 1px solid;
+    }
+    
+    table {
+        height: 240px;
+        display: block;
+        overflow-x: auto;
+        border-spacing: 0;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 2px 5px;
+        text-align: center;
+        border-top-width: 0;
+        border-left-width: 0;
+    }
+    th{
+
+        width: 100vh;
+    }
+
+    td{
+        &:hover{
+            background-color: black;
+            color: white;
+        }
+    }
+
+    th:last-child{
+        border-right-width: 0;
+    }
+
+}
