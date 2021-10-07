@@ -49,8 +49,9 @@ function TablePage() {
                     <tr>
                         {table.courses && table.courses.map(course => (
                             <td colSpan={course.time.split("-")[1] - course.time.split("-")[0]}>{course.course.code}</td>
-                        ))}
-                        {/* <td colSpan="3">fsd</td> */}
+                            ))}
+                            <td></td>
+                        <td colSpan="3">fsd</td>
                     </tr>
                 </table>
                 <table>
