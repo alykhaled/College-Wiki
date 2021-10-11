@@ -5,9 +5,7 @@ import axios from 'axios';
 function TablePage() {
     const [table, setTable] = useState({});
     const [sunday, setSunday] = useState([]);
-    table.courses && table.courses.map(course => (
-        console.log()
-    ))
+
     useEffect(() => {
         const getTable = async () => 
         {
@@ -29,7 +27,7 @@ function TablePage() {
     return (
         <div className="tablepage">
             <div className="container">
-                <table>
+                {/* <table>
                     <tr>
                         <th colSpan="11">Sunday</th>
                     </tr>
@@ -51,7 +49,7 @@ function TablePage() {
                             <td colSpan={course.time.split("-")[1] - course.time.split("-")[0]}>{course.course.code}</td>
                             ))}
                             <td></td>
-                        <td colSpan="3">fsd</td>
+                        <td colSpan="3" >fsd</td>
                     </tr>
                 </table>
                 <table>
@@ -76,17 +74,54 @@ function TablePage() {
                         <td colSpan="2">GENN102</td>
                         <td colSpan="2">GENN102</td>
                         <td colSpan="3">GENN102</td>
-                        {/* <td >GENN102</td> */}
                     </tr>
                     <tr>
                         <td colSpan="3">GENN102</td>
                         <td colSpan="2">GENN102</td>
                         <td colSpan="3">GENN102</td>
                         <td colSpan="3">GENN102</td>
-                        {/* <td >GENN102</td> */}
                     </tr>
-                </table>
-               
+                </table> */}
+                <div className="table">
+                    <div className="tableHeader">
+                        Sunday
+                    </div>
+                    <div className="tableTimes">
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                        <div className="tableTime">
+                            8:00:9:00
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

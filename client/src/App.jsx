@@ -13,6 +13,7 @@ import Login from './components/AdminPanel/Login/Login';
 import AdminRoute from './components/AdminPanel/AdminRoute';
 import CoursePage from './components/CoursePage/CoursePage';
 import TablePage from './components/TablePage/TablePage';
+import MyTable from './components/MyTable/MyTable';
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path="/comingsoon">
               <ComingSoon />
+            </Route>
+            <Route path="/mytable">
+              <MyTable />
             </Route>
             <Route path="/table">
               <TablePage />
