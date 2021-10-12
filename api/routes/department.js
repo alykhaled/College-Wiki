@@ -49,6 +49,18 @@ router.get("/:code/lists", async (req,res) => {
             populate:{
                 path:"courses",
                 populate:{
+                    path:"preReq",
+                    populate:{
+                        path:"preReq",
+                        model:"Course",
+                    }
+                }
+            }
+        }).populate({
+            path:"lists",
+            populate:{
+                path:"courses",
+                populate:{
                     path:"professor",
                     model:"Professor",
                 }

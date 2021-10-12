@@ -76,6 +76,16 @@ function NavBar() {
                         Feedback
                     </a>
                 </li>
+                <li>
+                    {/* <Link to="/login">
+                        Login
+                    </Link> */}
+                    <div className="myaccount">
+                        <Link to="/login">
+                                My Account      
+                        </Link>
+                    </div>
+                </li>
             </ul>
         </nav>
         <div className={openMenu ? "menuBtn open" : "menuBtn"} onClick={() => setOpenMenu(!openMenu)}>
