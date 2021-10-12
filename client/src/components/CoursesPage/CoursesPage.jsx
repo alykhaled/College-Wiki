@@ -52,6 +52,7 @@ function CoursesPage() {
             {course !== undefined && <div className="courseInfo">
                 <h3 className="courseCode">{course.code}</h3>
                 <h1 className="courseName">{course.name}</h1>
+                <h3>Credit Hours: {course.creditHours}</h3>
                 <Link to={'/course/'+course.code}>View Full Page</Link>
                 <hr/>
                 <p>Semester: </p>

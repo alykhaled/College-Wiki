@@ -14,8 +14,10 @@ import AdminRoute from './components/AdminPanel/AdminRoute';
 import CoursePage from './components/CoursePage/CoursePage';
 import TablePage from './components/TablePage/TablePage';
 import MyTable from './components/MyTable/MyTable';
+import { useState } from 'react';
 
 function App() {
+  const [signedIn, setSignedIn] = useState(false);
   return (
     <Router>
       <Switch>
