@@ -94,6 +94,15 @@ nav{
             font-size: 20px;
             margin: 10px;
         }
+        .myaccount{
+            border-radius: 15px;
+            background-color: gray;
+            padding: 5px;
+            color: white;
+            a{
+                color: white;
+            }
+        }
     }
 }
 
@@ -129,6 +138,9 @@ nav{
     }
 
 }
+
+
+
 .miniMenu{
     position: absolute;
     top: 80px;
