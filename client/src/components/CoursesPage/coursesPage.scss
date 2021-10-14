@@ -34,6 +34,14 @@
                     background-color: black;
                     color: white;
                 }
+                &.completed{
+                    background-color: rgb(36, 255, 36);
+                    color: black;
+                }
+                &.inprogress{
+                    background-color: rgb(255, 39, 39);
+                    color: black;
+                }
                 &:hover{
                     background-color: black;
                     color: white;

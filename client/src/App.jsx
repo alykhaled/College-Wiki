@@ -1,6 +1,7 @@
 import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import CoursesPage from './components/CoursesPage/CoursesPage';
 import NavBar from './components/Navbar/NavBar';
 import Home from './components/Home/Home';
@@ -15,6 +16,8 @@ import UserPage from './components/UserPage/UserPage';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
+  const [user, setUser] = useState({});
+  
   return (
     <Router>
       <Switch>
@@ -46,7 +49,7 @@ function App() {
               <UserPage/>
             </Route>
             <Route path="/:id">
-              <CoursesPage/>
+              <CoursesPage user={user}/>
             </Route>
             <Route exact path="/">
               <Home />

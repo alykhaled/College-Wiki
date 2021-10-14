@@ -5,22 +5,52 @@ import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
 function CoursesPage() {
     const {id} = useParams();
-    const [course, setCourse] = useState();    
+    const [user, setUser] = useState({});
+    const [course, setCourse] = useState();  
     const [lists, setLists] = useState([]);
     const [showNames, setShowNames] = useState(false);
     const [showCurrentSemster, setShowCurrentSemster] = useState(false);
+
     useEffect(() => {
-        const getCourses = async () => 
+        const getMe = async () => 
         {
+            let coursesCompleted = [];
+            let coursesInProgress = [];
             try {
-                const res = await axios.get(process.env.REACT_APP_API+"/department/"+id+"/lists");
-                setLists(res.data.lists);
-                console.log(res.data);
+                const res = await axios.get(process.env.REACT_APP_API+"/me/",{
+                headers: {
+                    token: "Bearer " + localStorage.getItem("token"),
+                }});
+                setUser(res.data);
+                coursesCompleted = res.data.coursesCompleted;
+                coursesInProgress = res.data.coursesInProgress;
+                
+            } catch (error) {
+                // localStorage.removeItem("token");
+                // localStorage.removeItem("isAdmin");
+                console.log(error);
+            }
+            try {
+                const ress = await axios.get(process.env.REACT_APP_API+"/department/"+id+"/lists");
+                ress.data.lists.map(list => {
+                    list.courses.map(course => {
+                        if (coursesCompleted.find( ({ code }) => code === course.code )) {
+                            course["completed"] = true;
+                        }
+                        else if (coursesInProgress.find( ({ code }) => code === course.code ))
+                        {
+                            course["inprogress"] = true;
+                        }
+                        console.log(course);
+                    })
+                });
+                setLists(ress.data.lists);
+                console.log(ress.data.lists);
             } catch (error) {
                 console.log(error);
             }
         };
-        getCourses();
+        getMe();
     }, [id]);
 
     return (
@@ -41,7 +71,7 @@ function CoursesPage() {
                         <h1>{list.name}</h1>
                         <div className="courses">
                             {list.courses.map(currentCourse => (
-                                (!showCurrentSemster | currentCourse.semester.includes("FALL")) ? <div className={currentCourse === course ? "course active" : "course"} onClick={() => setCourse(currentCourse)}>
+                                (!showCurrentSemster | currentCourse.semester.includes("FALL")) ? <div className={"course " + (currentCourse === course ? "active" : "") + (currentCourse.completed ? " completed" : "") + (currentCourse.inprogress ? "  inprogress" : "")} onClick={() => setCourse(currentCourse)}>
                                     {showNames ? currentCourse.name : currentCourse.code}
                                 </div> : ""
                             ))}

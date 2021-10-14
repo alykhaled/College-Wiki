@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams} from 'react-router-dom'
+import { Link, useParams} from 'react-router-dom'
 import axios from 'axios';
 import './coursepage.scss'
 function CoursePage() {
@@ -50,9 +50,11 @@ function CoursePage() {
             <hr/>
             <h3>Prerequisite: </h3>
             <div className="coursePrereq">{course.preReq !== undefined ? course.preReq.map(course => (
-                <div className="course">
-                    {course.code}
-                </div>
+                <Link to={"/course/"+course.code}>
+                    <div className="course">
+                        {course.code}
+                    </div>
+                </Link>
             )) : "No Prereq" }</div>
             <hr/>
             <h3>Description: </h3>

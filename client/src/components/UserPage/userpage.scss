@@ -1,3 +1,9 @@
 .userpage{
-    
+    .main{
+        display: grid;
+        grid-template-columns: auto auto;
+        .coursesOption{
+            padding: 10px;
+        }
+    }
 }
