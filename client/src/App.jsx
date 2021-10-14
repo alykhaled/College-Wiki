@@ -1,11 +1,8 @@
 import './App.scss';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState } from 'react';
 import CoursesPage from './components/CoursesPage/CoursesPage';
 import NavBar from './components/Navbar/NavBar';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
 import Home from './components/Home/Home';
 import DepartmentsPage from './components/DepartmentsPage/DepartmentsPage';
 import ComingSoon from './components/ComingSoon/ComingSoon';
@@ -14,7 +11,7 @@ import AdminRoute from './components/AdminPanel/AdminRoute';
 import CoursePage from './components/CoursePage/CoursePage';
 import TablePage from './components/TablePage/TablePage';
 import MyTable from './components/MyTable/MyTable';
-import { useState } from 'react';
+import UserPage from './components/UserPage/UserPage';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
@@ -45,6 +42,9 @@ function App() {
             <Route path="/table">
               <TablePage />
             </Route>
+            <Route path="/me">
+              <UserPage/>
+            </Route>
             <Route path="/:id">
               <CoursesPage/>
             </Route>
@@ -54,7 +54,8 @@ function App() {
           </Switch>
           <footer>
             Unofficial Wiki and Guide for Cairo University Faculty of Engineering<br/>
-            Made by <a href="https://github.com/alykhaled">Aly Khaled</a>
+            Made by <a href="https://github.com/alykhaled">Aly Khaled</a><br/>
+            Special Thanks for Omar Yasser (Nona's Husband)
           </footer>
         </div>
       </Switch>

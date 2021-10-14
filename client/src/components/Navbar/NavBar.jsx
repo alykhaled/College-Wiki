@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import logo from './img1.png'; // with import
-function NavBar() {
+function NavBar({signedIn}) {
     const history = useHistory();
     const [openMenu, setOpenMenu] = useState(false);
     const [searchType, setSearchType] = useState("code");
@@ -76,7 +76,7 @@ function NavBar() {
                         Feedback
                     </a>
                 </li>
-                <li>
+                {signedIn && <li>
                     {/* <Link to="/login">
                         Login
                     </Link> */}
@@ -85,7 +85,7 @@ function NavBar() {
                                 My Account      
                         </Link>
                     </div>
-                </li>
+                </li>}
             </ul>
         </nav>
         <div className={openMenu ? "menuBtn open" : "menuBtn"} onClick={() => setOpenMenu(!openMenu)}>
