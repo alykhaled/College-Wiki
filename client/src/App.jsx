@@ -13,6 +13,7 @@ import CoursePage from './components/CoursePage/CoursePage';
 import TablePage from './components/TablePage/TablePage';
 import MyTable from './components/MyTable/MyTable';
 import UserPage from './components/UserPage/UserPage';
+import RegisterPage from './components/RegisterPage/RegisterPage';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route path="/course/:code">
               <CoursePage />
+            </Route>
+            <Route path="/register">
+              <RegisterPage/>
             </Route>
             <Route path="/comingsoon">
               <ComingSoon />
