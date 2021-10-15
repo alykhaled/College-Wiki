@@ -24,9 +24,6 @@ function App() {
         <Route path="/admin">
           <AdminRoute/>
         </Route>
-        <Route path="/login">
-          <Login/>
-        </Route>
         <div className="App">
           <NavBar/>
           <Switch>
@@ -35,6 +32,9 @@ function App() {
             </Route>
             <Route path="/course/:code">
               <CoursePage />
+            </Route>
+            <Route path="/login">
+              <Login/>
             </Route>
             <Route path="/register">
               <RegisterPage/>
