@@ -62,7 +62,7 @@ function CoursesPage() {
                         {showNames ? "Show Code" : "Show Names"}
                     </div>
                     <div className={(showCurrentSemster ? "filterOption active" : "filterOption")} onClick={(e) => setShowCurrentSemster(!showCurrentSemster)}>
-                        {showCurrentSemster ? "Show All Courses" : "Show Open Courses"}
+                        {showCurrentSemster ? "Show All Courses" : "Show Current Semester Courses"}
                     </div>
                 </div>
                 <hr />
@@ -92,11 +92,13 @@ function CoursesPage() {
                     </div>
                 )) : "No Semester"}</div>
                 <hr/>
-                <p className="coursePrereq">Prerequisite: {course.preReq !== [] ? course.preReq.map(course => (
+                Prerequisite: 
+                <p className="coursePrereq">
+                {course.preReq.length !== 0 ? course.preReq.map(course => (
                     <div className="course" onClick={() => setCourse(course)}>
                         {showNames ? course.name : course.code}
                     </div>
-                )) : "No Prereq"}</p>
+                )) : "None"}</p>
                 {/* <p className="courseProfessor">Professor: {course.professor[0] !== undefined ? course.professor[0].name : ""}</p> */}
                 <hr/>
                 <p className="courseDesc">{course.description}</p>

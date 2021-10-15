@@ -16,7 +16,6 @@ import UserPage from './components/UserPage/UserPage';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
-  const [user, setUser] = useState({});
   
   return (
     <Router>
@@ -49,7 +48,7 @@ function App() {
               <UserPage/>
             </Route>
             <Route path="/:id">
-              <CoursesPage user={user}/>
+              <CoursesPage />
             </Route>
             <Route exact path="/">
               <Home />

@@ -49,21 +49,33 @@ function UserPage() {
         setInProgressCourses([...inProgressCourses]);
     };
 
-    // const removeCourse = async (removedCourse) => 
-    // {
-    //     try {
-    //         await axios.put(process.env.REACT_APP_API+"/list/"+id+"/deletecourse",{course:removedCourse._id});
-    //     } catch (error) {
-    //         localStorage.removeItem("token");
-    //         localStorage.removeItem("isAdmin");
-    //         console.log(error);
-    //     }
-    //     const index = courses.indexOf(removedCourse);
-    //     if (index > -1) {
-    //         courses.splice(index, 1);
-    //         setCourses([...courses]);
-    //     }
-    // };
+    const removeCourse = async (course) => 
+    {
+        await axios.put(process.env.REACT_APP_API+"/me/removecourse/"+course._id,{},{
+            headers: {
+                token: "Bearer " + localStorage.getItem("token"),
+            }
+        });
+        const index = completedCourses.indexOf(course);
+        if (index > -1) {
+            completedCourses.splice(index, 1);
+            setCompletedCourses([...completedCourses]);
+        }
+    };
+
+    const removeInProgressCourse = async (course) => 
+    {
+        await axios.put(process.env.REACT_APP_API+"/me/removeinprogress/"+course._id,{},{
+            headers: {
+                token: "Bearer " + localStorage.getItem("token"),
+            }
+        });
+        const index = inProgressCourses.indexOf(course);
+        if (index > -1) {
+            inProgressCourses.splice(index, 1);
+            setInProgressCourses([...inProgressCourses]);
+        }
+    };
     return (
         <div className="userpage">
             <h1>{User.name}</h1>
@@ -81,7 +93,7 @@ function UserPage() {
                             {completedCourses !== undefined && completedCourses.map(course => (
                                 <div>
                                     <li>{course.code} | {course.name}</li>
-                                    <span>
+                                    <span onClick={(e) => removeCourse(course)}>
                                         X
                                     </span>
                                 </div>
@@ -100,7 +112,7 @@ function UserPage() {
                             {inProgressCourses !== undefined && inProgressCourses.map(course => (
                                 <div>
                                     <li>{course.code} | {course.name}</li>
-                                    <span>
+                                    <span onClick={(e) => removeInProgressCourse(course)}>
                                         X
                                     </span>
                                 </div>

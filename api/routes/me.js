@@ -4,7 +4,7 @@ const User = require('../models/User');
 const mongoose = require('mongoose');
 const verify   = require('../verifyToken');
 
-//Create Course POST
+//Add a course to the user's list of completed courses
 router.put("/course/:id",verify, async (req,res) => {
     try{
         const course = await Course.findById(req.params.id);
@@ -17,7 +17,7 @@ router.put("/course/:id",verify, async (req,res) => {
     }
 });
 
-//Create Course POST
+//Add a course to the user's list of inprogress courses
 router.put("/inprogress/:id",verify, async (req,res) => {
     try{
         const course = await Course.findById(req.params.id);
@@ -30,6 +30,29 @@ router.put("/inprogress/:id",verify, async (req,res) => {
     }
 });
 
+//Remove a course to the user's list of completed courses
+router.put("/removecourse/:id",verify, async (req,res) => {
+    try{
+        const user = await User.findByIdAndUpdate(req.user._id, {$pull: {coursesCompleted: req.params.id}}, {new: true});
+        res.status(200).send(user);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
+
+//Remove a course to the user's list of inprogress courses
+router.put("/removeinprogress/:id",verify, async (req,res) => {
+    try{
+        const user = await User.findByIdAndUpdate(req.user._id, {$pull: {coursesInProgress: req.params.id}}, {new: true});
+        res.status(200).send(user);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
 // //UPDATE Course
 // router.put("/:id", verify, async (req,res) => {
 //     try{
