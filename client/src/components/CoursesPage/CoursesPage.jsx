@@ -41,7 +41,6 @@ function CoursesPage() {
                         {
                             course["inprogress"] = true;
                         }
-                        console.log(course);
                     })
                 });
                 setLists(ress.data.lists);
