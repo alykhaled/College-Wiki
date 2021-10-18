@@ -35,11 +35,11 @@ function CoursesPage() {
                 ress.data.lists.map(list => {
                     list.courses.map(course => {
                         if (coursesCompleted.find( ({ code }) => code === course.code )) {
-                            course["compleated"] = true;
+                            course["completed"] = true;
                         }
                         else if (coursesInProgress.find( ({ code }) => code === course.code ))
                         {
-                            course["inprosgress"] = true;
+                            course["inprogress"] = true;
                         }
                         
                     })
