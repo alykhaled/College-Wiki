@@ -21,47 +21,53 @@ const createCourseMap = async (departmentCode) => {
     const courseMap = {
         user: "username",
         program: departmentCode,
-        courses: new Map( courses.map(course => [course.code, course])),
+        courses: courses,
         AvailableToTakeCourses: courses.filter(course => course.preReq.length === 0),
         takenCourses: [],
         takenCredits: 0
-    }
+    }    
     return courseMap;
 }
 
 
 
 const takeCourse = (courseCode, courseMap) => {
-    const course = courseMap.courses.get(courseCode);
+    const course = courseMap.courses.find(course => course.code === courseCode);
     if (!course && course.isTaken && course.outDegree !== 0) {
         return;
     }
     course.isTaken = true;
     courseMap.takenCourses.push(course);
-    courseMap.takenCredits += course.credits;
-    course.preReqRev.forEach(preReq => {
-        preReq.outDegree--;
-        if (preReq.outDegree === 0) {
-            courseMap.AvailableToTakeCourses.push(preReq);
-        }
-    });
+    courseMap.takenCredits += course.creditHours;
+    courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(course), 1);
+    if (course.preReqRev) {
+        course.preReqRev.forEach(preReq => {
+            preReq.outDegree--;
+            if (preReq.outDegree === 0) {
+                courseMap.AvailableToTakeCourses.push(preReq);
+            }
+        });
+    }
+    console.log(course);
 }
 
 const dropCourse = (courseCode, courseMap) => {
-    const course = courseMap.courses.get(courseCode);
+    const course = courseMap.courses.find(course => course.code === courseCode);
     if (!course && !course.isTaken && course.outDegree !== 0) {
         return;
     }
     course.isTaken = false;
     courseMap.takenCourses.splice(courseMap.takenCourses.indexOf(course), 1);
-    courseMap.takenCredits -= course.credits;
+    courseMap.takenCredits -= course.creditHours;
     courseMap.AvailableToTakeCourses.push(course);
-    course.preReqRev.forEach(preReq => {
-        if (preReq.outDegree === 0) {
-            courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(preReq), 1);
-        }
-        preReq.outDegree++;
-    });
+    if (course.preReqRev) {
+        course.preReqRev.forEach(preReq => {
+            if (preReq.outDegree === 0) {
+                courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(preReq), 1);
+            }
+            preReq.outDegree++;
+        });
+    }
 }
 
 const getAvailableToTakeCourses = (courseMap) => {
@@ -77,7 +83,7 @@ const getTakenCredits = (courseMap) => {
 }
 
 const getLeftPreReq = (courseCode, courseMap) => {
-    const course = courseMap.courses.get(courseCode);
+    const course = courseMap.courses.find(course => course.code === courseCode);
     return course.preReq.filter(preReq => !preReq.isTaken);
 }
 
