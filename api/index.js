@@ -9,6 +9,7 @@ const departmentRoute = require('./routes/department');
 const listRoute = require('./routes/list');
 const tableRoute = require('./routes/table');
 const meRoute = require('./routes/me');
+const courseMapRoute = require('./routes/courseMap');
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use("/api/department",departmentRoute);
 app.use("/api/list",listRoute);
 app.use("/api/table",tableRoute);
 app.use("/api/me",meRoute);
+app.use("/api/courseMap",courseMapRoute);
 
 app.get("/",(req,res) => {
     res.set('Access-Control-Allow-Origin', '*');
