@@ -137,6 +137,30 @@ router.get("/" ,async (req,res) => {
     
 });
 
+router.post("/:code/preReq/",verify, async (req,res) => {
+    try{
+        let course = await Course.findOne({code: req.params.code.toUpperCase()});
+        const preReqs  = req.body.preReq;
+        if (!course || !preReqs) {
+            res.status(404).send("Course or PreReqs body not found");
+        }
+        else {
+            preReqs.forEach(async (preReq, index) => {
+                const preReqCourse = await Course.findOne({code: preReq.toUpperCase()});
+                if(preReqCourse) {
+                    course = await Course.findByIdAndUpdate(course.id,{$addToSet: {preReq: preReqCourse.id}});
+                } else {
+                    preReqs.splice(index,1);
+                }
+            });
+            res.status(200).json({"Sucessfully added preReqs": preReqs});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
+
 //GET All courses
 // router.get("/?id" ,async (req,res) => {
 //     try 
