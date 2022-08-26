@@ -9,7 +9,7 @@ const getAllCourses = async (departmentCode) => {
 }
 
 
-const createCourseMap = async (departmentCode) => {
+const createCourseMap = async (id, name, departmentCode) => {
     let courses = await getAllCourses(departmentCode);
     if (courses == null) {
         return null;
@@ -19,7 +19,8 @@ const createCourseMap = async (departmentCode) => {
         course.isTaken = false;
     })
     const courseMap = {
-        user: "username",
+        id: id,
+        name: name,
         program: departmentCode,
         courses: courses,
         AvailableToTakeCourses: courses.filter(course => course.preReq.length === 0),
@@ -27,6 +28,20 @@ const createCourseMap = async (departmentCode) => {
         takenCredits: 0
     }    
     return courseMap;
+}
+
+const getCourseMap = async(req, res, next) => {
+    req.id = req.params.id;
+    if (req.session.courseMap == null) {
+        res.status(404).send("No course maps found for this session");
+        return;
+    }
+    req.courseMap = req.session.courseMap.find(courseMap => courseMap.id == req.id);
+    if (req.courseMap == null) {
+        res.status(404).send("No course map found with this id");
+        return;
+    }
+    next();
 }
 
 
@@ -90,6 +105,7 @@ const getLeftPreReq = (courseCode, courseMap) => {
 
 module.exports = {
     createCourseMap,
+    getCourseMap,
     takeCourse,
     dropCourse,
     getAvailableToTakeCourses,
