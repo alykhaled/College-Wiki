@@ -149,6 +149,7 @@ router.post("/:code/preReq/",verify, async (req,res) => {
                 const preReqCourse = await Course.findOne({code: preReq.toUpperCase()});
                 if(preReqCourse) {
                     course = await Course.findByIdAndUpdate(course.id,{$addToSet: {preReq: preReqCourse.id}});
+                    await preReqCourse.updateOne({$addToSet: {preReqReverse: course.id}});
                 } else {
                     preReqs.splice(index,1);
                 }

@@ -48,15 +48,15 @@ const getCourseMap = async(req, res, next) => {
 
 const takeCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
-    if (!course && course.isTaken && course.outDegree !== 0) {
+    if (!course || course.isTaken || course.outDegree !== 0) {
         return;
     }
     course.isTaken = true;
     courseMap.takenCourses.push(course);
     courseMap.takenCredits += course.creditHours;
     courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(course), 1);
-    if (course.preReqRev) {
-        course.preReqRev.forEach(preReq => {
+    if (course.preReqReverse) {
+        course.preReqReverse.forEach(preReq => {
             preReq.outDegree--;
             if (preReq.outDegree === 0) {
                 courseMap.AvailableToTakeCourses.push(preReq);
@@ -68,19 +68,19 @@ const takeCourse = (courseCode, courseMap) => {
 
 const dropCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
-    if (!course && !course.isTaken && course.outDegree !== 0) {
+    if (!course || !course.isTaken || course.outDegree !== 0) {
         return;
     }
     course.isTaken = false;
     courseMap.takenCourses.splice(courseMap.takenCourses.indexOf(course), 1);
     courseMap.takenCredits -= course.creditHours;
     courseMap.AvailableToTakeCourses.push(course);
-    if (course.preReqRev) {
-        course.preReqRev.forEach(preReq => {
-            if (preReq.outDegree === 0) {
-                courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(preReq), 1);
+    if (course.preReqReverse) {
+        course.preReqReverse.forEach(preReqRev => {
+            if (preReqRev.outDegree === 0) {
+                courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(preReqRev), 1);
             }
-            preReq.outDegree++;
+            preReqRev.outDegree++;
         });
     }
 }
