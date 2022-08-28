@@ -146,21 +146,21 @@ class Semester {
 }
 
 class CourseMap {
-    constructor(id, name, username, program) {
+    constructor(id, name, username, program, courses, semesters) {
         this.id = id;
         this.name = name || "Course Map";
         this.username = username || "";
         this.program = program || "PRE";
-        this.semesters = [];
-        this.courses = new Map();
+        this.semesters = semesters || [];
+        this.courses = courses || [];
         this.credits = 0;
         this.gpa = 0;
     }
 
     addCourse(course) {
-        if (!this.courses.has(course.code)) {
+        if (!this.courses.includes(course.code)) {
             const newCourse = Course.createCourseFromCourseSchema(course);
-            this.courses.set(newCourse.code, newCourse);
+            this.courses.push(newCourse);
         } else {
             console.log("Course already added.");
         }
@@ -175,7 +175,7 @@ class CourseMap {
     }
 
     addCourseToSemester(course, semester) {
-        if (this.courses.has(course.code)) {
+        if (this.courses.includes(course)) {
             semester.addCourse(course);
             this.credits += course.credits;
             this.updatePastSemestersData();
@@ -185,7 +185,7 @@ class CourseMap {
     }
 
     removeCourseFromSemester(course, semester) {
-        if (this.courses.has(course.code)) {
+        if (this.courses.includes(course)) {
             semester.removeCourse(course);
             this.credits -= course.credits;
             this.updatePastSemestersData();
