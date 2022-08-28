@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const {Course, Semester, CourseMap } = require('../utils/CourseMap');
+
+let courseMapCounter = 0;
 
 const getAllCourses = async (departmentCode) => {
     const courses = await mongoose.model('Course').find({department: departmentCode});
@@ -9,34 +12,32 @@ const getAllCourses = async (departmentCode) => {
 }
 
 
-const createCourseMap = async (id, name, departmentCode) => {
-    let courses = await getAllCourses(departmentCode);
+const createCourseMap = async (req, res, next) => {
+    req.courseMapId = courseMapCounter++;
+    req.courseMapName = req.query.name || "Course Map";
+    req.courseMapProgram = req.query.program || "CCE";
+
+    let courses = await getAllCourses(req.courseMapProgram);
     if (courses == null) {
+        res.status(404).send("No courses found for this department");
         return null;
     }
+    let courseMap = new CourseMap(req.courseMapId, req.courseMapName, req.username, req.courseMapProgram);
     courses.forEach(course => {
-        course.outDegree = course.preReq.length;
-        course.isTaken = false;
+        Course.createCourseFromCourseSchema(course);
+        courseMap.addCourse(course);
     })
-    const courseMap = {
-        id: id,
-        name: name,
-        program: departmentCode,
-        courses: courses,
-        AvailableToTakeCourses: courses.filter(course => course.preReq.length === 0),
-        takenCourses: [],
-        takenCredits: 0
-    }    
-    return courseMap;
+    req.courseMap = courseMap;
+    next();
 }
 
 const getCourseMap = async(req, res, next) => {
     req.id = req.params.id;
-    if (req.session.courseMap == null) {
+    if (req.session.courseMaps == null) {
         res.status(404).send("No course maps found for this session");
         return;
     }
-    req.courseMap = req.session.courseMap.find(courseMap => courseMap.id == req.id);
+    req.courseMap = req.session.courseMaps.find(courseMap => courseMap.id == req.id);
     if (req.courseMap == null) {
         res.status(404).send("No course map found with this id");
         return;

@@ -1,28 +1,23 @@
 const courseMapRouter = require("express").Router();
 const courseMapService = require("../services/courseMap");
 
-let courseMapCounter = 0;
+
 
 courseMapRouter.get("/", async (req, res) => {
-    if (req.session.courseMap){
-        res.send(req.session.courseMap);
+    if (req.session.courseMaps){
+        res.send(req.session.courseMaps);
     }
     else {
         res.status(404).send("No course maps found");
     }
 });
 
-courseMapRouter.post("/", async (req, res) => {
-    const id = courseMapCounter++;
-    const name = req.query.name || "Course Map";
-    const departmentCode = req.query.departmentCode;
-    courseMap = await courseMapService.createCourseMap(id, name, departmentCode);
-    if (courseMap == null) {
-        res.status(404).send("No courses found for this department");
+courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => {
+    if (req.courseMap) {
+        req.session.courseMaps = req.session.courseMaps || [];
+        req.session.courseMaps.push(courseMap);
+        res.status(200).send("Course map created");
     }
-    req.session.courseMap = req.session.courseMap || [];
-    req.session.courseMap.push(courseMap);
-    res.status(200).send("Course map created");
 });
 
 courseMapRouter.get("/:id/AvailableToTakeCourses", courseMapService.getCourseMap, async (req, res) => {
