@@ -38,6 +38,7 @@ const getCourseMap = async(req, res, next) => {
         return;
     }
     req.courseMap = req.session.courseMaps.find(courseMap => courseMap.id == req.id);
+    req.courseMap = CourseMap.loadCourseMapFromSessionStorage(req.courseMap);
     if (req.courseMap == null) {
         res.status(404).send("No course map found with this id");
         return;
@@ -45,7 +46,16 @@ const getCourseMap = async(req, res, next) => {
     next();
 }
 
-
+const addSemester = async (req, res, next) => {
+    if (!req.query.type) {
+        res.status(400).send("No semester type provided");
+        return;
+    }
+    req.semesterType = req.query.type;
+    const semester = req.courseMap.createSemester(req.semesterType);
+    req.session.courseMaps[req.courseMap.id] = req.courseMap;
+    res.status(200).send(req.courseMap);
+}
 
 const takeCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
@@ -107,6 +117,7 @@ const getLeftPreReq = (courseCode, courseMap) => {
 module.exports = {
     createCourseMap,
     getCourseMap,
+    addSemester,
     takeCourse,
     dropCourse,
     getAvailableToTakeCourses,

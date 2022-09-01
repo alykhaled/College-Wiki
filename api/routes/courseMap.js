@@ -15,10 +15,13 @@ courseMapRouter.get("/", async (req, res) => {
 courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => {
     if (req.courseMap) {
         req.session.courseMaps = req.session.courseMaps || [];
-        req.session.courseMaps.push(courseMap);
+        req.session.courseMaps.push(req.courseMap);
         res.status(200).send("Course map created");
     }
 });
+
+courseMapRouter.post("/:id/semester", courseMapService.getCourseMap, courseMapService.addSemester);
+    
 
 courseMapRouter.get("/:id/AvailableToTakeCourses", courseMapService.getCourseMap, async (req, res) => {
 

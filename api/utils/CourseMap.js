@@ -1,7 +1,7 @@
 class Course {
     constructor(code, name, credits, preReq, preReqReverse, preReqHours, 
                     group, semester, outDegree, isTaken, 
-                    description, professor, links) {
+                    description, professor, links, gpaPoints) {
         this.code = code;
         this.name = name;
         this.credits = credits;
@@ -15,7 +15,7 @@ class Course {
         this.description = description || "";
         this.professor = professor || [];
         this.links = links || [];
-        this.gpaPoints = 0;
+        this.gpaPoints = gpaPoints || 0;
     }
     
     static createCourseFromCourseSchema(courseSchema) {
@@ -68,16 +68,19 @@ class Course {
 }
 
 class Semester {
-    constructor(id, type, year, courses, maxCredits, pastSemestersCredits, cumulativeGPA) {
+    constructor(id, type, courses, maxCredits, pastSemestersCredits, cumulativeGPA) {
         this.id = id;
         this.type = type || "";
-        this.year = year || Date.getFullYear();
-        this.courses = courses || new Map();
+        this.courses = courses || [];
         this.credits = 0;
         this.maxCredits = maxCredits || 21;
         this.gpa = 0;
         this.pastSemestersCredits = pastSemestersCredits || 0;
         this.cumulativeGPA = cumulativeGPA || 0;
+    }
+
+    static createSemesterFromSemesterSchema(semesterSchema) {
+        return new Semester(semesterSchema.id, semesterSchema.type, semesterSchema.courses, semesterSchema.maxCredits, semesterSchema.pastSemestersCredits, semesterSchema.cumulativeGPA);
     }
 
     calculateGPA() {
@@ -100,7 +103,7 @@ class Semester {
         console.log("Adding course: " + course.code);
 
         if (this.calculateCredits() + course.credits <= this.maxCredits) {
-            if (!this.courses.has(course.code) && !course.isTaken) {
+            if (!this.courses.includes(course) && !course.isTaken) {
                 if (course.semester.includes(this.type)) {
                     this.courses.set(course.code, course);
                     this.credits += course.credits;
@@ -119,11 +122,11 @@ class Semester {
     }
 
     removeCourse(course) {
-        if (this.courses.has(course.code)) {
-            this.courses.delete(course.code);
+        if (this.courses.includes(course)) {
+            this.courses.splice(this.courses.indexOf(course), 1);
             this.credits -= course.credits;
             course.preReq.forEach((preReq) => {
-                if (this.courses.has(preReq.code)) {
+                if (this.courses.includes(preReq)) {
                     this.removeCourse(preReq);
                 }
             });
@@ -146,15 +149,32 @@ class Semester {
 }
 
 class CourseMap {
-    constructor(id, name, username, program, courses, semesters) {
+    constructor(id, name, username, program, courses, semesters, credits, gpa) {
         this.id = id;
         this.name = name || "Course Map";
         this.username = username || "";
         this.program = program || "PRE";
         this.semesters = semesters || [];
         this.courses = courses || [];
-        this.credits = 0;
-        this.gpa = 0;
+        this.credits = credits || 0;
+        this.gpa = gpa || 0;
+    }
+
+    static loadCourseMapFromSessionStorage(courseMapSessionStorage) {
+        if (courseMapSessionStorage) {
+            return CourseMap.createCourseMapFromCourseMapSchema(courseMapSessionStorage);
+        } else {
+            return null;
+        }
+    }
+
+    static createCourseMapFromCourseMapSchema(courseMapSchema) {
+        let courseMap = new CourseMap(courseMapSchema.id, courseMapSchema.name, courseMapSchema.username, courseMapSchema.program);
+        courseMap.courses = courseMapSchema.courses.map(courseSchema => Course.createCourseFromCourseSchema(courseSchema));
+        courseMap.semesters = courseMapSchema.semesters.map(semesterSchema => Semester.createSemesterFromSemesterSchema(semesterSchema));
+        courseMap.credits = courseMapSchema.credits;
+        courseMap.gpa = courseMapSchema.gpa;
+        return courseMap;
     }
 
     addCourse(course) {
@@ -167,8 +187,8 @@ class CourseMap {
         return false;
     }
 
-    createSemester(type, year) {
-        let semester = new Semester(this.semesters.length, type, year);
+    createSemester(type) {
+        let semester = new Semester(this.semesters.length, type);
         this.semesters.push(semester);
         this.updatePastSemestersData();
         return semester;
