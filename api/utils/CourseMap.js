@@ -68,13 +68,13 @@ class Course {
 }
 
 class Semester {
-    constructor(id, type, courses, maxCredits, pastSemestersCredits, cumulativeGPA) {
+    constructor(id, type, courses, credits, maxCredits, gpa, pastSemestersCredits, cumulativeGPA) {
         this.id = id;
         this.type = type || "";
         this.courses = courses || [];
-        this.credits = 0;
+        this.credits = credits || 0;
         this.maxCredits = maxCredits || 21;
-        this.gpa = 0;
+        this.gpa = gpa || 0;
         this.pastSemestersCredits = pastSemestersCredits || 0;
         this.cumulativeGPA = cumulativeGPA || 0;
     }

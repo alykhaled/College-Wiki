@@ -57,6 +57,16 @@ const addSemester = async (req, res, next) => {
     res.status(200).send(req.courseMap);
 }
 
+const getSemester = async (req, res, next) => {
+    req.semesterId = req.params.semesterId;
+    req.semester = req.courseMap.semesters.find(semester => semester.id == req.semesterId);
+    if (req.semester == null) {
+        res.status(404).send("No semester found with this id");
+        return;
+    }
+    next();
+}
+
 const takeCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
     if (!course || course.isTaken || course.outDegree !== 0) {
@@ -118,6 +128,7 @@ module.exports = {
     createCourseMap,
     getCourseMap,
     addSemester,
+    getSemester,
     takeCourse,
     dropCourse,
     getAvailableToTakeCourses,
