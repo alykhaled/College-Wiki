@@ -1,25 +1,29 @@
 class Course {
-    constructor(code, name, credits, preReq, preReqReverse, preReqHours, 
+    constructor(id, code, name, creditHours, preReq, preReqReverse, preReqHours, 
                     group, semester, outDegree, isTaken, 
                     description, professor, links, gpaPoints) {
+        this._id = id;
         this.code = code;
         this.name = name;
-        this.credits = credits;
+        this.creditHours = creditHours;
         this.preReq = preReq || [];
         this.preReqReverse = preReqReverse || [];
         this.preReqHours = preReqHours || 0;
         this.group = group || "";
         this.semester = semester || [];
-        this.outDegree = outDegree || 0;
+        this.outDegree = outDegree;
         this.isTaken = isTaken || false;
         this.description = description || "";
         this.professor = professor || [];
         this.links = links || [];
         this.gpaPoints = gpaPoints || 0;
+        if (this.outDegree == undefined){
+            this.outDegree = this.preReq.length;
+        }
     }
     
     static createCourseFromCourseSchema(courseSchema) {
-        return new Course(courseSchema.code, courseSchema.name, courseSchema.creditHours, 
+        return new Course(courseSchema._id, courseSchema.code, courseSchema.name, courseSchema.creditHours, 
                             courseSchema.preReq, courseSchema.preReqReverse, courseSchema.preReqHours, 
                             courseSchema.group, courseSchema.semester, courseSchema.outDegree, courseSchema.isTaken, 
                             courseSchema.description, courseSchema.professor, courseSchema.links);
@@ -46,11 +50,8 @@ class Course {
     takeCourse() {
         if (this.outDegree == 0) {
             this.isTaken = true;
-            this.preReqReverse.forEach(course => {
-                course.outDegree--;
-            });
         } else {
-            console.log("Course " + this.code + " cannot be taken because it has prerequisites that are not taken.");
+            throw new Error("Course " + this.code + " cannot be taken because it has prerequisites.");
         }
     }
 
@@ -80,7 +81,9 @@ class Semester {
     }
 
     static createSemesterFromSemesterSchema(semesterSchema) {
-        return new Semester(semesterSchema.id, semesterSchema.type, semesterSchema.courses, semesterSchema.maxCredits, semesterSchema.pastSemestersCredits, semesterSchema.cumulativeGPA);
+        return new Semester(semesterSchema.id, semesterSchema.type, semesterSchema.courses,
+                                semesterSchema.credits, semesterSchema.maxCredits, semesterSchema.gpa,
+                                semesterSchema.pastSemestersCredits, semesterSchema.cumulativeGPA);
     }
 
     calculateGPA() {
@@ -88,43 +91,39 @@ class Semester {
         let credits = 0;
         for (let course of this.courses) {
             if (course.grade) {
-                sum += course.credits * course.grade;
-                credits += course.credits;
+                sum += course.creditHours * course.grade;
+                credits += course.creditHours;
             }
         }
         return this.gpa = sum / credits;
     }
-
-    getCredits() {
-       return this.credits;
-    }
     
     addCourse(course) {
-        console.log("Adding course: " + course.code);
+        console.log("Semester " + this.id + " is adding course: " + course.code + " with the following data: " + JSON.stringify(course));
 
-        if (this.calculateCredits() + course.credits <= this.maxCredits) {
+        if (this.credits + course.creditHours <= this.maxCredits) {
             if (!this.courses.includes(course) && !course.isTaken) {
                 if (course.semester.includes(this.type)) {
-                    this.courses.set(course.code, course);
-                    this.credits += course.credits;
-                    course.takeCourse();
-                    return true;
+                    course.takeCourse()
+                    this.courses.push(course);
+                    this.credits += course.creditHours;
                 } else {
                     throw new Error("Course is not offered in this semester.");
                 }
             } else {
-                console.log("Course already taken.");
+                throw new Error("Course is already in this semester.");
             }
         } else {
-            throw new Error("Too many credits");
+            console.log("Course cannot be added because it exceeds the maximum credits for this semester.");
+            console.log("Credits: " + this.credits + " + " + course.creditHours + " > " + this.maxCredits);
+            throw new Error("Course cannot be added because it exceeds the maximum credits for this semester.");
         }
-        return false;
     }
 
     removeCourse(course) {
         if (this.courses.includes(course)) {
             this.courses.splice(this.courses.indexOf(course), 1);
-            this.credits -= course.credits;
+            this.credits -= course.creditHours;
             course.preReq.forEach((preReq) => {
                 if (this.courses.includes(preReq)) {
                     this.removeCourse(preReq);
@@ -195,9 +194,17 @@ class CourseMap {
     }
 
     addCourseToSemester(course, semester) {
+        console.log("Adding course: " + course.code + " to semester: " + semester.id + " with the following data: " + JSON.stringify(course)); 
+
         if (this.courses.includes(course)) {
             semester.addCourse(course);
-            this.credits += course.credits;
+            course.preReqReverse.forEach((preReqId) => {
+                let preReq = this.courses.find(course => course._id === preReqId);
+                if (preReq) {
+                    preReq.outDegree--;
+                }
+            });
+            this.credits += course.creditHours;
             this.updatePastSemestersData();
         } else {
             throw new Error("Course does not exist.");
@@ -207,7 +214,7 @@ class CourseMap {
     removeCourseFromSemester(course, semester) {
         if (this.courses.includes(course)) {
             semester.removeCourse(course);
-            this.credits -= course.credits;
+            this.credits -= course.creditHours;
             this.updatePastSemestersData();
         } else {
             throw new Error("Course does not exist.");

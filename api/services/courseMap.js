@@ -39,6 +39,7 @@ const getCourseMap = async(req, res, next) => {
     }
     req.courseMap = req.session.courseMaps.find(courseMap => courseMap.id == req.id);
     req.courseMap = CourseMap.loadCourseMapFromSessionStorage(req.courseMap);
+    // console.log("Course map data at the router after loading: ", req.courseMap);
     if (req.courseMap == null) {
         res.status(404).send("No course map found with this id");
         return;
@@ -66,6 +67,31 @@ const getSemester = async (req, res, next) => {
     }
     next();
 }
+
+const addCourseToSemester = async (req, res, next) => {
+    if (!req.query.courseCode) {
+        res.status(400).send("No course code provided");
+        return;
+    }
+    req.courseCode = req.query.courseCode;
+    // console.log("Course Map data at the the router: ", req.courseMap);
+    req.course = req.courseMap.courses.find(course => course.code == req.courseCode);
+    if (req.course == null) {
+        res.status(404).send("No course found in the course map with this code");
+        return;
+    }
+    try {
+        console.log("Course map: " + req.courseMap.id + " is adding course " + req.course.code + " to semester " + req.semester.id + " with the following data: " + JSON.stringify(req.course));
+        req.courseMap.addCourseToSemester(req.course, req.semester);
+    } catch (err) {
+        res.status(400).send(err.message);
+        return;
+    }
+    console.log("courses in courseMap after adding a course", req.courseMap.courses);
+    req.session.courseMaps[req.courseMap.id] = req.courseMap;
+    res.status(200).send(req.courseMap);
+}
+
 
 const takeCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
@@ -129,6 +155,7 @@ module.exports = {
     getCourseMap,
     addSemester,
     getSemester,
+    addCourseToSemester,
     takeCourse,
     dropCourse,
     getAvailableToTakeCourses,
