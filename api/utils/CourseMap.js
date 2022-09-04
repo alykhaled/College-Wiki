@@ -190,6 +190,12 @@ class CourseMap {
 
     addCourseToSemester(course, semester) {
         console.log("Adding course: " + course.code + " to semester: " + semester.id); 
+        course.preReq.forEach(preReqId => {
+            let preReqCourse = this.courses.find(c => c._id == preReqId);
+            if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs >= semester.id) ) {
+                throw new Error("Course " + course.code + " cannot be added because it has a prerequisite that is not taken.");
+            }
+        });
 
         semester.addCourse(course);
         course.preReqReverse.forEach((preReqId) => {
