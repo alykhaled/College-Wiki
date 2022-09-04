@@ -22,7 +22,9 @@ courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => 
 
 courseMapRouter.post("/:id/semester", courseMapService.getCourseMap, courseMapService.addSemester);
     
-courseMapRouter.post("/:id/semesters/:semesterId/course", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.addCourseToSemester);
+courseMapRouter.post("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.addCourseToSemester);
+
+courseMapRouter.delete("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.removeCourseFromSemester);
 
 courseMapRouter.get("/:id/AvailableToTakeCourses", courseMapService.getCourseMap, async (req, res) => {
 
