@@ -1,11 +1,15 @@
 class Course {
     constructor(id, code, name, creditHours, preReq, preReqReverse, preReqHours, 
                     group, availableSemesters, outDegree, isTaken, semestersTakenIDs,
-                    description, professor, links, gpaPoints) {
+                    description, professor, links) {
         this._id = id;
         this.code = code;
         this.name = name;
         this.creditHours = creditHours;
+        this.description = description || "";
+        this.professor = professor || [];
+        this.links = links || [];
+
         this.preReq = preReq || [];
         this.preReqReverse = preReqReverse || [];
         this.preReqHours = preReqHours || 0;
@@ -14,10 +18,7 @@ class Course {
         this.outDegree = outDegree;
         this.isTaken = isTaken || false;
         this.semestersTakenIDs = semestersTakenIDs || [];
-        this.description = description || "";
-        this.professor = professor || [];
-        this.links = links || [];
-        this.gpaPoints = gpaPoints || 0;
+        
         if (this.outDegree == undefined){
             this.outDegree = this.preReq.length;
         }
@@ -28,24 +29,6 @@ class Course {
                             courseSchema.preReq, courseSchema.preReqReverse, courseSchema.preReqHours, 
                             courseSchema.group, courseSchema.availableSemesters, courseSchema.outDegree, courseSchema.isTaken, 
                             courseSchema.semestersTakenIDs, courseSchema.description, courseSchema.professor, courseSchema.links);
-    }
-
-    addGrade(grade) {
-        switch (grade) {
-            case "A+":
-            case "A" : this.gpaPoints = 4; break;
-            case "A-": this.gpaPoints = 3.7; break;
-            case "B+": this.gpaPoints = 3.3; break;
-            case "B" : this.gpaPoints = 3; break;
-            case "B-": this.gpaPoints = 2.7; break;
-            case "C+": this.gpaPoints = 2.3; break;
-            case "C" : this.gpaPoints = 2; break;
-            case "C-": this.gpaPoints = 1.7; break;
-            case "D+": this.gpaPoints = 1.3; break;
-            case "D" : this.gpaPoints = 1; break;
-            case "F" : this.gpaPoints = 0; break;
-            default: this.gpaPoints = 0; break;
-        }
     }
 
     takeCourse(semesterId) {
@@ -67,33 +50,17 @@ class Course {
 }
 
 class Semester {
-    constructor(id, type, courses, credits, maxCredits, gpa, pastSemestersCredits, cumulativeGPA) {
+    constructor(id, type, courses, credits, maxCredits) {
         this.id = id;
         this.type = type || "";
         this.courses = courses || [];
         this.credits = credits || 0;
         this.maxCredits = maxCredits || 21;
-        this.gpa = gpa || 0;
-        this.pastSemestersCredits = pastSemestersCredits || 0;
-        this.cumulativeGPA = cumulativeGPA || 0;
     }
 
     static createSemesterFromSemesterSchema(semesterSchema) {
         return new Semester(semesterSchema.id, semesterSchema.type, semesterSchema.courses,
-                                semesterSchema.credits, semesterSchema.maxCredits, semesterSchema.gpa,
-                                semesterSchema.pastSemestersCredits, semesterSchema.cumulativeGPA);
-    }
-
-    calculateGPA() {
-        let sum = 0;
-        let credits = 0;
-        for (let course of this.courses) {
-            if (course.grade) {
-                sum += course.creditHours * course.grade;
-                credits += course.creditHours;
-            }
-        }
-        return this.gpa = sum / credits;
+                                semesterSchema.credits, semesterSchema.maxCredits);
     }
 
     addCourse(course) {
@@ -130,20 +97,10 @@ class Semester {
         }
     }
 
-    setCumulativeGPA(cumulativeGPA) {
-        this.cumulativeGPA = cumulativeGPA;
-        switch (cumulativeGPA) {
-            case cumulativeGPA >= 3.00: this.maxCredits = 21; break;
-            case cumulativeGPA >= 2.5: this.maxCredits = 20; break;
-            case cumulativeGPA >= 2.0: this.maxCredits = 19; break;
-            case cumulativeGPA >= 1.7: this.maxCredits = 17; break;
-            case cumulativeGPA < 1.7: this.maxCredits = 17; break;
-        }
-    }
 }
 
 class CourseMap {
-    constructor(id, name, username, program, courses, semesters, credits, gpa) {
+    constructor(id, name, username, program, courses, semesters, credits) {
         this.id = id;
         this.name = name || "Course Map";
         this.username = username || "";
@@ -151,7 +108,6 @@ class CourseMap {
         this.semesters = semesters || [];
         this.courses = courses || [];
         this.credits = credits || 0;
-        this.gpa = gpa || 0;
     }
 
     static loadCourseMapFromSessionStorage(courseMapSessionStorage) {
@@ -167,7 +123,6 @@ class CourseMap {
         courseMap.courses = courseMapSchema.courses.map(courseSchema => Course.createCourseFromCourseSchema(courseSchema));
         courseMap.semesters = courseMapSchema.semesters.map(semesterSchema => Semester.createSemesterFromSemesterSchema(semesterSchema));
         courseMap.credits = courseMapSchema.credits;
-        courseMap.gpa = courseMapSchema.gpa;
         return courseMap;
     }
 
@@ -184,7 +139,6 @@ class CourseMap {
     createSemester(type) {
         let semester = new Semester(this.semesters.length, type);
         this.semesters.push(semester);
-        this.updatePastSemestersData();
         return semester;
     }
 
@@ -192,7 +146,7 @@ class CourseMap {
         console.log("Adding course: " + course.code + " to semester: " + semester.id); 
         course.preReq.forEach(preReqId => {
             let preReqCourse = this.courses.find(c => c._id == preReqId);
-            if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs >= semester.id) ) {
+            if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs[0] >= semester.id) ) {
                 throw new Error("Course " + course.code + " cannot be added because it has a prerequisite that is not taken.");
             }
         });
@@ -205,15 +159,13 @@ class CourseMap {
             }
         });
         this.credits += course.creditHours;
-        this.updatePastSemestersData();
-        
+
     }
 
     removeCourseFromSemester(course, semester) {
         console.log("Removing course: " + course.code + " from semester: " + semester.id);
         semester.removeCourse(course);
         this.credits -= course.creditHours;
-        this.updatePastSemestersData();
 
         course.preReqReverse.forEach((preReqId) => {
             let preReq = this.courses.find(course => course._id === preReqId);
@@ -239,7 +191,7 @@ class CourseMap {
                 let preReqTaken = true;
                 course.preReq.forEach(preReqId => {
                     let preReqCourse = this.courses.find(c => c._id == preReqId);
-                    if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs >= semester.id) ) {
+                    if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs[0] >= semester.id) ) {
                         preReqTaken = false;
                     }
                 });
@@ -251,28 +203,6 @@ class CourseMap {
         return availableCourses;
     }
 
-    calculateGPA() {
-        let sum = 0;
-        let credits = 0;
-        for (let semester of this.semesters) {
-            sum += semester.gpa * semester.credits;
-            credits += semester.credits;
-        }
-        return this.gpa = sum / credits;
-    }
-
-    updatePastSemestersData() {
-        let credits = 0;
-        let sum = 0;
-        let gpa = 0;
-        for (let semester of this.semesters) {
-            semester.pastSemestersCredits = credits;
-            semester.setCumulativeGPA(gpa);
-            credits += semester.credits;
-            sum += semester.gpa * semester.credits;
-            gpa = sum / credits;
-        }
-    }
 }
 
 module.exports = {

@@ -20,38 +20,13 @@ courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => 
     }
 });
 
-courseMapRouter.post("/:id/semester", courseMapService.getCourseMap, courseMapService.addSemester);
+courseMapRouter.post("/:id/semesters", courseMapService.getCourseMap, courseMapService.addSemester);
     
 courseMapRouter.post("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.addCourseToSemester);
 
 courseMapRouter.delete("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.removeCourseFromSemester);
 
 courseMapRouter.get("/:id/semesters/:semesterId/available-courses", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.getAvailableCourses);
-
-courseMapRouter.get("/:id/takenCourses", courseMapService.getCourseMap, async (req, res) => {
-    
-    res.send(courseMapService.getTakenCourses(courseMap));
-
-});
-
-courseMapRouter.get("/:id/takenCredits", courseMapService.getCourseMap, async (req, res) => {
-
-    res.status(200).json(courseMapService.getTakenCredits(courseMap));
-
-});
-
-courseMapRouter.post("/:id/takeCourse", courseMapService.getCourseMap, async (req, res) => {
-    const courseCode = req.query.courseCode;
-    courseMapService.takeCourse(courseCode, courseMap);
-
-    res.send(courseMap);
-});
-
-courseMapRouter.post("/:id/dropCourse", courseMapService.getCourseMap, async (req, res) => {
-    const courseCode = req.query.courseCode;
-    courseMapService.dropCourse(courseCode, courseMap);
-    res.send(courseMap);
-});
 
 
 module.exports = courseMapRouter;

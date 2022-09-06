@@ -107,53 +107,6 @@ const getAvailableCourses = async (req, res, next) => {
     res.status(200).send(req.availableCourses);
 }
 
-const takeCourse = (courseCode, courseMap) => {
-    const course = courseMap.courses.find(course => course.code === courseCode);
-    if (!course || course.isTaken || course.outDegree !== 0) {
-        return;
-    }
-    course.isTaken = true;
-    courseMap.takenCourses.push(course);
-    courseMap.takenCredits += course.creditHours;
-    courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(course), 1);
-    if (course.preReqReverse) {
-        course.preReqReverse.forEach(preReq => {
-            preReq.outDegree--;
-            if (preReq.outDegree === 0) {
-                courseMap.AvailableToTakeCourses.push(preReq);
-            }
-        });
-    }
-    console.log(course);
-}
-
-const dropCourse = (courseCode, courseMap) => {
-    const course = courseMap.courses.find(course => course.code === courseCode);
-    if (!course || !course.isTaken || course.outDegree !== 0) {
-        return;
-    }
-    course.isTaken = false;
-    courseMap.takenCourses.splice(courseMap.takenCourses.indexOf(course), 1);
-    courseMap.takenCredits -= course.creditHours;
-    courseMap.AvailableToTakeCourses.push(course);
-    if (course.preReqReverse) {
-        course.preReqReverse.forEach(preReqRev => {
-            if (preReqRev.outDegree === 0) {
-                courseMap.AvailableToTakeCourses.splice(courseMap.AvailableToTakeCourses.indexOf(preReqRev), 1);
-            }
-            preReqRev.outDegree++;
-        });
-    }
-}
-
-const getTakenCourses = (courseMap) => {
-    return courseMap.takenCourses;
-}
-
-const getTakenCredits = (courseMap) => {
-    return courseMap.takenCredits;
-}
-
 const getLeftPreReq = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
     return course.preReq.filter(preReq => !preReq.isTaken);
@@ -168,10 +121,6 @@ module.exports = {
     addCourseToSemester,
     removeCourseFromSemester,
     getAvailableCourses,
-    takeCourse,
-    dropCourse,
-    getTakenCourses,
-    getTakenCredits,
     getLeftPreReq
 }
 
