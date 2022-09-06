@@ -26,11 +26,7 @@ courseMapRouter.post("/:id/semesters/:semesterId/courses/:courseCode", courseMap
 
 courseMapRouter.delete("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.removeCourseFromSemester);
 
-courseMapRouter.get("/:id/AvailableToTakeCourses", courseMapService.getCourseMap, async (req, res) => {
-
-    res.send(courseMapService.getAvailableToTakeCourses(courseMap));
-
-});
+courseMapRouter.get("/:id/semesters/:semesterId/available-courses", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.getAvailableCourses);
 
 courseMapRouter.get("/:id/takenCourses", courseMapService.getCourseMap, async (req, res) => {
     

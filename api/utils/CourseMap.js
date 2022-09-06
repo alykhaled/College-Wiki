@@ -232,6 +232,25 @@ class CourseMap {
        
     }
 
+    getAvailableCourses(semester) {
+        let availableCourses = [];
+        this.courses.forEach(course => {
+            if (!course.isTaken && course.availableSemesters.includes(semester.type)) {
+                let preReqTaken = true;
+                course.preReq.forEach(preReqId => {
+                    let preReqCourse = this.courses.find(c => c._id == preReqId);
+                    if (preReqCourse && (!preReqCourse.isTaken || preReqCourse.semestersTakenIDs >= semester.id) ) {
+                        preReqTaken = false;
+                    }
+                });
+                if (preReqTaken) {
+                    availableCourses.push(course);
+                }
+            }
+        });
+        return availableCourses;
+    }
+
     calculateGPA() {
         let sum = 0;
         let credits = 0;

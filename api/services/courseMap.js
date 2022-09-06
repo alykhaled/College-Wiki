@@ -102,6 +102,10 @@ const removeCourseFromSemester = async (req, res, next) => {
     res.status(200).send(req.courseMap);
 }
 
+const getAvailableCourses = async (req, res, next) => {
+    req.availableCourses = req.courseMap.getAvailableCourses(req.semester);
+    res.status(200).send(req.availableCourses);
+}
 
 const takeCourse = (courseCode, courseMap) => {
     const course = courseMap.courses.find(course => course.code === courseCode);
@@ -142,10 +146,6 @@ const dropCourse = (courseCode, courseMap) => {
     }
 }
 
-const getAvailableToTakeCourses = (courseMap) => {
-    return courseMap.AvailableToTakeCourses;
-}
-
 const getTakenCourses = (courseMap) => {
     return courseMap.takenCourses;
 }
@@ -167,9 +167,9 @@ module.exports = {
     getSemester,
     addCourseToSemester,
     removeCourseFromSemester,
+    getAvailableCourses,
     takeCourse,
     dropCourse,
-    getAvailableToTakeCourses,
     getTakenCourses,
     getTakenCredits,
     getLeftPreReq
