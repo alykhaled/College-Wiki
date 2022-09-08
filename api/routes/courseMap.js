@@ -12,6 +12,10 @@ courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => 
 });
 
 courseMapRouter.post("/:id/semesters", courseMapService.getCourseMap, courseMapService.addSemester);
+
+courseMapRouter.get("/:id/semesters/:semesterId", courseMapService.getCourseMap, courseMapService.getSemester, async (req, res) => {
+    res.status(200).send(req.semester);
+});
     
 courseMapRouter.post("/:id/semesters/:semesterId/courses/:courseCode", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.addCourseToSemester);
 
