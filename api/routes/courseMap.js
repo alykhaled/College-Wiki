@@ -3,13 +3,8 @@ const courseMapService = require("../services/courseMap");
 
 
 
-courseMapRouter.get("/", async (req, res) => {
-    if (req.session.courseMaps){
-        res.send(req.session.courseMaps);
-    }
-    else {
-        res.status(404).send("No course maps found");
-    }
+courseMapRouter.get("/:id", courseMapService.getCourseMap, async (req, res) => {
+    res.status(200).send(req.courseMap);
 });
 
 courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => {

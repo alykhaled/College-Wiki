@@ -55,17 +55,18 @@ const createCourseMap = async (req, res, next) => {
 
 const getCourseMap = async(req, res, next) => {
     req.id = req.params.id;
-    if (req.session.courseMaps == null) {
-        res.status(404).send("No course maps found for this session");
-        return;
-    }
-    req.courseMap = mongoose.model('CourseMap').findById(req.id);
-    if (req.courseMap == null) {
-        res.status(404).send("No course map found with that id");
-        return;
-    }
-    req.courseMap = utils.CourseMap.loadCourseMapFromDb(req.courseMap);
-    next();
+
+    req.courseMap = await CourseMap.findById(req.id).populate("program courses.course").exec(function(err, courseMap) {
+        if (err) {
+            return res.status(500).json({message: "Error finding course map"});
+        }
+        if (courseMap == null) {
+            return res.status(404).json({message: "Course map not found"});
+        }
+        req.courseMap = courseMap;
+        next();
+    });
+    
 }
 
 const addSemester = async (req, res, next) => {
