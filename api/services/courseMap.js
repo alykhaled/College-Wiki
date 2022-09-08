@@ -1,34 +1,56 @@
 const mongoose = require('mongoose');
-const {Course, Semester, CourseMap } = require('../utils/CourseMap');
-
-let courseMapCounter = 0;
-
-const getAllCourses = async (departmentCode) => {
-    const courses = await mongoose.model('Course').find({department: departmentCode});
-    if (courses.length == 0) {
-        return null;
-    }
-    return courses;
-}
+const CourseMap = require('../models/CourseMap');
+const Semester = require('../models/Semester');
+const CourseMapCourse = require('../models/CourseMapCourse');
+const Course = require('../models/Course');
+const utils = require('../utils/CourseMap');
 
 
 const createCourseMap = async (req, res, next) => {
-    req.courseMapId = courseMapCounter++;
+    
     req.courseMapName = req.query.name || "Course Map";
-    req.courseMapProgram = req.query.program || "CCE";
 
-    let courses = await getAllCourses(req.courseMapProgram);
-    if (courses == null) {
-        res.status(404).send("No courses found for this department");
-        return null;
+    req.courseMapProgram = await mongoose.model('Department').findOne({code: req.query.program});
+    if (req.courseMapProgram == null) {
+        return res.status(404).json({message: "Program not found"});
     }
-    let courseMap = new CourseMap(req.courseMapId, req.courseMapName, req.username, req.courseMapProgram);
-    courses.forEach(course => {
-        Course.createCourseFromCourseSchema(course);
-        courseMap.addCourse(course);
-    })
-    req.courseMap = courseMap;
-    next();
+
+    if (!req.courseMapProgram.courses || req.courseMapProgram.courses.length == 0) {
+        return res.status(404).json({message: "No courses found for this program"});
+    }
+    req.courseMapCourses = [];
+    req.courseMapProgram.courses.forEach(async course => {
+        let newCourseMapCourse = new CourseMapCourse({
+            course: course._id, 
+            semester: [],
+        }).save((err, courseMapCourse) => {
+            if (err) {
+                return res.status(500).json({message: "Error creating course map course"});
+            }
+            req.courseMapCourses.push(courseMapCourse);
+            if (req.courseMapCourses.length == req.courseMapProgram.courses.length) {
+                req.courseMap = new CourseMap({
+                    name: req.courseMapName,
+                    program: req.courseMapProgram._id,
+                    courses: req.courseMapCourses,
+                }).save((err, courseMap) => {
+                    if (err) {
+                        return res.status(500).json({message: "Error creating course map"});
+                    }
+                    CourseMap.populate(courseMap, {path: "program courses.course"}, (err, courseMap) => {
+                        if (err) {
+                            return res.status(500).json({message: "Error populating course map"});
+                        }
+                        return res.status(200).json({message: "Course map created", courseMap: courseMap});
+                        next();
+                    });
+                });
+            }
+        });
+    });
+
+
+    
 }
 
 const getCourseMap = async(req, res, next) => {
@@ -37,13 +59,12 @@ const getCourseMap = async(req, res, next) => {
         res.status(404).send("No course maps found for this session");
         return;
     }
-    req.courseMap = req.session.courseMaps.find(courseMap => courseMap.id == req.id);
-    req.courseMap = CourseMap.loadCourseMapFromSessionStorage(req.courseMap);
-    // console.log("Course map data at the router after loading: ", req.courseMap);
+    req.courseMap = mongoose.model('CourseMap').findById(req.id);
     if (req.courseMap == null) {
-        res.status(404).send("No course map found with this id");
+        res.status(404).send("No course map found with that id");
         return;
     }
+    req.courseMap = utils.CourseMap.loadCourseMapFromDb(req.courseMap);
     next();
 }
 

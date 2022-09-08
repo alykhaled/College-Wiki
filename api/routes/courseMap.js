@@ -13,11 +13,7 @@ courseMapRouter.get("/", async (req, res) => {
 });
 
 courseMapRouter.post("/", courseMapService.createCourseMap, async (req, res) => {
-    if (req.courseMap) {
-        req.session.courseMaps = req.session.courseMaps || [];
-        req.session.courseMaps.push(req.courseMap);
-        res.status(200).send("Course map created");
-    }
+    res.status(200).send(req.courseMap);
 });
 
 courseMapRouter.post("/:id/semesters", courseMapService.getCourseMap, courseMapService.addSemester);

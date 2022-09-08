@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 class Course {
     constructor(id, code, name, creditHours, preReq, preReqReverse, preReqHours, 
                     group, availableSemesters, outDegree, isTaken, semestersTakenIDs,
@@ -23,12 +25,22 @@ class Course {
             this.outDegree = this.preReq.length;
         }
     }
+
+    static async loadCoursesFromCourseMapSchema(courseMapCoursesSchemas) {
+        console.log("Loading courses from course map schema...", courseMapCoursesSchemas);
+        const courses = [];
+        for (let i = 0; i < courseMapCoursesSchemas.length; i++) {
+            const course = Course.createCourseFromCourseSchema(courseMapCoursesSchemas[i]);
+            courses.push(course);
+        }
+        return courses;
+    }
     
     static createCourseFromCourseSchema(courseSchema) {
-        return new Course(courseSchema._id, courseSchema.code, courseSchema.name, courseSchema.creditHours, 
-                            courseSchema.preReq, courseSchema.preReqReverse, courseSchema.preReqHours, 
-                            courseSchema.group, courseSchema.availableSemesters, courseSchema.outDegree, courseSchema.isTaken, 
-                            courseSchema.semestersTakenIDs, courseSchema.description, courseSchema.professor, courseSchema.links);
+        return new Course(courseSchema._id, courseSchema.course.code, courseSchema.course.name, courseSchema.course.creditHours, 
+                            courseSchema.course.preReq, courseSchema.course.preReqReverse, courseSchema.course.preReqHours, 
+                            courseSchema.course.group, courseSchema.course.availableSemesters, courseSchema.outDegree, courseSchema.isTaken, 
+                            courseSchema.semester._id, courseSchema.course.description, courseSchema.course.professor, courseSchema.course.links);
     }
 
     takeCourse(semesterId) {
@@ -58,8 +70,19 @@ class Semester {
         this.maxCredits = maxCredits || 21;
     }
 
+    static async loadSemestersFromCourseMapSchema(courseMapSemestersSchemas) {
+        const semesters = [];
+        for (let i = 0; i < courseMapSemestersSchemas.length; i++) {
+            const courseMapSemesterSchema = courseMapSemestersSchemas[i];
+            semester.courses = await Course.loadCoursesFromCourseMapSchema(courseMapSemesterSchema.courses);
+            semester = Semester.createSemesterFromSemesterSchema(semester);
+            semesters.push(semester);
+        }
+        return semesters;
+    }
+
     static createSemesterFromSemesterSchema(semesterSchema) {
-        return new Semester(semesterSchema.id, semesterSchema.type, semesterSchema.courses,
+        return new Semester(semesterSchema._id, semesterSchema.type, semesterSchema.courses,
                                 semesterSchema.credits, semesterSchema.maxCredits);
     }
 
@@ -108,6 +131,16 @@ class CourseMap {
         this.semesters = semesters || [];
         this.courses = courses || [];
         this.credits = credits || 0;
+    }
+
+    static async loadCourseMapFromDb(courseMapSchema) {
+        let courseMap = new CourseMap(courseMapSchema._id, courseMapSchema.name, courseMapSchema.username, courseMapSchema.program.code,
+                                        courseMapSchema.courses, courseMapSchema.semesters, courseMapSchema.credits);
+        courseMap.courses = await Course.loadCoursesFromCourseMapSchema(courseMap.courses);
+        // courseMap.semesters = await Semester.loadSemestersFromCourseMapSchema(courseMap.semesters);
+
+        console.log("CourseMap loaded from db: ", courseMap);
+        return courseMap;
     }
 
     static loadCourseMapFromSessionStorage(courseMapSessionStorage) {
