@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const CourseMapCourseSchema = require('./CourseMapCourse');
 
 const SemesterSchema = new mongoose.Schema({
     type: {type: String, required: true},
-    courses: [{type: mongoose.Schema.Types.ObjectId , ref: "CourseMapCourse", required: false}],
+    order: {type: Number, required: true},
+    courses: [CourseMapCourseSchema],
     credits: {type: Number, required: false},
     maxCredits: {type: Number, required: false},
 });
 
-module.exports = mongoose.model('Semester',SemesterSchema);
+module.exports = SemesterSchema;

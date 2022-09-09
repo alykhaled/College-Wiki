@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const CourseMap = require('../models/CourseMap');
-const Semester = require('../models/Semester');
-const CourseMapCourse = require('../models/CourseMapCourse');
 const Course = require('../models/Course');
 const utils = require('../utils/CourseMap');
 
@@ -10,68 +8,41 @@ const createCourseMap = async (req, res, next) => {
     
     req.courseMapName = req.query.name || "Course Map";
 
-    req.courseMapProgram = await mongoose.model('Department').findOne({code: req.query.program});
+    req.courseMapProgram = await mongoose.model('Department').findOne({code: req.query.program}).populate("courses");
     if (req.courseMapProgram == null) {
         return res.status(404).json({message: "Program not found"});
     }
-
     if (!req.courseMapProgram.courses || req.courseMapProgram.courses.length == 0) {
         return res.status(404).json({message: "No courses found for this program"});
     }
-    req.courseMapCourses = [];
-    req.courseMapProgram.courses.forEach(async course => {
-        let newCourseMapCourse = new CourseMapCourse({
-            course: course._id, 
-            semester: [],
-        }).save((err, courseMapCourse) => {
-            if (err) {
-                return res.status(500).json({message: "Error creating course map course"});
+
+    req.courseMap = new CourseMap({
+        name: req.courseMapName,
+        program: req.courseMapProgram,
+        semestersOrder: [],
+        courses: req.courseMapProgram.courses.map(course => {
+            return {
+                course: course,
+                semestersOrder: [],
+                outDegree: course.preReq.length,
             }
-            req.courseMapCourses.push(courseMapCourse);
-            if (req.courseMapCourses.length == req.courseMapProgram.courses.length) {
-                req.courseMap = new CourseMap({
-                    name: req.courseMapName,
-                    program: req.courseMapProgram._id,
-                    courses: req.courseMapCourses,
-                }).save((err, courseMap) => {
-                    if (err) {
-                        return res.status(500).json({message: "Error creating course map"});
-                    }
-                    CourseMap.populate(courseMap, {path: "program"}, (err, courseMap) => {
-                        if (err) {
-                            return res.status(500).json({message: "Error populating course map"});
-                        }
-                        return res.status(200).json({message: "Course map created", courseMap: courseMap});
-                    });
-                });
-            }
-        });
+        }),
+        credits: 0,
     });
 
+    req.courseMap.save();
+    res.status(200).json({message: "Course map created", courseMap: req.courseMap});
 
-    
 }
 
-const getCourseMap = async(req, res, next) => {
+const getCourseMap = async (req, res, next) => {
     req.id = req.params.id;
 
-    req.courseMap = await CourseMap.findById(req.id).populate("program semesters").exec(function(err, courseMap) {
-        if (err) {
-            return res.status(500).json({message: "Error finding course map"});
-        }
-        if (courseMap == null) {
-            return res.status(404).json({message: "Course map not found"});
-        }
-        courseMap.populate("semesters.course", (err, courseMap) => {
-            if (err) {
-                return res.status(500).json({message: "Error populating course map"});
-            }
-        
-            req.courseMap = courseMap;
-            next();
-        });
-    });
-    
+    req.courseMap = await CourseMap.findById(req.id).populate("program");
+    if (req.courseMap == null) {
+        return res.status(404).json({message: "Course map not found"});
+    }
+    next();
 }
 
 const addSemester = async (req, res, next) => {
@@ -80,25 +51,16 @@ const addSemester = async (req, res, next) => {
         return;
     }
     req.semesterType = req.query.type;
-    const semester = new Semester({
+    const semester = {
         type: req.semesterType,
+        order: req.courseMap.semesters.length,
         courses: [],
         credits: 0,
         maxCredits: 21,
-    }).save((err, semester) => {
-        if (err) {
-            return res.status(500).json({message: "Error creating semester"});
-        }
-        req.courseMap.semesters.push(semester);
-        req.courseMap.save((err, courseMap) => {
-            if (err) {
-                return res.status(500).json({message: "Error saving course map"});
-            }
-            return res.status(200).json({message: "Semester added", courseMap: courseMap});
-
-        });
-    });
-    
+    }
+    req.courseMap.semesters.push(semester);
+    req.courseMap.save();
+    next();
 }
 
 const getSemester = async (req, res, next) => {
@@ -113,36 +75,46 @@ const getSemester = async (req, res, next) => {
 
 const addCourseToSemester = async (req, res, next) => {
     req.courseCode = req.params.courseCode;
-    req.course = req.courseMap.courses.find(course => course.code == req.courseCode);
+    req.course = req.courseMap.courses.find(course => course.course.code == req.courseCode);
     if (req.course == null) {
         res.status(404).send("No course found in the course map with this code");
         return;
     }
-    try {
-        req.courseMap.addCourseToSemester(req.course, req.semester);
-    } catch (err) {
-        res.status(400).send(err.message);
-        return;
+
+    if (utils.isCourseAvailable(req.course, req.semester, req.courseMap)) {
+        req.semester.courses.push(req.course);
+        req.course.semestersOrder.push(req.semester.order);
+        req.course.course.preReqReverse.forEach(preReqId => {
+            const preReq = req.courseMap.courses.find(course => course.course._id == preReqId.toString());
+            console.log("Updating pre req", preReq);
+            if (preReq) {
+                preReq.outDegree--;
+            }
+        });
+
+
+        req.semester.credits += req.course.course.creditHours;
+        req.courseMap.credits += req.course.course.creditHours;
+        req.courseMap.save();
+        return res.status(200).send({message: "Course added to semester", courseMap: req.courseMap});
+    } else {
+        return res.status(400).send({message: "Course not available in this semester"});
     }
-    req.session.courseMaps[req.courseMap.id] = req.courseMap;
-    res.status(200).send(req.courseMap);
+    
 }
 
 const removeCourseFromSemester = async (req, res, next) => {
     req.courseCode = req.params.courseCode;
-    req.course = req.courseMap.courses.find(course => course.code == req.courseCode);
-    if (req.course == null) {
-        res.status(404).send("No course found in the course map with this code");
+    req.course = req.semester.courses.find(course => course.course.code == req.courseCode);
+    if (!req.course) {
+        res.status(404).send("No course found in the semester with this code");
         return;
     }
-    try {
-        req.courseMap.removeCourseFromSemester(req.course, req.semester);
-    } catch (err) {
-        res.status(400).send(err.message);
-        return;
-    }
-    req.session.courseMaps[req.courseMap.id] = req.courseMap;
-    res.status(200).send(req.courseMap);
+    req.course = req.courseMap.courses.find(course => course.course.code == req.courseCode);
+    utils.removeCourseFromSemester(req.course, req.semester, req.courseMap);
+    req.courseMap.save();
+    res.status(200).send({message: "Course removed from semester", courseMap: req.courseMap});
+
 }
 
 const getAvailableCourses = async (req, res, next) => {
