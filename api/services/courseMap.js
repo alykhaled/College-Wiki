@@ -133,9 +133,11 @@ const getAvailableCourses = async (req, res, next) => {
 
 }
 
-const getLeftPreReq = (courseCode, courseMap) => {
-    const course = courseMap.courses.find(course => course.code === courseCode);
-    return course.preReq.filter(preReq => !preReq.isTaken);
+const getLeftPreReqs = async (req, res, next) => {
+    req.courseCode = req.params.courseCode;
+    req.course = req.courseMap.courses.find(course => course.course.code == req.courseCode);
+    req.leftPreReq = utils.getLeftPreReq(req.course, req.semester, req.courseMap);
+    res.status(200).send({leftPreReq: req.leftPreReq});
 }
 
 
@@ -147,6 +149,6 @@ module.exports = {
     addCourseToSemester,
     removeCourseFromSemester,
     getAvailableCourses,
-    getLeftPreReq
+    getLeftPreReqs
 }
 

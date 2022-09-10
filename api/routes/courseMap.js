@@ -25,5 +25,7 @@ courseMapRouter.delete("/:id/semesters/:semesterId/courses/:courseCode", courseM
 
 courseMapRouter.get("/:id/semesters/:semesterId/available-courses", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.getAvailableCourses);
 
+courseMapRouter.get("/:id/semesters/:semesterId/courses/:courseCode/left-prereqs", courseMapService.getCourseMap, courseMapService.getSemester, courseMapService.getLeftPreReqs);
+
 
 module.exports = courseMapRouter;
