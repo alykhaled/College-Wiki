@@ -86,7 +86,6 @@ const addCourseToSemester = async (req, res, next) => {
         req.course.semestersOrder.push(req.semester.order);
         req.course.course.preReqReverse.forEach(preReqId => {
             const preReq = req.courseMap.courses.find(course => course.course._id == preReqId.toString());
-            console.log("Updating pre req", preReq);
             if (preReq) {
                 preReq.outDegree--;
             }
@@ -118,8 +117,20 @@ const removeCourseFromSemester = async (req, res, next) => {
 }
 
 const getAvailableCourses = async (req, res, next) => {
-    req.availableCourses = req.courseMap.getAvailableCourses(req.semester);
-    res.status(200).send(req.availableCourses);
+    let availableCourses = req.courseMap.courses.filter(course => { return course.outDegree == 0 });
+    req.availableCourses = [];
+    req.retakableCourses = [];
+    availableCourses.forEach(course => {
+        if (utils.isCourseAvailable(course, req.semester, req.courseMap)) {
+            if (course.semestersOrder.length > 0) {
+                req.retakableCourses.push(course);
+            } else {
+                req.availableCourses.push(course);
+            }
+        }
+    });
+    res.status(200).send({message: "Available courses", availableCourses: req.availableCourses, retakableCourses: req.retakableCourses});
+
 }
 
 const getLeftPreReq = (courseCode, courseMap) => {
