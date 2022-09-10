@@ -28,6 +28,14 @@ const createCourseMap = async (req, res, next) => {
             }
         }),
         credits: 0,
+        electiveGroups: req.courseMapProgram.electiveGroups.map(elective => {
+            return {
+                group: elective.group,
+                coursesTaken: [],
+                creditHoursTaken: 0,
+                mustTakeCoursesLeft: elective.mustTakeCourses,
+            }
+        }),
     });
 
     req.courseMap.save();
@@ -94,6 +102,11 @@ const addCourseToSemester = async (req, res, next) => {
 
         req.semester.credits += req.course.course.creditHours;
         req.courseMap.credits += req.course.course.creditHours;
+
+        if (req.course.course.group.includes("elective")) {
+            utils.addElectiveCourse(req.course, req.semester, req.courseMap);
+        }
+
         req.courseMap.save();
         return res.status(200).send({message: "Course added to semester", courseMap: req.courseMap});
     } else {
@@ -121,12 +134,15 @@ const getAvailableCourses = async (req, res, next) => {
     req.availableCourses = [];
     req.retakableCourses = [];
     availableCourses.forEach(course => {
+        console.log("checking course: ", course.course.code);
         if (utils.isCourseAvailable(course, req.semester, req.courseMap)) {
             if (course.semestersOrder.length > 0) {
                 req.retakableCourses.push(course);
             } else {
                 req.availableCourses.push(course);
             }
+        } else {
+            console.log("course is not available");
         }
     });
     res.status(200).send({message: "Available courses", availableCourses: req.availableCourses, retakableCourses: req.retakableCourses});
