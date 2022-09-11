@@ -48,7 +48,7 @@ app.use("/api/department",departmentRoute);
 app.use("/api/list",listRoute);
 app.use("/api/table",tableRoute);
 app.use("/api/me",meRoute);
-app.use("/api/course-map",courseMapRoute);
+app.use("/api/course-maps",courseMapRoute);
 
 app.get("/",(req,res) => {
     res.set('Access-Control-Allow-Origin', '*');
