@@ -18,6 +18,7 @@ const createCourseMap = async (req, res, next) => {
 
     req.courseMap = new CourseMap({
         name: req.courseMapName,
+        user: req.user._id,
         program: req.courseMapProgram,
         semestersOrder: [],
         courses: req.courseMapProgram.courses.map(course => {
@@ -50,6 +51,14 @@ const getCourseMap = async (req, res, next) => {
     if (req.courseMap == null) {
         return res.status(404).json({message: "Course map not found"});
     }
+    if (req.courseMap.user.toString() != req.user._id.toString()) {
+        return res.status(401).json({message: "Unauthorized"});
+    }
+    next();
+}
+
+const getAllCourseMaps = async (req, res, next) => {
+    req.courseMaps = await CourseMap.find({user: req.user._id}).populate("program");
     next();
 }
 
@@ -160,6 +169,7 @@ const getLeftPreReqs = async (req, res, next) => {
 module.exports = {
     createCourseMap,
     getCourseMap,
+    getAllCourseMaps,
     addSemester,
     getSemester,
     addCourseToSemester,
@@ -167,4 +177,3 @@ module.exports = {
     getAvailableCourses,
     getLeftPreReqs
 }
-
