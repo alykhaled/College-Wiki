@@ -39,7 +39,7 @@ const createCourseMap = async (req, res, next) => {
     });
 
     req.courseMap.save();
-    res.status(200).json({message: "Course map created", courseMap: req.courseMap});
+    next();
 
 }
 
@@ -108,7 +108,7 @@ const addCourseToSemester = async (req, res, next) => {
         }
 
         req.courseMap.save();
-        return res.status(200).send({message: "Course added to semester", courseMap: req.courseMap});
+        next();
     } else {
         return res.status(400).send({message: "Course not available in this semester"});
     }
@@ -125,7 +125,7 @@ const removeCourseFromSemester = async (req, res, next) => {
     req.course = req.courseMap.courses.find(course => course.course.code == req.courseCode);
     utils.removeCourseFromSemester(req.course, req.semester, req.courseMap);
     req.courseMap.save();
-    res.status(200).send({message: "Course removed from semester", courseMap: req.courseMap});
+    next();
 
 }
 
