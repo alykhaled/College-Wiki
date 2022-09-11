@@ -61,7 +61,7 @@ const addSemester = async (req, res, next) => {
     req.semesterType = req.query.type;
     const semester = {
         type: req.semesterType,
-        order: req.courseMap.semesters.length,
+        order: req.courseMap.semesters.length+1,
         courses: [],
         credits: 0,
         maxCredits: 21,
@@ -73,7 +73,7 @@ const addSemester = async (req, res, next) => {
 
 const getSemester = async (req, res, next) => {
     req.semesterId = req.params.semesterId;
-    req.semester = req.courseMap.semesters.find(semester => semester._id == req.semesterId);
+    req.semester = req.courseMap.semesters.find(semester => semester.order == req.semesterId);
     if (req.semester == null) {
         res.status(404).send("No semester found with this id");
         return;
