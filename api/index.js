@@ -10,8 +10,7 @@ const listRoute = require('./routes/list');
 const tableRoute = require('./routes/table');
 const meRoute = require('./routes/me');
 const courseMapRoute = require('./routes/courseMap');
-var session = require('express-session')
-var cookieParser = require('cookie-parser')
+
 
 dotenv.config();
 
@@ -26,21 +25,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT");
     next();
 });
-
-app.use(cookieParser());
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 300000000, 
-        sameSite: 'none',
-        httpsOnly: true,
-        secure: 'auto',
-      }
-}));
-
-
 app.use(express.json());
 app.use("/api/course",courseRoute);
 app.use("/api/auth",authRoute);
@@ -55,6 +39,7 @@ app.get("/",(req,res) => {
     res.send("Working!")
 })
 
-app.listen(process.env.PORT || 8080, () => {
-    console.log("Server is running on port 8080");
+const PORT = process.env.PORT || 8080
+app.listen(PORT, () => {
+    console.log("Server is running on port " + PORT);
 })
