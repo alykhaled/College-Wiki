@@ -94,7 +94,23 @@ router.get("/search/" ,async (req,res) => {
 router.get("/:id" ,async (req,res) => {
     try 
     {
-        const course = await Course.findById(req.params.id).populate("professor","-courses").populate("preReq");
+        const course = await Course.findById(req.params.id).populate("professor","-courses").populate({ path: 'preReq', select: 'name code' }).lean();
+        // console.log(course);
+        let dependentCourses = [];
+        const courses = await Course.find().select("_id preReq name code").populate({ path: 'preReq', select: '_id name code' });
+        // console.log(courses[0]);
+        courses.forEach(async (course, index) => { 
+            course.preReq.forEach(async (preReq, index) => {
+                // console.log(preReq._id);
+                if(preReq._id.equals(req.params.id)) {
+                    course.preReq = undefined; 
+                    dependentCourses.push(course);
+                }
+            });
+        });
+        
+        console.log(dependentCourses);
+        course["dependentCourses"] = dependentCourses;
         res.status(200).send(course);
     } 
     catch (error) 
@@ -155,6 +171,30 @@ router.post("/:code/preReq/",verify, async (req,res) => {
             });
             res.status(200).json({"Sucessfully added preReqs": preReqs});
         }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
+
+router.get("/:code/dependent", async (req,res) => {
+    try{
+        let course = await Course.findOne({code: req.params.code.toUpperCase()});
+        if (!course) {
+            res.status(404).send("Course not found");
+        }
+        let dependentCourses = [];
+        const courses = await Course.find().select("preReq name code").populate({ path: 'preReq', select: 'name code' });
+        courses.forEach(async (course, index) => { 
+            course.preReq.forEach(async (preReq, index) => {
+                if(preReq.code === req.params.code.toUpperCase()) {
+                    course.preReq = undefined; 
+                    console.log(course)
+                    dependentCourses.push(course);
+                }
+            });
+        });
+        res.status(200).send(dependentCourses);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
