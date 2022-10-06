@@ -12,7 +12,7 @@ function Home() {
     return (
         <div className="home">
             <div className="mainImage">
-                <img src="https://scontent-mrs2-2.xx.fbcdn.net/v/t1.6435-9/121102831_107944787751696_5431430813709774713_n.png?_nc_cat=101&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeEnQmFRW8r05CY1LZigTAUqqLiH5tfaH_OouIfm19of84NKJoUrvIJ7qy24EX4Pi0YBm9Bnjj4ztIiZkqby9pvt&_nc_ohc=l8GDgd7LL_4AX_usykR&_nc_ht=scontent-mrs2-2.xx&oh=7c6906fd8642f305cf84daf0d0e70cc6&oe=617DAE08" alt="a" >
+                <img src="https://eng.cu.edu.eg/wp-content/uploads/2014/12/Fac_eng_minified-620x279.jpg" alt="a" >
                 </img>
             </div>
             <div className="all">

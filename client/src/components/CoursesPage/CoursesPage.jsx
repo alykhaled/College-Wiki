@@ -2,11 +2,15 @@ import './coursesPage.scss'
 import axios from "axios";
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router';
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
+
+
 function CoursesPage() {
+    const history = useHistory();
     const {id} = useParams();
     const [user, setUser] = useState({});
     const [course, setCourse] = useState();  
+    const [courseID, setCourseID] = useState();  
     const [lists, setLists] = useState([]);
     const [showNames, setShowNames] = useState(false);
     const [showCurrentSemster, setShowCurrentSemster] = useState(false);
@@ -53,6 +57,19 @@ function CoursesPage() {
         getMe();
     }, [id]);
 
+    //Change current course
+    useEffect( async () => {
+        try {
+            const res = await axios.get(process.env.REACT_APP_API+"/course/"+courseID);
+            setCourse(res.data);
+        } catch (error) {
+            // localStorage.removeItem("token");
+            // localStorage.removeItem("isAdmin");
+            console.log(error);
+        }
+    }, [courseID]);
+
+
     return (
         <div className="coursespage">
             <div className="container">
@@ -71,7 +88,7 @@ function CoursesPage() {
                         <h1>{list.name}</h1>
                         <div className="courses">
                             {list.courses.map(currentCourse => (
-                                (!showCurrentSemster | currentCourse.semester.includes("FALL")) ? <div className={"course " + (currentCourse === course ? "active" : "") + (currentCourse.completed ? " completed" : "") + (currentCourse.inprogress ? "  inprogress" : "")} onClick={() => setCourse(currentCourse)}>
+                                (!showCurrentSemster | currentCourse.semester.includes("FALL")) ? <div className={"course " + (currentCourse === course ? "active" : "") + (currentCourse.completed ? " completed" : "") + (currentCourse.inprogress ? "  inprogress" : "")} onClick={() => setCourseID(currentCourse._id)}>
                                     {showNames ? currentCourse.name : currentCourse.code}
                                 </div> : ""
                             ))}
@@ -95,7 +112,15 @@ function CoursesPage() {
                 Prerequisite: 
                 <p className="coursePrereq">
                 {course.preReq.length !== 0 ? course.preReq.map(course => (
-                    <div className="course" onClick={() => setCourse(course)}>
+                    <div className="course" onClick={() => setCourseID(course._id)}>
+                        {showNames ? course.name : course.code}
+                    </div>
+                )) : "None"}</p>
+                <hr/>
+                Is a Prerequisite for: 
+                <p className="coursePrereq">
+                {course.dependentCourses.length !== 0 ? course.dependentCourses.map(course => (
+                    <div className="course" onClick={() => setCourseID(course._id)}>
                         {showNames ? course.name : course.code}
                     </div>
                 )) : "None"}</p>
