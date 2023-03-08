@@ -34,7 +34,7 @@ app.use("/api/me",meRoute);
 
 app.get("/",(req,res) => {
     res.set('Access-Control-Allow-Origin', '*');
-    res.send("Working!!")
+    res.send("Working!!!")
 })
 
 app.listen(process.env.PORT || 8080, () => {
