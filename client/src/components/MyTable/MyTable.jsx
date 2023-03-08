@@ -22,7 +22,7 @@ function MyTable() {
         getTable();
     }, [])
     return (
-        <div className="mytable">
+        <div className="mytale">
 
         </div>
     )
