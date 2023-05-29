@@ -1,3 +1,0 @@
-use('wiki')
-
-db.courses.find({code: {$regex: new RegExp(" ")}});

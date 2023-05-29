@@ -12,8 +12,9 @@ import AdminRoute   from './components/AdminPanel/AdminRoute';
 import CoursePage   from './components/CoursePage/CoursePage';
 import TablePage    from './components/TablePage/TablePage';
 import MyTable      from './components/MyTable/MyTable';
-import UserPage     from './components/UserPage/UserPage';
+import UserPage     from './components/User/UserPage/UserPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
+import UserNavbar from './components/User/UserNavbar/UserNavbar';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
@@ -49,7 +50,7 @@ function App() {
               <TablePage />
             </Route>
             <Route path="/me">
-              <UserPage/>
+              <UserNavbar/>
             </Route>
             <Route path="/:id">
               <CoursesPage />

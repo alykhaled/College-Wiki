@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../../SearchBar/SearchBar';
 import './userpage.scss';
-function UserPage() {
+function UserCourses() {
     const [completedCourses, setCompletedCourses] = useState([]);
     const [inProgressCourses, setInProgressCourses] = useState([]);
     const [User, setUser] = useState({});
