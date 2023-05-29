@@ -10,6 +10,7 @@ import {
     Link
   } from "react-router-dom";
 import UserDashboard from '../UserDashboard/UserDashboard';
+import UserCourses from '../UserPage/UserCourses';
 export default function UserNavbar() {
     const [option, setOption] = useState("")
 
@@ -56,7 +57,7 @@ export default function UserNavbar() {
                 </div>
                 <Switch>
                     <Route path="/">
-                        <UserDashboard/>
+                        <UserCourses/>
                     </Route>
                 </Switch>
             </div>

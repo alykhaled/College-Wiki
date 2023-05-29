@@ -125,4 +125,4 @@ function UserCourses() {
     )
 }
 
-export default UserPage
+export default UserCourses
