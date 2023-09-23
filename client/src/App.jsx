@@ -61,8 +61,7 @@ function App() {
           </Switch>
           <footer>
             Unofficial Wiki and Guide for Cairo University Faculty of Engineering<br/>
-            Made by <a href="https://github.com/alykhaled">Aly Khaled</a><br/>
-            Special Thanks for Omar Yasser (Nona's Husband) and Ziad Mohamed (Zooz's Husband)
+            Made by <a href="https://github.com/alykhaled">Aly Khaled</a>
           </footer>
         </div>
       </Switch>
